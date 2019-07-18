@@ -1,0 +1,148 @@
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <title>Кассовый чек</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/payment/style.css">
+</head>
+<body>
+<div class="body container-fluid">
+    <% const count = parseInt(query.count); %>
+    <% const passes = parseInt(query.passes); %>
+    <% const passesIll = parseInt(query.passesIll); %>
+    <% const attendanceAmount = count > 8 ? prices.visit * 8 : prices.visit * count; %>
+    <div class="row">
+        <div style="margin: 20px 20px 0 20px;width: 400px;">
+            <div class="payment">
+                <div class="payment__row">
+                    <span class="payment__row_title">ФИО ребенка:</span>
+                    <div class="payment__row_body">
+                        <%= query.fio %>
+                    </div>
+                </div>
+                <% if (query.attendance === 'true') { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title">Всего посещений:</span>
+                        <div class="payment__row_body">
+                            <% if (count > 3 || count === 1) { %>
+                                <%= `${count} раз` %>
+                            <% } else { %>
+                                <%= `${count} раза` %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% if (passes) { %>
+                        <div class="payment__row">
+                            <span class="payment__row_title">Всего пропусков:</span>
+                            <div class="payment__row_body">
+                                <% if (passes > 3 || passes === 1) { %>
+                                    <%= `${passes} раз` %>
+                                <% } else { %>
+                                    <%= `${passes} раза` %>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="payment__row">
+                            <span class="payment__row_title">Из них по поболезни:</span>
+                            <div class="payment__row_body">
+                                <% if (passesIll > 3 || passesIll === 1) { %>
+                                    <%= `${passesIll} раз` %>
+                                <% } else { %>
+                                    <%= `${passesIll} раза` %>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+                <div class="payment__row">
+                    <span class="payment__row_title">Расчетный период:</span>
+                    <% let m = new Date().getMonth() + 1; %>
+                    <div class="payment__row_body"><%= `${m > 9 ? m : '0' + m}.${new Date().getFullYear()}` %></div>
+                </div>
+                <% if (query.attendance === 'true') { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title">Ставка:</span>
+                        <div class="payment__row_body">
+                            <%= prices.visit %> ₽
+                        </div>
+                    </div>
+                <% } %>
+                <% if (query.individual === 'true') { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title">Индивидуальные занятия:</span>
+                        <div class="payment__row_body">
+                            <%= query.individual_price %> ₽
+                        </div>
+                    </div>
+                <% } %>
+                <% if (query.fee === 'true') { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title">Ежегодный взнос:</span>
+                        <div class="payment__row_body">
+                            <div class="payment__row_body">
+                                <div class="payment__row_body">
+                                    <%= prices.fee %> ₽
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+                <% if (query.books === 'true') { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title">Пособие:</span>
+                        <div class="payment__row_body">
+                            <%= prices.books %> ₽
+                        </div>
+                    </div>
+                <% } %>
+                <div class="payment__row payment__total">
+                    <span class="payment__row_title">Итого к оплате:</span>
+                    <div class="payment__row_body total">
+                       <%= query.total %> ₽
+                    </div>
+                </div>
+                <div class="payment__row payment__total">
+                    <span class="payment__row_title">Дата:</span>
+                    <div class="payment__row_body">
+                        <% let dd = new Date().getDate() %>
+                        <% let mm = new Date().getMonth() + 1 %>
+                        <% let yy = new Date().getFullYear() %>
+                        <%= `${dd > 9 ? dd : '0' + dd}.${mm > 9 ? mm : '0' + mm}.${yy}` %>
+                    </div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Вид оплаты:</span>
+                    <div class="payment__row_body">
+                        <%= query.type %>
+                    </div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Администратор:</span>
+                    <div class="payment__row_body">
+                        <%= admin %>
+                    </div>
+                </div>
+                <div class="payment__row payment__total">
+                    <span class="payment__row_title">ИП Матвиенко О.А.</span>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">ИНН</span>
+                    <div class="payment__row_body">
+                        <%= ITN %>
+                    </div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">ОГРН</span>
+                    <div class="payment__row_body">
+                        <%= PSRN %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

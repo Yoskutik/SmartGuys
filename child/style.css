@@ -1,0 +1,64 @@
+.disabled .add, .disabled .remove {
+  display: none; }
+.disabled .weekdays {
+  width: 126px; }
+
+input[disabled], select[disabled] {
+  background: #fff !important;
+  border-color: #fff; }
+
+.info {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+  .info__attendance, .info__payment-list {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 20px 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 250px; }
+    .info__attendance ul, .info__payment-list ul {
+      border: 1px solid #E0E0E0;
+      overscroll-behavior-y: contain;
+      overflow: auto;
+      margin: 10px 0;
+      max-height: 150px;
+      width: 100%;
+      padding: 0; }
+      .info__attendance ul li, .info__payment-list ul li {
+        border-bottom: 1px solid #E0E0E0;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        margin-bottom: -1px;
+        list-style: none;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        padding: 5px;
+        width: 100%; }
+      .info__attendance ul .multyCheckbox, .info__payment-list ul .multyCheckbox {
+        color: #fff; }
+    .info__attendance__btns, .info__payment-list__btns {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%; }
+      .info__attendance__btns button, .info__payment-list__btns button {
+        padding: 2px 4px; }
+  .info__payment-list {
+    width: calc(100% - 270px); }
+    .info__payment-list ul {
+      max-height: 200px; }
+
+/*# sourceMappingURL=style.css.map */

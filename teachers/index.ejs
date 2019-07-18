@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <%- include('../assets/elements/head'); %>
+    <link rel="stylesheet" href="/teachers/style.css">
+    <script src="/teachers/script.js"></script>
+</head>
+<body>
+<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
+<%- include('../assets/elements/header', {admin: admin}); %>
+<div class="body container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-4 teachers">
+            <ul class="teachers__list">
+                <% for (let i in teachers) {%>
+                    <li data-id="<%= teachers[i].id %>">
+                        <input disabled value="<%= teachers[i].fio %>" type="text">
+                        <span class="remove"></span>
+                        <span class="update"></span>
+                    </li>
+                <% } %>
+            </ul>
+            <div class="btns justify-content-end">
+                <button type="button" class="btn btn-info add">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../assets/elements/footer'); %>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <%- include ../assets/elements/head.ejs %>
+    <link rel="stylesheet" href="/schedule/style.css">
+    <link rel="stylesheet" href="/assets/elements/multyCheckbox/multyCheckbox.css">
+    <script src="/schedule/script.js"></script>
+    <script src="/assets/elements/multyCheckbox/multyCheckbox.js"></script>
+</head>
+<body>
+<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
+<%- include('../assets/elements/header', {admin: admin}); %>
+<div class="body container-fluid">
+    <div class="row justify-content-center">
+        <% if (new Date().getDay() === 7) { %>
+            <%
+            let valid = true;
+            (() => {
+                for (let i = 0; i < 6; i++) {
+                    for (let j in schedule.teachers[i]) {
+                        for (let k in schedule.teachers[i][j].children) {
+                            if (!schedule.teachers[i][j].children[k].attendance.type) {
+                                valid = false;
+                                return;
+                            }
+                        }
+                    }
+                }
+            })();
+            %>
+            <% if (!valid) { %>
+                <div class="col-lg-10 col-md-11" style="padding: 0;">
+                    <div class="action alert alert-warning" role="alert">
+                        <b>Внимание!</b>
+                        Неделя заканчивается, но некоторые ученики не имеют отмеченной посещаемости
+                        <button type="button" class="action__close close" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+            <% } %>
+        <% } %>
+        <div class="col-lg-10 col-md-11 navigation">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link navigation__link navigation__teachers active">Учителя</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link navigation__link navigation__children">Дети</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-10 col-md-11 schedule">
+            <% const weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']; %>
+            <div class="schedule__teachers">
+                <% for (let i in weekdays) { %>
+                    <div class="schedule__weekday">
+                        <span class="schedule__weekday_title"><%= weekdays[i] %></span>
+                        <ul class="schedule__weekday_list">
+                            <% schedule.teachers[i].forEach(teacher => { %>
+                                <li class="teacher-item">
+                                    <div>
+                                        <%= teacher.fio %>
+                                        <span class="time"><%= teacher.time %></span>
+                                    </div>
+                                    <ul class="schedule__weekday_list inner">
+                                        <% teacher.children.forEach(child => { %>
+                                            <li data-id="<%= child.id %>" data-lesson-type="<%= child.lesson_type %>">
+                                                <div>
+                                                    <%= child.fio %>
+                                                </div>
+                                                <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                                                    items: [
+                                                        {color: '#ededed'},
+                                                        {color: '#068f0f', content: {text: 'П'}},
+                                                        {color: '#e8e120', content: {text: 'Б'}},
+                                                        {color: '#e82020', content: {text: 'О'}},
+                                                    ],
+                                                    chosen: child.attendance.type,
+                                                }) %>
+                                            </li>
+                                        <% }) %>
+                                    </ul>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                <% } %>
+            </div>
+            <div class="schedule__children">
+                <% for (let i in weekdays) { %>
+                    <div class="schedule__weekday">
+                        <span class="schedule__weekday_title"><%= weekdays[i] %></span>
+                        <ul class="schedule__weekday_list">
+                            <% schedule.children[i].forEach(child => { %>
+                                <li data-id="<%= child.id %>">
+                                    <div class="child-item">
+                                        <%= child.fio %>
+                                        <span class="time"><%= child.time %></span>
+                                    </div>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-11 schedule__btns justify-content-end">
+            <button type="button" class="btn btn-info add">Отправить посещаемость</button>
+        </div>
+    </div>
+</div>
+<%- include ../assets/elements/footer.ejs %>
+</body>
+</html>

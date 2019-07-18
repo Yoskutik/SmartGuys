@@ -1,0 +1,93 @@
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <%- include('../assets/elements/head'); %>
+    <link rel="stylesheet" href="/children/style.css">
+    <link rel="stylesheet" href="/assets/elements/multyCheckbox/multyCheckbox.css">
+    <script src="/children/script.js"></script>
+    <script src="/assets/elements/multyCheckbox/multyCheckbox.js"></script>
+</head>
+<body>
+<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
+<%- include('../assets/elements/header', {admin: admin}) %>
+<div class="body container-fluid">
+    <div class="row justify-content-center children">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <label class="children__finder">
+                Поиск ребенка:
+                <input type="text" placeholder="ФИО">
+            </label>
+            <ul class="children__finder_list dropdown_list"></ul>
+            <div class="children__add">
+                <form class="children__add_form">
+                    <span>ФИО ребенка:</span>
+                    <input name="fio" type="text">
+                    <span>Дата рождения:</span>
+                    <input name="birthday" type="text">
+                    <span>ФИО родителя:</span>
+                    <input type="text">
+                    <span>Тел. родителя:</span>
+                    <input name="tel">
+                    <span>ФИО родителя:</span>
+                    <input class="optionally" type="text">
+                    <span>Тел. родителя:</span>
+                    <input class="optionally" name="tel" type="text">
+                    <span>Расписание:</span>
+                    <div class="children__add_schedule">
+                        <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                            items: [
+                                {color: 'white'},
+                                {color: '#8869bf', content: {text: 'Г'}},
+                                {color: '#bfb069', content: {text: 'И'}},
+                            ],
+                        }); %>
+                        <select class="custom-select weekdays">
+                            <option disabled selected>День недели</option>
+                            <option>Понедельник</option>
+                            <option>Вторник</option>
+                            <option>Среда</option>
+                            <option>Четверг</option>
+                            <option>Пятница</option>
+                            <option>Суббота</option>
+                            <option>Воскресенье</option>
+                        </select>
+                        <input name="time" class="time" type="text" placeholder="Время">
+                        <input list="teachers" class="fio" placeholder="ФИО учителя">
+                        <ul class="children__add_schedule_teachers dropdown_list"></ul>
+                        <span class="add"></span>
+                    </div>
+                    <span></span>
+                    <div class="children__add_schedule">
+                        <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                            items: [
+                                {color: 'white'},
+                                {color: '#8869bf', content: {text: 'Г'}},
+                                {color: '#bfb069', content: {text: 'И'}},
+                            ],
+                        }); %>
+                        <select class="custom-select weekdays">
+                            <option disabled selected>День недели</option>
+                            <option>Понедельник</option>
+                            <option>Вторник</option>
+                            <option>Среда</option>
+                            <option>Четверг</option>
+                            <option>Пятница</option>
+                            <option>Суббота</option>
+                            <option>Воскресенье</option>
+                        </select>
+                        <input name="time" class="time" type="text" placeholder="Время">
+                        <input class="fio" type="text" placeholder="ФИО учителя">
+                        <ul class="children__add_schedule_teachers dropdown_list"></ul>
+                        <span class="remove"></span>
+                    </div>
+                </form>
+                <div class="children__add_buttons justify-content-end">
+                    <button type="button" class="btn btn-info add">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../assets/elements/footer'); %>
+</body>
+</html>

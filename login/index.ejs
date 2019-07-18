@@ -1,0 +1,89 @@
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <%- include('../assets/elements/head'); %>
+    <style>
+        .login {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 3px;
+            height: 34px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 4px 16px !important;
+        }
+
+        .footer {
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
+<div class="body container-fluid">
+    <div class="login">
+        <form>
+            <input type="text" placeholder="ФИО администратора">
+            <button type="button" class="btn btn-primary">Войти</button>
+        </form>
+    </div>
+</div>
+<%- include('../assets/elements/footer'); %>
+<script>
+    $('button').on('click', () => {
+        if ($('input').val().length === 0) {
+            $('input').addClass('border-danger');
+            return;
+        }
+        let expires = new Date();
+        expires.setHours(0);
+        expires.setMinutes(0);
+        expires.setSeconds(0);
+        expires.setTime(expires.getTime() + 24 * 60 * 60 * 1000);
+        // $.cookie('admin', $('input').val(), {
+        //     // domain: window.location.host,
+        //     path: ``,
+        //     expires,
+        // });
+        // $.ajax({
+        //     url: '/login/',
+        //     type: 'post',
+        //     data: {
+        //         fio: $('input').val()
+        //     },
+        //     success: data => {
+                window.location.href = `${window.location.origin}/?new_admin=${$('input').val()}`;
+            // }
+        // })
+    });
+
+    $('input').on('focus', () => $('input').removeClass('border-danger'));
+
+    $('form').on('submit', e => {
+        e.preventDefault();
+        $('button').trigger('click');
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<%
+annual = annual[0] || {fee: false, book: false};
+let m = new Date().getMonth() + 1;
+let paid = payment[0] !== undefined && payment[0].time.match(new RegExp(`${new Date().getFullYear()}-${m > 9 ? m : '0' + m}.+`));
+let count = 0, passes = 0, passesIll = 0;
+attendance.forEach(a => {
+    if (a.type === 1) count++;
+    if (a.type === 2) {
+        passes++;
+        passesIll++;
+    }
+    if (a.type === 3) passes++;
+});
+%>
+
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <%- include ../assets/elements/head.ejs %>
+    <link rel="stylesheet" href="/payment/style.css">
+    <script src="/payment/script.js"></script>
+    <script src="/assets/elements/customNumberInput/script.js"></script>
+    <script>
+        const prices = <%- JSON.stringify(prices) %>;
+        const data = <%-JSON.stringify({
+            passes,
+            passesIll,
+            fio: child.fio
+        })%>;
+    </script>
+</head>
+<body>
+<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
+<%- include('../assets/elements/header', {admin: admin}); %>
+<div class="body container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <% if (paid) { %>
+                <div class="alert alert-primary" role="alert">
+                    <%
+                        let amount = 0;
+                        payment.forEach(p => amount += p.amount);
+                    %>
+                    В этом месяце оплачено <%= amount %> ₽
+                </div>
+            <% } %>
+            <div class="payment">
+                <div class="payment__row">
+                    <span class="payment__row_title">ФИО ребенка:</span>
+                    <div class="payment__row_body"><%= child.fio %></div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Всего посещений:</span>
+                    <div class="payment__row_body">
+                        <% if (count > 3 || count === 1) { %>
+                            <%= `${count} раз` %>
+                        <% } else { %>
+                            <%= `${count} раза` %>
+                        <% } %>
+                    </div>
+                </div>
+                <% if (passes !== 0) { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title">Всего пропусков:</span>
+                        <div class="payment__row_body">
+                            <% if (passes > 3 || passes === 1) { %>
+                                <%= `${passes} раз` %>
+                            <% } else { %>
+                                <%= `${passes} раза` %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="payment__row">
+                        <span class="payment__row_title">Из них по болезни:</span>
+                        <div class="payment__row_body">
+                            <% if (passesIll > 3 || passesIll === 1) { %>
+                                <%= `${passesIll} раз` %>
+                            <% } else { %>
+                                <%= `${passesIll} раза` %>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="payment__row">
+                    <span class="payment__row_title">Расчетный период:</span>
+                    <div class="payment__row_body"><%= `${m > 9 ? m : '0' + m}.${new Date().getFullYear()}` %></div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Посещаемость:</span>
+                    <div class="payment__row_body">
+                        <input class="styled-checkbox" id="attendance" type="checkbox">
+                        <label for="attendance"></label>
+                    </div>
+                </div>
+                <div class="payment__row counter">
+                    <span class="payment__row_title">Количество посещений:</span>
+                    <div class="payment__row_body">
+                        <%- include('../assets/elements/customNumberInput/input', {
+                            value: attendance.length,
+                        }) %>
+                    </div>
+                </div>
+                <div class="payment__row price__visit">
+                    <span class="payment__row_title">Ставка:</span>
+                    <div class="payment__row_body"><%= prices.visit %> ₽</div>
+                </div>
+                <% if (hasIndividualLessons) { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title">Индивидуальные занятия:</span>
+                        <div class="payment__row_body">
+                            <input class="styled-checkbox" id="individual" type="checkbox">
+                            <label for="individual"></label>
+                        </div>
+                    </div>
+                    <div class="payment__row price__individual">
+                        <span class="payment__row_title">Сумма:</span>
+                        <div class="payment__row_body">
+                            <input class="individual" type="text"> ₽
+                        </div>
+                    </div>
+                <% } %>
+                <div class="payment__row">
+                    <span class="payment__row_title">Ежегодный взнос:</span>
+                    <div class="payment__row_body">
+                        <input class="styled-checkbox" id="fee" type="checkbox"
+                                <%= annual.fee ? 'checked disabled' : '' %>>
+                        <label for="fee"><%= annual.fee ? 'Оплачено' : `${prices.fee} ₽` %></label>
+                    </div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Пособие:</span>
+                    <div class="payment__row_body">
+                        <input class="styled-checkbox" id="books" type="checkbox"
+                               value="value2" <%= annual.book ? 'checked disabled' : '' %>>
+                        <label for="books"><%= annual.book ? 'Оплачено' : `${prices.books} ₽` %></label>
+                    </div>
+                </div>
+                <div class="payment__row payment__total">
+                    <span class="payment__row_title">Итого к оплате:</span>
+                    <div class="payment__row_body total">0 ₽</div>
+                </div>
+            </div>
+            <div class="type">
+                <span class="type__title">Тип оплаты:</span>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio2" name="customRadio"
+                           class="custom-control-input" checked value="Безналичный">
+                    <label class="custom-control-label" for="customRadio2">Безналичный</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio1" name="customRadio"
+                           class="custom-control-input" value="Наличный">
+                    <label class="custom-control-label" for="customRadio1">Наличный</label>
+                </div>
+            </div>
+            <div class="alert alert-danger danger" role="alert" style="display: none;">
+                Выберите хотя бы один из видов оплаты.
+            </div>
+            <div class="comment">
+                <span class="comment__title">Комментарий <small>(необязательно)</small></span>
+                <textarea class="comment__message" placeholder="Комментарий" maxlength="128"></textarea>
+            </div>
+            <div class="buttons justify-content-end">
+                <button type="button" class="btn btn-primary look">Просмотр</button>
+                <button type="button" class="btn btn-primary pay">Оплатить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../assets/elements/footer'); %>
+</body>
+</html>

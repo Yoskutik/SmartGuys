@@ -1,0 +1,10 @@
+<%
+if (typeof value === 'undefined') value = 0;
+if (typeof className === 'undefined') className = '';
+%>
+
+<div class="custom-number-input">
+    <input class="<%= className %> custom-number-input__input" value="<%= value %>">
+    <span class="custom-number-input__up"></span>
+    <span class="custom-number-input__down"></span>
+</div>

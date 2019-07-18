@@ -1,0 +1,147 @@
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <% include ../assets/elements/head.ejs %>
+    <link rel="stylesheet" href="/assets/elements/multyCheckbox/multyCheckbox.css">
+    <link rel="stylesheet" href="/children/style.css">
+    <link rel="stylesheet" href="/child/style.css">
+    <script>
+        const child = <%- JSON.stringify(child) %>;
+        const schedule = <%- JSON.stringify(schedule) %>;
+    </script>
+    <script src="/assets/elements/multyCheckbox/multyCheckbox.js"></script>
+    <script src="/children/script.js"></script>
+    <script src="/child/script.js"></script>
+</head>
+<body>
+<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
+<%- include('../assets/elements/header', {admin: admin}); %>
+<div class="body container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="children__add">
+                <form class="children__add_form">
+                    <span>ФИО ребенка:</span>
+                    <input name="fio" type="text" disabled value="<%= child.fio %>">
+                    <span>Дата рождения:</span>
+                    <input name="birthday" type="text" disabled value="<%= child.birthday %>">
+                    <span>ФИО родителя:</span>
+                    <input type="text" disabled value="<%= child.parent_1_fio %>">
+                    <span>Тел. родителя:</span>
+                    <input name="tel" disabled value="<%= child.parent_1_tel %>">
+                    <span>ФИО родителя:</span>
+                    <input class="optionally" type="text" disabled value="<%= child.parent_2_fio %>">
+                    <span>Тел. родителя:</span>
+                    <input class="optionally" name="tel" type="text" disabled value="<%= child.parent_2_tel %>">
+                    <span>Отпуск:</span>
+                    <input class="optionally" name="vacation" type="text" disabled value="<%= vacation ? vacation.period : '' %>">
+                    <% if (schedule.length > 0) { %>
+                        <% for (let i = 0; i < schedule.length; i++) { %>
+                            <span><%= i === 0 ? 'Расписание' : '' %></span>
+                            <div class="children__add_schedule disabled">
+                                    <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                                        items: [
+                                            {color: 'white'},
+                                            {color: '#8869bf', content: {text: 'Г'}},
+                                            {color: '#bfb069', content: {text: 'И'}},
+                                        ],
+                                        className: 'disabled',
+                                        chosen: schedule[i].type,
+                                    }); %>
+                                <select class="custom-select weekdays" disabled>
+                                    <option disabled>День недели</option>
+                                    <option <%= schedule[i].weekday === 0 ? 'selected' : ''%>>Понедельник</option>
+                                    <option <%= schedule[i].weekday === 1 ? 'selected' : ''%>>Вторник</option>
+                                    <option <%= schedule[i].weekday === 2 ? 'selected' : ''%>>Среда</option>
+                                    <option <%= schedule[i].weekday === 3 ? 'selected' : ''%>>Четверг</option>
+                                    <option <%= schedule[i].weekday === 4 ? 'selected' : ''%>>Пятница</option>
+                                    <option <%= schedule[i].weekday === 5 ? 'selected' : ''%>>Суббота</option>
+                                    <option <%= schedule[i].weekday === 6 ? 'selected' : ''%>>Воскресенье</option>
+                                </select>
+                                <input name="time" class="time" type="text" placeholder="Время" disabled value="<%= schedule[i].time %>">
+                                <input class="fio" type="text" placeholder="ФИО учителя" disabled
+                                       value="<%= schedule[i].teacher.fio %>" data-id="<%= schedule[i].teacher_id %>">
+                                <ul class="children__add_schedule_teachers dropdown_list"></ul>
+                                <span class="<%= i === 0 ? 'add' : 'remove' %>"></span>
+                            </div>
+                        <% } %>
+                    <% } else { %>
+                        <span>Расписание</span>
+                        <div class="children__add_schedule disabled">
+                            <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                                items: [
+                                    {color: 'white'},
+                                    {color: '#8869bf', content: {text: 'Г'}},
+                                    {color: '#bfb069', content: {text: 'И'}},
+                                ],
+                                className: 'disabled',
+                            }); %>
+                            <select class="custom-select weekdays" disabled>
+                                <option disabled selected>День недели</option>
+                                <option>Понедельник</option>
+                                <option>Вторник</option>
+                                <option>Среда</option>
+                                <option>Четверг</option>
+                                <option>Пятница</option>
+                                <option>Суббота</option>
+                                <option>Воскресенье</option>
+                            </select>
+                            <input name="time" class="time" type="text" placeholder="Время" disabled>
+                            <input class="fio" type="text" placeholder="ФИО учителя" disabled>
+                            <ul class="children__add_schedule_teachers dropdown_list"></ul>
+                            <span class="add"></span>
+                        </div>
+                    <% } %>
+                </form>
+                <div class="children__add_buttons justify-content-end">
+                    <button type="button" class="btn btn-info change">Изменить</button>
+                    <button type="button" class="btn btn-info payment">Оплата</button>
+                </div>
+                <div class="info">
+                    <div class="info__payment-list">
+                        Список оплат
+                        <ul>
+                            <% payment.forEach(row => { %>
+                                <li>
+                                    <% let [yyyy, mm, dd] = row.time.match(/\d+/g); %>
+                                    <%= `${dd}.${mm}.${yyyy}` %>
+                                    <%= row.amount %> ₽
+                                    <% if (row.comment) { %>
+                                        <br><%= row.comment %>
+                                    <% } %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                    <div class="info__attendance">
+                        Посещаемость
+                        <ul>
+                            <% attendance.forEach(row => { %>
+                                <li data-time="<%= row.time %>" data-lesson-type="<%= row.lesson_type %>">
+                                    <% let [yyyy, mm, dd] = row.time.match(/\d+/g); %>
+                                    <%= `${dd}.${mm}.${yyyy}` %>
+                                    <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                                        items: [
+                                            {color: '#ededed'},
+                                            {color: '#068f0f', content: {text: 'П'}},
+                                            {color: '#e8e120', content: {text: 'Б'}},
+                                            {color: '#e82020', content: {text: 'О'}},
+                                        ],
+                                        className: 'disabled',
+                                        chosen: row.type,
+                                    }); %>
+                                </li>
+                            <% }) %>
+                        </ul>
+                        <div class="attendance__btns justify-content-end">
+                            <button type="button" class="btn btn-info change">Изменить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include ../assets/elements/footer.ejs %>
+</body>
+</html>

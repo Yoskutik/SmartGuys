@@ -1,0 +1,59 @@
+.teachers {
+  margin-top: 30px; }
+  .teachers__list {
+    width: 100%;
+    padding: 0;
+    margin: 0; }
+    .teachers__list li {
+      border: 1px solid #E0E0E0;
+      margin-bottom: -1px;
+      position: relative;
+      list-style: none;
+      cursor: pointer;
+      width: 100%; }
+      .teachers__list li > input {
+        border: none;
+        background: white;
+        padding: 3px;
+        width: 100%; }
+    .teachers__list span {
+      border: 1px solid #E0E0E0;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      position: absolute;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      right: -30px;
+      height: 24px;
+      width: 24px;
+      top: 3px; }
+      .teachers__list span.save:after {
+        content: url(/assets/icons/save.png); }
+      .teachers__list span.update:after {
+        background: url(/assets/icons/refresh.png);
+        background-size: 16px 16px;
+        display: inline-block;
+        height: 16px;
+        width: 16px;
+        content: ''; }
+      .teachers__list span.remove {
+        right: -59px; }
+        .teachers__list span.remove:after {
+          content: url(/assets/icons/trash.png); }
+      .teachers__list span:hover {
+        background: #ededed; }
+      .teachers__list span:active {
+        background: #E0E0E0; }
+
+.btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px 0 20px; }
+
+/*# sourceMappingURL=style.css.map */

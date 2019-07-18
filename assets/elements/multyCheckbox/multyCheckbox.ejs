@@ -1,0 +1,19 @@
+<% if (typeof chosen === 'undefined') chosen = 0; %>
+<% if (typeof className === 'undefined') className = ''; %>
+
+<span class="multyCheckbox <%= className %>">
+    <% items.forEach((item, i) => { %>
+        <span class="multyCheckbox__item"
+              style="background: <%= item.color %>; <%= i !== chosen ? 'display: none' : '' %>">
+            <% if (item.content) { %>
+                <% if (item.content.url) { %>
+                    <img src="<%= item.content.url %>">
+                <% } else if (item.content.html) { %>
+                    <%- item.content.hmtl %>
+                <% } else if (item.content.text) { %>
+                    <%= item.content.text %>
+                <%}%>
+            <% } %>
+        </span>
+    <% }) %>
+</span>

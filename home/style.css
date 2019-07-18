@@ -1,0 +1,107 @@
+.form {
+  margin: 30px 0 20px; }
+  .form__finder {
+    position: relative;
+    outline: none;
+    width: 100%; }
+    .form__finder:after {
+      content: url(/assets/icons/search.png);
+      position: absolute;
+      right: 5px;
+      top: 5px; }
+    .form__finder_input {
+      padding: 3px 34px 3px 3px;
+      height: 34px;
+      width: 100%; }
+    .form__finder_loader {
+      position: absolute;
+      border-width: 3px;
+      display: none;
+      height: 24px;
+      width: 24px;
+      right: 6px;
+      top: 5px; }
+    .form__finder_list {
+      position: absolute;
+      padding: 0;
+      z-index: 1;
+      width: 80%;
+      margin: 0;
+      top: 34px; }
+  .form__schedule {
+    position: relative; }
+    .form__schedule_title {
+      display: block;
+      padding: 5px; }
+    .form__schedule_children {
+      border: 1px solid #9a9a9a;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+      .form__schedule_children-item {
+        border-bottom: 2px solid #9a9a9a;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex; }
+        .form__schedule_children-item:last-child {
+          border-bottom: none; }
+      .form__schedule_children-title {
+        display: block;
+        padding: 5px;
+        width: 270px; }
+      .form__schedule_children ul {
+        border-left: 1px solid #b3b3b3;
+        padding: 0;
+        width: 80%;
+        margin: 0; }
+        .form__schedule_children ul:last-child {
+          border-bottom: none; }
+      .form__schedule_children li {
+        border-bottom: none;
+        border-right: none;
+        border-left: none; }
+    .form__schedule_btns {
+      margin: 10px 0 20px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+      .form__schedule_btns button {
+        padding: 2px 6px; }
+
+.li {
+  border: 1px solid #b3b3b3;
+  position: relative;
+  background: white;
+  margin-top: -1px;
+  list-style: none;
+  cursor: pointer;
+  width: 100%; }
+  .li div {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 7px; }
+    .li div:hover {
+      background: #ededed; }
+    .li div:active {
+      background: #E0E0E0; }
+  .li .at {
+    margin: 0 5px 0 auto; }
+  .li .multyCheckbox {
+    position: absolute;
+    font-size: 14px;
+    right: -33px;
+    color: #fff;
+    top: 6px; }
+
+/*# sourceMappingURL=style.css.map */
