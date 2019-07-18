@@ -1,7 +1,5 @@
 "use strict";
 
-var _expressFileupload = _interopRequireDefault(require("express-fileupload"));
-
 var _cookieParser = _interopRequireDefault(require("cookie-parser"));
 
 var _compression = _interopRequireDefault(require("compression"));
@@ -214,11 +212,6 @@ app.use(_bodyParser["default"].urlencoded({
 }));
 app.use(_bodyParser["default"].json());
 app.use((0, _cookieParser["default"])());
-app.use((0, _expressFileupload["default"])({
-  limits: {
-    fileSize: 50 * 1024 * 1024
-  }
-}));
 app.set('view engine', '.ejs');
 app.set('views', __dirname);
 app.use(function (req, res, next) {
@@ -1304,14 +1297,15 @@ app.use(function (request, response) {
   }
 });
 app.listen(port, address, function () {
-  // console.clear();
+  console.clear();
   console.log();
   console.log();
   console.log('\t\x1b[1m\x1b[36mДобро пожаловать в \x1b[4mУмники и Умницы. Администрирование\x1b[0m\x1b[1m\x1b[36m!\x1b[0m');
   console.log('\t\x1b[1m\x1b[36mК сайту можно обратиться по ссылке:\x1b[0m');
   console.log('\t\x1b[1m\x1b[36m - \x1b[4mhttp://127.0.0.1\x1b[0m \x1b[1m\x1b[36m-\x1b[0m');
   console.log();
-  console.log(); // opn('http://127.0.0.1/');
+  console.log();
+  (0, _opn["default"])('http://127.0.0.1/');
 });
 
 String.prototype.validFor = function (date) {
