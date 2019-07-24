@@ -1,8 +1,8 @@
 $(window).ready(() => {
     $(document).on('click', '.remove', function () {
         let el = $(this).parent();
-        if (el.find('style.scss').val().trim().length !== 0 || !!el.data('id')) {
-            if (confirm(`Удалить учителя ${el.find('style.scss').val().trim()}?`)) {
+        if (el.find('input').val().trim().length !== 0 || !!el.data('id')) {
+            if (confirm(`Удалить учителя ${el.find('input').val().trim()}?`)) {
                 $.ajax({
                     url: '/api/removeTeacher',
                     type: 'post',
@@ -10,7 +10,7 @@ $(window).ready(() => {
                         id: el.data('id'),
                     },
                     success: () => {
-                        toast(`Учитель ${el.find('style.scss').val().trim()} был удален`);
+                        toast(`Учитель ${el.find('input').val().trim()} был удален`);
                         el.remove();
                     },
                 });
@@ -20,7 +20,7 @@ $(window).ready(() => {
         }
     });
 
-    $(document).on('style.scss', '.save', function () {
+    $(document).on('input', '.save', function () {
         this.classList.remove('border-danger');
     });
 
@@ -30,20 +30,20 @@ $(window).ready(() => {
 
     $(document).on('click', '.save', function () {
         let el = $(this).parent();
-        if (!el.find('style.scss').val()) {
+        if (!el.find('input').val()) {
             el.find('.save').addClass('border-danger');
             return;
         }
-        if (confirm(`Сохранить учителя ${el.find('style.scss').val().trim()}?`)) {
+        if (confirm(`Сохранить учителя ${el.find('input').val().trim()}?`)) {
             if (!el.data('id')) {
                 $.ajax({
                     url: '/api/addTeacher',
                     type: 'post',
                     data: {
-                        fio: el.find('style.scss').val(),
+                        fio: el.find('input').val(),
                     },
                     success: data => {
-                        el.attr('data-id', data.id).find('style.scss').attr('disabled', true);
+                        el.attr('data-id', data.id).find('input').attr('disabled', true);
                         el.find('.save').toggleClass('save update');
                         toast('Данные были обновлены');
                     },
@@ -54,10 +54,10 @@ $(window).ready(() => {
                     type: 'post',
                     data: {
                         id: el.data('id'),
-                        fio: el.find('style.scss').val(),
+                        fio: el.find('input').val(),
                     },
                     success: () => {
-                        el.find('style.scss').attr('disabled', true);
+                        el.find('input').attr('disabled', true);
                         el.find('.save').toggleClass('save update');
                         toast('Данные были обновлены');
                     },

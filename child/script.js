@@ -84,6 +84,20 @@ $(window).ready(() => {
             window.location.href = `${window.location.origin}/payment/?id=${child_id}`;
     });
 
+    $('.children__add_buttons .delete').on('click', async() => {
+        if (!confirm(`Удалить ${$('input[name=fio]').val()}?`)) return;
+        $.ajax({
+            url: '/api/removeChild',
+            type: 'post',
+            data: {
+                id: child_id,
+            },
+            success: () => {
+                location.reload();
+            }
+        });
+    });
+
     $(document).on('click', '.multyCheckbox', function () {
         attend[$(this).closest('li').data('time')] = [
             $(this).find('.multyCheckbox__item:visible').index(),
