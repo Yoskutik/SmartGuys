@@ -160,6 +160,11 @@ function _backup() {
         switch (_context24.prev = _context24.next) {
           case 0:
             dir = _path["default"].join(require('os').homedir(), '.smartGuys');
+
+            if (!_fs["default"].existsSync(dir)) {
+              _fs["default"].mkdirSync(dir);
+            }
+
             files = _fs["default"].readdirSync(dir);
             date = new Date(getTime());
             files.forEach(function (file) {
@@ -169,11 +174,6 @@ function _backup() {
                 _fs["default"].unlinkSync(_path["default"].join(dir, file));
               }
             });
-
-            if (!_fs["default"].existsSync(dir)) {
-              _fs["default"].mkdirSync(dir);
-            }
-
             (0, _nodeJsZip.zip)(_path["default"].join(__dirname, 'db.db'), {
               name: getTime(),
               dir: dir
