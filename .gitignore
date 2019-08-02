@@ -1,0 +1,9 @@
+/.idea/
+/src/
+/.babelrc
+/db.db
+/package.json
+/package-lock.json
+
+*.scss
+*.css.map

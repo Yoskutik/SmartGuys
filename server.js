@@ -8,7 +8,7 @@ var _bodyParser = _interopRequireDefault(require("body-parser"));
 
 var _express = _interopRequireDefault(require("express"));
 
-var _db = _interopRequireDefault(require("./dist/db"));
+var _db = _interopRequireDefault(require("./bin/db"));
 
 var _nodeJsZip = require("nodeJs-zip");
 
