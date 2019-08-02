@@ -1,3 +1,5 @@
-"./Git/cmd/git" reset --hard HEAD
-"./Git/cmd/git" pull
+"./bin/Git/cmd/git" reset --hard HEAD
+
+"./bin/Git/cmd/git" pull
+
 pause
