@@ -1,2 +1,2 @@
-"./bin/node" server.js
+"./bin/node.exe" server.js
 pause
