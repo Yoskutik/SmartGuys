@@ -872,7 +872,7 @@ function () {
   var _ref9 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee9(req, res) {
-    var childrenDict, schedule, length, i, sch, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, row;
+    var childrenDict, schedule, i, sch, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, row;
 
     return regeneratorRuntime.wrap(function _callee9$(_context10) {
       while (1) {
@@ -909,91 +909,88 @@ function () {
             //     order: 'weekday'
             // });
             schedule = [];
-            length = 0;
             i = 0;
 
-          case 8:
+          case 7:
             if (!(i < 7)) {
-              _context10.next = 36;
+              _context10.next = 34;
               break;
             }
 
-            _context10.next = 11;
+            _context10.next = 10;
             return scheduleTable.getAll({
               where: "teacher_id = ".concat(req.query.id, " AND weekday = ").concat(i),
               order: 'time'
             });
 
-          case 11:
+          case 10:
             sch = _context10.sent;
             _iteratorNormalCompletion = true;
             _didIteratorError = false;
             _iteratorError = undefined;
-            _context10.prev = 15;
+            _context10.prev = 14;
 
             for (_iterator = sch[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
               row = _step.value;
               row.child = childrenDict[row.child_id];
             }
 
-            _context10.next = 23;
+            _context10.next = 22;
             break;
 
-          case 19:
-            _context10.prev = 19;
-            _context10.t1 = _context10["catch"](15);
+          case 18:
+            _context10.prev = 18;
+            _context10.t1 = _context10["catch"](14);
             _didIteratorError = true;
             _iteratorError = _context10.t1;
 
-          case 23:
+          case 22:
+            _context10.prev = 22;
             _context10.prev = 23;
-            _context10.prev = 24;
 
             if (!_iteratorNormalCompletion && _iterator["return"] != null) {
               _iterator["return"]();
             }
 
-          case 26:
-            _context10.prev = 26;
+          case 25:
+            _context10.prev = 25;
 
             if (!_didIteratorError) {
-              _context10.next = 29;
+              _context10.next = 28;
               break;
             }
 
             throw _iteratorError;
 
+          case 28:
+            return _context10.finish(25);
+
           case 29:
-            return _context10.finish(26);
+            return _context10.finish(22);
 
           case 30:
-            return _context10.finish(23);
-
-          case 31:
             schedule.push({
               day: weekdays[i],
               schedule: sch
             });
-            length += sch.length;
 
-          case 33:
+          case 31:
             i++;
-            _context10.next = 8;
+            _context10.next = 7;
             break;
 
-          case 36:
+          case 34:
             res.render('teachers/schedule.ejs', {
               admin: req.cookies.admin,
-              schedule: schedule,
-              length: length
+              schedule: schedule
             });
 
-          case 37:
+          case 35:
           case "end":
             return _context10.stop();
         }
       }
-    }, _callee9, null, [[15, 19, 23, 31], [24,, 26, 30]]);
+    }, _callee9, null, [[14, 18, 22, 30], [23,, 25, 29]]);
   }));
 
   return function (_x17, _x18) {
