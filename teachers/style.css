@@ -45,6 +45,10 @@
         right: -59px; }
         .teachers__list span.remove:after {
           content: url(/assets/icons/trash.png); }
+      .teachers__list span.schedule {
+        left: -30px;}
+        .teachers__list span.schedule:after {
+          content: url(/assets/icons/calendar.png); }
       .teachers__list span:hover {
         background: #ededed; }
       .teachers__list span:active {

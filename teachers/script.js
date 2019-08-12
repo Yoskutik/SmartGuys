@@ -24,6 +24,14 @@ $(window).ready(() => {
         this.classList.remove('border-danger');
     });
 
+    $(document).on('click', '.schedule', function () {
+        let w = open(`${location.origin}/teachers/schedule/?id=${$(this).parent().data('id')}`);
+        w.onload = () => {
+            w.print();
+            w.close();
+        }
+    });
+
     $(document).on('click', '.update', function () {
         $(this).toggleClass('update save').parent().find('input').removeAttr('disabled');
     });

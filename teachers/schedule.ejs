@@ -1,0 +1,42 @@
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <%- include ../assets/elements/head.ejs %>
+    <link rel="stylesheet" href="/schedule/style.css">
+</head>
+<body>
+<div class="body container-fluid">
+    <div class="row">
+        <div class="col-12 schedule" style="border: none">
+            <div class="schedule__teachers">
+                <% schedule.forEach(row => { %>
+                    <% if (row.schedule.length) { %>
+                        <div class="schedule__weekday" style="width: calc(100% / 3 - 20px);">
+                            <span class="schedule__weekday_title"><%= row.day %></span>
+                            <ul class="schedule__weekday_list">
+                                <% row.schedule.forEach(time => { %>
+                                    <li class="teacher-item">
+                                        <div style="align-items: flex-end">
+                                            <span style="margin-right: 10px"><%= time.child.fio %></span>
+                                            <% let years = time.child.years; %>
+                                            <% if (Math.abs(years) > 4 || years === 0) { %>
+                                                <small><%= years %> лет</small>
+                                            <% } else if (Math.abs(years) > 1) { %>
+                                                <small><%= years %> года</small>
+                                            <% } else { %>
+                                                <small><%= years %> год</small>
+                                            <% } %>
+                                            <span class="time"><%= time.time %></span>
+                                        </div>
+                                    </li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    <% } %>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
