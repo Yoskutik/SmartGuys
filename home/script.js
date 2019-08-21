@@ -56,4 +56,15 @@ $(window).ready(() => {
     $('.multyCheckbox').on('click', function () {
         $(this).removeClass('border-danger');
     });
+
+    $('.today_calculation').on('click', () => {
+        $.ajax({
+            url: '/api/getTodayPayment',
+            type: 'post',
+            data: {},
+            success: data => {
+                toast(`Безналичный: ${data.nonCash} ₽, Наличный: ${data.cash} ₽`);
+            }
+        });
+    });
 });

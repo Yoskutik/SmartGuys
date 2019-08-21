@@ -12,6 +12,11 @@
     <script src="/assets/elements/multyCheckbox/multyCheckbox.js"></script>
     <script src="/children/script.js"></script>
     <script src="/child/script.js"></script>
+    <style>
+        .multyCheckbox_type {
+            width: 45px;
+        }
+    </style>
 </head>
 <body>
 <%- include('../assets/elements/loader', {className: 'main-loader'}); %>
@@ -43,10 +48,14 @@
                                     <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
                                         items: [
                                             {color: 'white'},
-                                            {color: '#8869bf', content: {text: 'Г'}},
-                                            {color: '#bfb069', content: {text: 'И'}},
+                                            {color: '#8869bf', content: {text: 'Груп'}},
+                                            {color: '#5f6693', content: {text: 'Ма 1'}},
+                                            {color: '#75ced2', content: {text: 'Ма 2'}},
+                                            {color: '#6a6683', content: {text: 'Англ'}},
+                                            {color: '#94d7d6', content: {text: 'ИЗО'}},
+                                            {color: '#bfb069', content: {text: 'Инд'}},
                                         ],
-                                        className: 'disabled',
+                                        className: 'disabled multyCheckbox_type',
                                         chosen: schedule[i].type,
                                     }); %>
                                     <select class="custom-select weekdays" disabled>
@@ -72,8 +81,12 @@
                                 <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
                                     items: [
                                         {color: 'white'},
-                                        {color: '#8869bf', content: {text: 'Г'}},
-                                        {color: '#bfb069', content: {text: 'И'}},
+                                        {color: '#8869bf', content: {text: 'Груп'}},
+                                        {color: '#5f6693', content: {text: 'Ма 1'}},
+                                        {color: '#75ced2', content: {text: 'Ма 2'}},
+                                        {color: '#6a6683', content: {text: 'Англ'}},
+                                        {color: '#94d7d6', content: {text: 'ИЗО'}},
+                                        {color: '#bfb069', content: {text: 'Инд'}},
                                     ],
                                     className: 'disabled',
                                 }); %>

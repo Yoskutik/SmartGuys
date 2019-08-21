@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="/assets/elements/multyCheckbox/multyCheckbox.css">
     <script src="/schedule/script.js"></script>
     <script src="/assets/elements/multyCheckbox/multyCheckbox.js"></script>
+    <script>
+        const data = <%- JSON.stringify(schedule)%>
+    </script>
 </head>
 <body>
 <%- include('../assets/elements/loader', {className: 'main-loader'}); %>
@@ -50,7 +53,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-lg-10 col-md-11 schedule">
+        <div class="col-lg-10 col-md-11 schedule" style="transition-duration: 2.5s">
             <% const weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']; %>
             <div class="schedule__teachers">
                 <% for (let i in weekdays) { %>

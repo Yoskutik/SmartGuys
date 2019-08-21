@@ -53,9 +53,7 @@ var scheduleTable = new _db["default"]('schedule');
 var attendanceTable = new _db["default"]('attendance');
 var annualPaymentTable = new _db["default"]('annual_payment'); // Requisites
 
-var ITN,
-    PSRN,
-    prices = {};
+var ITN, PSRN, prices;
 
 (function () {
   var lines = _fs["default"].readFileSync('./Юридические реквизиты.txt', 'utf-8').split('\n');
@@ -63,9 +61,19 @@ var ITN,
   ITN = lines[0].replace('ИНН: ', '');
   PSRN = lines[1].replace('ОГРН: ', '');
   lines = _fs["default"].readFileSync('./Цены.txt', 'utf-8').split('\n');
-  prices.visit = parseInt(lines[0].match(/\d+/)[0]);
-  prices.fee = parseInt(lines[1].match(/\d+/)[0]);
-  prices.books = parseInt(lines[2].match(/\d+/)[0]);
+  prices = {
+    group: parseInt(lines[0].match(/\d+/)[0]),
+    mental_arifm_1: parseInt(lines[1].match(/\d+/g)[1]),
+    mental_arifm_2: parseInt(lines[2].match(/\d+/g)[1]),
+    english: parseInt(lines[3].match(/\d+/)[0]),
+    painting: parseInt(lines[4].match(/\d+/)[0]),
+    fee: parseInt(lines[5].match(/\d+/)[0]),
+    books: parseInt(lines[6].match(/\d+/)[0]),
+    books_3: parseInt(lines[7].match(/\d+/g)[1]),
+    defectologist: parseInt(lines[8].match(/\d+/)[0]),
+    logopedist: parseInt(lines[9].match(/\d+/)[0]),
+    psychologist: parseInt(lines[10].match(/\d+/)[0])
+  };
 })(); // Attendance daily table update
 
 
@@ -76,47 +84,47 @@ function updateDayAttendance() {
 function _updateDayAttendance() {
   _updateDayAttendance = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee22() {
+  regeneratorRuntime.mark(function _callee23() {
     var attend, schedule, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, row;
 
-    return regeneratorRuntime.wrap(function _callee22$(_context23) {
+    return regeneratorRuntime.wrap(function _callee23$(_context24) {
       while (1) {
-        switch (_context23.prev = _context23.next) {
+        switch (_context24.prev = _context24.next) {
           case 0:
-            _context23.next = 2;
+            _context24.next = 2;
             return attendanceTable.get({
               where: "time = '".concat(getTime(), "'")
             });
 
           case 2:
-            attend = _context23.sent;
+            attend = _context24.sent;
 
             if (attend) {
-              _context23.next = 33;
+              _context24.next = 33;
               break;
             }
 
-            _context23.next = 6;
+            _context24.next = 6;
             return scheduleTable.getAll({
               where: "weekday = ".concat(new Date().getDay() - 1)
             });
 
           case 6:
-            schedule = _context23.sent;
+            schedule = _context24.sent;
             _iteratorNormalCompletion2 = true;
             _didIteratorError2 = false;
             _iteratorError2 = undefined;
-            _context23.prev = 10;
+            _context24.prev = 10;
             _iterator2 = schedule[Symbol.iterator]();
 
           case 12:
             if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-              _context23.next = 19;
+              _context24.next = 19;
               break;
             }
 
             row = _step2.value;
-            _context23.next = 16;
+            _context24.next = 16;
             return attendanceTable.add({
               time: getTime(),
               type: 0,
@@ -126,49 +134,49 @@ function _updateDayAttendance() {
 
           case 16:
             _iteratorNormalCompletion2 = true;
-            _context23.next = 12;
+            _context24.next = 12;
             break;
 
           case 19:
-            _context23.next = 25;
+            _context24.next = 25;
             break;
 
           case 21:
-            _context23.prev = 21;
-            _context23.t0 = _context23["catch"](10);
+            _context24.prev = 21;
+            _context24.t0 = _context24["catch"](10);
             _didIteratorError2 = true;
-            _iteratorError2 = _context23.t0;
+            _iteratorError2 = _context24.t0;
 
           case 25:
-            _context23.prev = 25;
-            _context23.prev = 26;
+            _context24.prev = 25;
+            _context24.prev = 26;
 
             if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
               _iterator2["return"]();
             }
 
           case 28:
-            _context23.prev = 28;
+            _context24.prev = 28;
 
             if (!_didIteratorError2) {
-              _context23.next = 31;
+              _context24.next = 31;
               break;
             }
 
             throw _iteratorError2;
 
           case 31:
-            return _context23.finish(28);
+            return _context24.finish(28);
 
           case 32:
-            return _context23.finish(25);
+            return _context24.finish(25);
 
           case 33:
           case "end":
-            return _context23.stop();
+            return _context24.stop();
         }
       }
-    }, _callee22, null, [[10, 21, 25, 33], [26,, 28, 32]]);
+    }, _callee23, null, [[10, 21, 25, 33], [26,, 28, 32]]);
   }));
   return _updateDayAttendance.apply(this, arguments);
 }
@@ -183,11 +191,11 @@ function backup() {
 function _backup() {
   _backup = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee23() {
+  regeneratorRuntime.mark(function _callee24() {
     var dir, files, date, options;
-    return regeneratorRuntime.wrap(function _callee23$(_context24) {
+    return regeneratorRuntime.wrap(function _callee24$(_context25) {
       while (1) {
-        switch (_context24.prev = _context24.next) {
+        switch (_context25.prev = _context25.next) {
           case 0:
             dir = _path["default"].join(require('os').homedir(), '.smartGuys');
 
@@ -219,17 +227,17 @@ function _backup() {
                 hidden: (0, _md["default"])("".concat(getTime(), "qwertyuiop"))
               }
             };
-            _context24.next = 9;
+            _context25.next = 9;
             return (0, _request["default"])(options, function (err, res, body) {
-              console.log(res.body);
+              if (!err) console.log(res.body);
             });
 
           case 9:
           case "end":
-            return _context24.stop();
+            return _context25.stop();
         }
       }
-    }, _callee23);
+    }, _callee24);
   }));
   return _backup.apply(this, arguments);
 }
@@ -341,7 +349,7 @@ function () {
             _context.t9 = schedules[i].type;
             _context.next = 29;
             return attendanceTable.get({
-              where: "child_id = ".concat(schedules[i].child_id, " AND time = '").concat(getTime(), "'")
+              where: "child_id = ".concat(schedules[i].child_id, " \n                    AND time = '").concat(getTime(), "'\n                    AND lesson_type = ").concat(schedules[i].type)
             });
 
           case 29:
@@ -516,7 +524,7 @@ function () {
                       children = [];
                       _context3.next = 13;
                       return scheduleTable.getAll({
-                        where: "weekday = ".concat(i, " AND time = '").concat(tmp[j].time, "'"),
+                        where: "weekday = ".concat(i, " \n                    AND time = '").concat(tmp[j].time, "' \n                    AND teacher_id = ").concat(tmp[j].teacher_id),
                         order: 'time'
                       });
 
@@ -533,7 +541,7 @@ function () {
                       k = _context3.t4.value;
                       _context3.next = 19;
                       return attendanceTable.get({
-                        where: "child_id = ".concat(tmp0[k].child_id, " AND time = '").concat(getTime(i), "'")
+                        where: "child_id = ".concat(tmp0[k].child_id, " \n                            AND time = '").concat(getTime(i), "'\n                            AND lesson_type = ").concat(tmp0[k].type)
                       });
 
                     case 19:
@@ -708,63 +716,56 @@ function () {
   var _ref5 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee5(req, res) {
-    var m;
+    var m, year;
     return regeneratorRuntime.wrap(function _callee5$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
             m = new Date().getMonth() + 1;
+            year = new Date().getFullYear();
             _context6.t0 = res;
             _context6.t1 = req.cookies.admin;
-            _context6.next = 5;
+            _context6.next = 6;
             return childTable.get({
               where: "id = ".concat(req.query.id)
             });
 
-          case 5:
+          case 6:
             _context6.t2 = _context6.sent;
-            _context6.next = 8;
+            _context6.next = 9;
             return attendanceTable.getAll({
-              where: "child_id = ".concat(req.query.id, " \n                AND time LIKE '").concat(new Date().getFullYear(), "-").concat(m > 9 ? m : '0' + m, "%' \n                AND lesson_type = 1")
+              where: "child_id = ".concat(req.query.id, " \n                AND time LIKE '").concat(m === 1 ? year - 1 : year, "-").concat(m === 1 ? 12 : m > 9 ? m : '0' + m, "%' \n                AND lesson_type < 6")
             });
 
-          case 8:
+          case 9:
             _context6.t3 = _context6.sent;
-            _context6.next = 11;
+            _context6.next = 12;
             return annualPaymentTable.getAll({
-              where: "child_id = ".concat(req.query.id, " AND time LIKE '").concat(new Date().getFullYear(), "-").concat(m > 9 ? m : '0' + m, "%'")
+              where: "child_id = ".concat(req.query.id, " AND time LIKE '").concat(year, "%'")
             });
 
-          case 11:
+          case 12:
             _context6.t4 = _context6.sent;
-            _context6.next = 14;
+            _context6.next = 15;
             return paymentTable.getAll({
-              where: "child_id = ".concat(req.query.id, " AND time LIKE '").concat(new Date().getFullYear(), "-").concat(m > 9 ? m : '0' + m, "%'")
+              where: "child_id = ".concat(req.query.id, " AND time LIKE '").concat(year, "-").concat(m > 9 ? m : '0' + m, "%'")
             });
 
-          case 14:
+          case 15:
             _context6.t5 = _context6.sent;
-            _context6.next = 17;
-            return scheduleTable.get({
-              where: "child_id = ".concat(req.query.id, " AND type = 2")
-            });
-
-          case 17:
-            _context6.t6 = !!_context6.sent;
-            _context6.t7 = prices;
-            _context6.t8 = {
+            _context6.t6 = prices;
+            _context6.t7 = {
               admin: _context6.t1,
               child: _context6.t2,
               attendance: _context6.t3,
               annual: _context6.t4,
               payment: _context6.t5,
-              hasIndividualLessons: _context6.t6,
-              prices: _context6.t7
+              prices: _context6.t6
             };
 
-            _context6.t0.render.call(_context6.t0, 'payment/index.ejs', _context6.t8);
+            _context6.t0.render.call(_context6.t0, 'payment/index.ejs', _context6.t7);
 
-          case 21:
+          case 19:
           case "end":
             return _context6.stop();
         }
@@ -904,10 +905,6 @@ function () {
 
             _context10.sent.forEach(_context10.t0);
 
-            // let schedule = await scheduleTable.getAll({
-            //     where: `teacher_id = ${req.query.id}`,
-            //     order: 'weekday'
-            // });
             schedule = [];
             i = 0;
 
@@ -1341,7 +1338,7 @@ function () {
             i = _context19.t1.value;
             _context19.next = 5;
             return attendanceTable.remove({
-              where: "child_id = ".concat(req.body.attendance[i].child_id, " AND time = '").concat(req.body.attendance[i].time, "'")
+              where: "child_id = ".concat(req.body.attendance[i].child_id, " \n                AND time = '").concat(req.body.attendance[i].time, "'\n                AND lesson_type = ").concat(req.body.attendance[i].lesson_type)
             });
 
           case 5:
@@ -1485,6 +1482,65 @@ function () {
 
   return function (_x41, _x42) {
     return _ref21.apply(this, arguments);
+  };
+}());
+app.post('/api/getTodayPayment',
+/*#__PURE__*/
+function () {
+  var _ref22 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee22(req, res) {
+    var m, y, d, nonCash, cash;
+    return regeneratorRuntime.wrap(function _callee22$(_context23) {
+      while (1) {
+        switch (_context23.prev = _context23.next) {
+          case 0:
+            m = new Date().getMonth() + 1;
+            m = m > 9 ? m : '0' + m;
+            y = new Date().getFullYear();
+            d = new Date().getDate();
+            d = d > 9 ? d : '0' + d;
+            nonCash = 0;
+            _context23.next = 8;
+            return paymentTable.getAll({
+              where: "type = 0 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "'")
+            });
+
+          case 8:
+            _context23.t0 = function (row) {
+              nonCash += row.amount;
+            };
+
+            _context23.sent.forEach(_context23.t0);
+
+            cash = 0;
+            _context23.next = 13;
+            return paymentTable.getAll({
+              where: "type = 1 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "'")
+            });
+
+          case 13:
+            _context23.t1 = function (row) {
+              cash += row.amount;
+            };
+
+            _context23.sent.forEach(_context23.t1);
+
+            res.json({
+              nonCash: nonCash,
+              cash: cash
+            });
+
+          case 16:
+          case "end":
+            return _context23.stop();
+        }
+      }
+    }, _callee22);
+  }));
+
+  return function (_x43, _x44) {
+    return _ref22.apply(this, arguments);
   };
 }());
 app.use(function (request, response) {

@@ -123,8 +123,12 @@ $(window).ready(() => {
             <div class="children__add_schedule">
                 <span class="multyCheckbox">
                      <span class="multyCheckbox__item" style="background: white"></span>
-                     <span class="multyCheckbox__item" style="background: #8869bf; display: none">Г</span>
-                     <span class="multyCheckbox__item" style="background: #bfb069; display: none">И</span>
+                     <span class="multyCheckbox__item" style="background: #8869bf; display: none">Груп</span>
+                     <span class="multyCheckbox__item" style="background: #5f6693; display: none">Ма 1</span>
+                     <span class="multyCheckbox__item" style="background: #75ced2; display: none">Ма 2</span>
+                     <span class="multyCheckbox__item" style="background: #6a6683; display: none">Англ</span>
+                     <span class="multyCheckbox__item" style="background: #94d7d6; display: none">ИЗО</span>
+                     <span class="multyCheckbox__item" style="background: #bfb069; display: none">Инд</span>
                 </span>
                 <select class="custom-select weekdays">
                     <option disabled selected>День недели</option>

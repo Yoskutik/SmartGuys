@@ -3,13 +3,24 @@ annual = annual[0] || {fee: false, book: false};
 let m = new Date().getMonth() + 1;
 let paid = payment[0] !== undefined && payment[0].time.match(new RegExp(`${new Date().getFullYear()}-${m > 9 ? m : '0' + m}.+`));
 let count = 0, passes = 0, passesIll = 0;
-attendance.forEach(a => {
-    if (a.type === 1) count++;
-    if (a.type === 2) {
-        passes++;
-        passesIll++;
-    }
-    if (a.type === 3) passes++;
+let all_attendance = {
+    group:  {attendance: 0, passes: 0, ill: 0},
+    mental_arifm_1:  {attendance: 0, passes: 0, ill: 0},
+    mental_arifm_2:  {attendance: 0, passes: 0, ill: 0},
+    english:  {attendance: 0, passes: 0, ill: 0},
+    painting:  {attendance: 0, passes: 0, ill: 0}
+}
+
+const lesson_types = ['group', 'mental_arifm_1', 'mental_arifm_2', 'english', 'painting'];
+
+attendance.forEach(row => {
+    if (row.type === 1)
+        all_attendance[lesson_types[row.lesson_type - 1]].attendance++;
+    else if (row.type === 2) {
+        all_attendance[lesson_types[row.lesson_type - 1]].ill++;
+        all_attendance[lesson_types[row.lesson_type - 1]].passes++;
+    } else
+        all_attendance[lesson_types[row.lesson_type - 1]].passes++;
 });
 %>
 
@@ -23,18 +34,22 @@ attendance.forEach(a => {
     <script>
         const prices = <%- JSON.stringify(prices) %>;
         const data = <%-JSON.stringify({
-            passes,
-            passesIll,
+            attendance: all_attendance,
             fio: child.fio
         })%>;
     </script>
+    <style>
+        small {
+            margin: 2px 5px 0;
+        }
+    </style>
 </head>
 <body>
 <%- include('../assets/elements/loader', {className: 'main-loader'}); %>
 <%- include('../assets/elements/header', {admin: admin}); %>
 <div class="body container-fluid">
     <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-6 col-sm-8">
+        <div style="width: 450px">
             <% if (paid) { %>
                 <div class="alert alert-primary" role="alert">
                     <%
@@ -50,76 +65,124 @@ attendance.forEach(a => {
                     <div class="payment__row_body"><%= child.fio %></div>
                 </div>
                 <div class="payment__row">
-                    <span class="payment__row_title">Всего посещений:</span>
-                    <div class="payment__row_body">
-                        <% if (count > 3 || count === 1) { %>
-                            <%= `${count} раз` %>
-                        <% } else { %>
-                            <%= `${count} раза` %>
-                        <% } %>
-                    </div>
-                </div>
-                <% if (passes !== 0) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">Всего пропусков:</span>
-                        <div class="payment__row_body">
-                            <% if (passes > 3 || passes === 1) { %>
-                                <%= `${passes} раз` %>
-                            <% } else { %>
-                                <%= `${passes} раза` %>
-                            <% } %>
-                        </div>
-                    </div>
-                    <div class="payment__row">
-                        <span class="payment__row_title">Из них по болезни:</span>
-                        <div class="payment__row_body">
-                            <% if (passesIll > 3 || passesIll === 1) { %>
-                                <%= `${passesIll} раз` %>
-                            <% } else { %>
-                                <%= `${passesIll} раза` %>
-                            <% } %>
-                        </div>
-                    </div>
-                <% } %>
-                <div class="payment__row">
                     <span class="payment__row_title">Расчетный период:</span>
                     <div class="payment__row_body"><%= `${m > 9 ? m : '0' + m}.${new Date().getFullYear()}` %></div>
                 </div>
-                <div class="payment__row">
-                    <span class="payment__row_title">Посещаемость:</span>
-                    <div class="payment__row_body">
-                        <input class="styled-checkbox" id="attendance" type="checkbox">
-                        <label for="attendance"></label>
-                    </div>
-                </div>
-                <div class="payment__row counter">
-                    <span class="payment__row_title">Количество посещений:</span>
-                    <div class="payment__row_body">
+                <div class="payment__row payment__total">
+                    <span class="payment__row_title">Групповых занятий:</span>
+                    <div class="payment__row_body" style="display: flex">
+                        <%= prices.group %> ₽
+                        <small>x</small>
                         <%- include('../assets/elements/customNumberInput/input', {
-                            value: attendance.length,
+                            value: all_attendance.group.attendance + all_attendance.group.passes,
                         }) %>
                     </div>
                 </div>
-                <div class="payment__row price__visit">
-                    <span class="payment__row_title">Ставка:</span>
-                    <div class="payment__row_body"><%= prices.visit %> ₽</div>
-                </div>
-                <% if (hasIndividualLessons) { %>
+                <% if (all_attendance.group.passes) { %>
                     <div class="payment__row">
-                        <span class="payment__row_title">Индивидуальные занятия:</span>
+                        <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
                         <div class="payment__row_body">
-                            <input class="styled-checkbox" id="individual" type="checkbox">
-                            <label for="individual"></label>
-                        </div>
-                    </div>
-                    <div class="payment__row price__individual">
-                        <span class="payment__row_title">Сумма:</span>
-                        <div class="payment__row_body">
-                            <input class="individual" type="text"> ₽
+                            <%= all_attendance.group.passes %> / <%= all_attendance.group.ill %>
                         </div>
                     </div>
                 <% } %>
                 <div class="payment__row">
+                    <span class="payment__row_title">Ментальная арифметика I:</span>
+                    <div class="payment__row_body" style="display: flex">
+                        <%= prices.mental_arifm_1 %> ₽
+                        <small>x</small>
+                        <%- include('../assets/elements/customNumberInput/input', {
+                            value: all_attendance.mental_arifm_1.attendance + all_attendance.mental_arifm_1.passes,
+                        }) %>
+                    </div>
+                </div>
+                <% if (all_attendance.mental_arifm_1.passes) { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
+                        <div class="payment__row_body">
+                            <%= all_attendance.mental_arifm_1.passes %> / <%= all_attendance.mental_arifm_1.ill %>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="payment__row">
+                    <span class="payment__row_title">Ментальная арифметика II:</span>
+                    <div class="payment__row_body" style="display: flex">
+                        <%= prices.mental_arifm_2 %> ₽
+                        <small>x</small>
+                        <%- include('../assets/elements/customNumberInput/input', {
+                            value: all_attendance.mental_arifm_2.attendance + all_attendance.mental_arifm_2.passes,
+                        }) %>
+                    </div>
+                </div>
+                <% if (all_attendance.mental_arifm_2.passes) { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
+                        <div class="payment__row_body">
+                            <%= all_attendance.mental_arifm_2.passes %> / <%= all_attendance.mental_arifm_2.ill %>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="payment__row">
+                    <span class="payment__row_title">Английский язык:</span>
+                    <div class="payment__row_body" style="display: flex">
+                        <%= prices.english %> ₽
+                        <small>x</small>
+                        <%- include('../assets/elements/customNumberInput/input', {
+                        value: all_attendance.english.attendance + all_attendance.english.passes,
+                        }) %>
+                    </div>
+                </div>
+                <% if (all_attendance.english.passes) { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
+                        <div class="payment__row_body">
+                            <%= all_attendance.english.passes %> / <%= all_attendance.english.ill %>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="payment__row">
+                    <span class="payment__row_title">ИЗО студия:</span>
+                    <div class="payment__row_body" style="display: flex">
+                        <%= prices.painting %> ₽
+                        <small>x</small>
+                        <%- include('../assets/elements/customNumberInput/input', {
+                            value: all_attendance.painting.attendance + all_attendance.painting.passes,
+                        }) %>
+                    </div>
+                </div>
+                <% if (all_attendance.painting.passes) { %>
+                    <div class="payment__row">
+                        <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
+                        <div class="payment__row_body">
+                            <%= all_attendance.painting.passes %> / <%= all_attendance.painting.ill %>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="payment__row payment__total">
+                    <span class="payment__row_title">Посещений у дефектолога:</span>
+                    <div class="payment__row_body" style="display: flex">
+                        <%= prices.defectologist %> ₽
+                        <small>x</small>
+                        <%- include('../assets/elements/customNumberInput/input') %>
+                    </div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Посещений у логопеда:</span>
+                    <div class="payment__row_body" style="display: flex">
+                        <%= prices.logopedist %> ₽
+                        <small>x</small>
+                        <%- include('../assets/elements/customNumberInput/input') %>
+                    </div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Посещений у психолога:</span>
+                    <div class="payment__row_body" style="display: flex">
+                        <%= prices.psychologist %> ₽
+                        <small>x</small>
+                        <%- include('../assets/elements/customNumberInput/input') %>
+                    </div>
+                </div>
+                <div class="payment__row payment__total">
                     <span class="payment__row_title">Ежегодный взнос:</span>
                     <div class="payment__row_body">
                         <input class="styled-checkbox" id="fee" type="checkbox"
@@ -135,6 +198,20 @@ attendance.forEach(a => {
                         <label for="books"><%= annual.book ? 'Оплачено' : `${prices.books} ₽` %></label>
                     </div>
                 </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Пособие 3:</span>
+                    <div class="payment__row_body">
+                        <input class="styled-checkbox" id="books_3" type="checkbox"
+                               value="value2" <%= annual.fee_3 ? 'checked disabled' : '' %>>
+                        <label for="books_3"><%= annual.fee_3 ? 'Оплачено' : `${prices.books_3} ₽` %></label>
+                    </div>
+                </div>
+                <div class="payment__row">
+                    <span class="payment__row_title">Дополнительная сумма:</span>
+                    <div class="payment__row_body">
+                        <input class="additional" type="text" style="width: 60px; height: 26px; padding: 2px"> ₽
+                    </div>
+                </div>
                 <div class="payment__row payment__total">
                     <span class="payment__row_title">Итого к оплате:</span>
                     <div class="payment__row_body total">0 ₽</div>
@@ -144,12 +221,12 @@ attendance.forEach(a => {
                 <span class="type__title">Тип оплаты:</span>
                 <div class="custom-control custom-radio">
                     <input type="radio" id="customRadio2" name="customRadio"
-                           class="custom-control-input" checked value="Безналичный">
+                           class="custom-control-input" checked value="0">
                     <label class="custom-control-label" for="customRadio2">Безналичный</label>
                 </div>
                 <div class="custom-control custom-radio">
                     <input type="radio" id="customRadio1" name="customRadio"
-                           class="custom-control-input" value="Наличный">
+                           class="custom-control-input" value="1">
                     <label class="custom-control-label" for="customRadio1">Наличный</label>
                 </div>
             </div>

@@ -79,7 +79,6 @@ $(window).ready(() => {
     });
 
     $('.children__add_buttons .payment').on('click', () => {
-        if (!verifyInputs()) return;
         if (confirm(`Начать оплату за ${$('input[name=fio]').val()}?`))
             window.location.href = `${window.location.origin}/payment/?id=${child_id}`;
     });
