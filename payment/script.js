@@ -191,7 +191,7 @@ function createVacation() {
         `books_3=${$('#books_3').is(':checked:not(:disabled)') ? 1 : 0}`,
         `additional=${$('.additional').val()}`,
         `total=${getTotal()}`,
-        `type=${$('input[type=radio]:checked').index()}`,
+        `type=${+$('input[type=radio]:checked').val()}`,
     ].join('&')}`);
     let dualScreenLeft = window.screenLeft || window.screenX;
     let dualScreenTop = window.screenTop || window.screenY;
