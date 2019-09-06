@@ -34,6 +34,47 @@ $(window).ready(() => {
         }
     });
 
+    $('#forGroup').on('click', function () {
+        let val = $('.comment__message').val();
+        if (this.checked)
+            $(this).parent().find('.custom-number-input')
+                .find('input').trigger('change');
+        else
+            $('.comment__message').val(val.replace(/Посещаемость \d+ р\.;/g, '').trim());
+    });
+    $('#forMentalArifm1').on('click', function () {
+        let val = $('.comment__message').val();
+        if (this.checked)
+            $(this).parent().find('.custom-number-input')
+                .find('input').trigger('change');
+        else
+            $('.comment__message').val(val.replace(/Ментальная арифметика I \d+ р\.;/g, '').trim());
+    });
+    $('#forMentalArifm2').on('click', function () {
+        let val = $('.comment__message').val();
+        if (this.checked)
+            $(this).parent().find('.custom-number-input')
+                .find('input').trigger('change');
+        else
+            $('.comment__message').val(val.replace(/Ментальная арифметика II \d+ р\.;/g, '').trim());
+    });
+    $('#forEnglish').on('click', function () {
+        let val = $('.comment__message').val();
+        if (this.checked)
+            $(this).parent().find('.custom-number-input')
+                .find('input').trigger('change');
+        else
+            $('.comment__message').val(val.replace(/Английский язык \d+ р\.;/g, '').trim());
+    });
+    $('#forPainting').on('click', function () {
+        let val = $('.comment__message').val();
+        if (this.checked)
+            $(this).parent().find('.custom-number-input')
+                .find('input').trigger('change');
+        else
+            $('.comment__message').val(val.replace(/ИЗО студия \d+ р\.;/g, '').trim());
+    });
+
     $('#books').on('click', function() {
         if (this.checked) {
             let val = $('.comment__message').val();
@@ -64,11 +105,12 @@ $(window).ready(() => {
         'Английский язык', 'ИЗО студия', 'Дефектолог', 'Логопед', 'Психолог'].forEach((str, i) => {
         $('.custom-number-input input').eq(i)
             .on('change', function () {
+                if ($(this).parent().parent().find('input[type=checkbox]').is(':not(:checked)')) return;
                 let val = $('.comment__message').val();
-                val = val.replace(new RegExp(`${str} \\d+;`, 'g'), '').trim();
+                val = val.replace(new RegExp(`${str} \\d+ р.;`, 'g'), '').trim();
                 $('.comment__message').val(val);
                 if (+this.value > 0)
-                    $('.comment__message').val(`${val} ${str} ${this.value};`.trim());
+                    $('.comment__message').val(`${val} ${str} ${this.value} р.;`.trim());
             })
             .trigger('change');
     });
@@ -76,16 +118,16 @@ $(window).ready(() => {
     $('.additional').on('input', function () {
         $('.payment__row_body.total').text(`${getTotal()} ₽`);
         let val = $('.comment__message').val();
-        val = val.replace(/Дополнительно \d+;/g, '').trim();
+        val = val.replace(/Дополнительно \d+ ₽;/g, '').trim();
         $('.comment__message').val(val);
         if (+this.value > 0)
-            $('.comment__message').val(`${val} Дополнительно ${+this.value};`.trim());
+            $('.comment__message').val(`${val} Дополнительно ${+this.value} ₽;`.trim());
     });
 
     $('.pay').on('click', async () => {
-        let fee = $('input[type=checkbox]').eq(0).is(':checked:not(:disabled)');
-        let book = $('input[type=checkbox]').eq(1).is(':checked:not(:disabled)');
-        let fee_3 = $('input[type=checkbox]').eq(2).is(':checked:not(:disabled)');
+        let fee = $('input[type=checkbox]').eq(5).is(':checked:not(:disabled)');
+        let book = $('input[type=checkbox]').eq(6).is(':checked:not(:disabled)');
+        let fee_3 = $('input[type=checkbox]').eq(7).is(':checked:not(:disabled)');
         let annual = {};
         if (fee) annual.fee = true;
         if (book) annual.book = true;
@@ -135,6 +177,8 @@ function getTotal() {
     let total = 0;
 
     ['group', 'mental_arifm_1', 'mental_arifm_2', 'english', 'painting'].forEach((key, i) => {
+        let id = `for_${key}`.toCamelCase();
+        if ($(`#${id}`).is(':not(:checked)')) return;
         if (!data.attendance[key].passes) {
             total += $('.custom-number-input__input').eq(i).val() >= 8
                 ? prices[key] * 8
@@ -171,6 +215,14 @@ function getTotal() {
     total += prices.psychologist * $('.custom-number-input__input').eq(7).val();
     return total;
 }
+
+String.prototype.toCamelCase = function () {
+    return this.toLowerCase()
+        .replace( /[-_]+/g, ' ')
+        .replace( /[^\w\s]/g, '')
+        .replace( / (.)/g, function($1) { return $1.toUpperCase(); })
+        .replace( / /g, '' );
+};
 
 function createVacation() {
     let w = '440';

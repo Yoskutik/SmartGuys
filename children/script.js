@@ -25,11 +25,11 @@ $(window).ready(() => {
         });
 
         let child = {
-            fio: input[1].value,
+            fio: input[1].value.capitalyzeAll(),
             birthday: input[2].value,
-            parent_1_fio: input[3].value,
+            parent_1_fio: input[3].value.capitalyzeAll(),
             parent_1_tel: input[4].value,
-            parent_2_fio: input[5].value,
+            parent_2_fio: input[5].value.capitalyzeAll(),
             parent_2_tel: input[6].value,
         };
 
@@ -188,7 +188,7 @@ function verifyInputs() {
         }
     });
 
-    $('.multyCheckbox__item:first-child').each((i, el) => {
+    $('.children__add_schedule .multyCheckbox__item:first-child').each((i, el) => {
         if ($(el).is(':visible')) {
             $(el).parent().addClass('border-danger');
             valid = false;

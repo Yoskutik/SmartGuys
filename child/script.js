@@ -74,6 +74,7 @@ $(window).ready(() => {
                 $('.multyCheckbox:not(.disabled)').addClass('disabled');
                 $('.children__add_schedule:not(.disabled)').addClass('disabled');
                 $(this).toggleClass('change save').text('Изменить');
+                toast('Изменения сохранены');
             }
         });
     });

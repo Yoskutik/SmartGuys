@@ -24,7 +24,9 @@ $(window).ready(() => {
         this.classList.remove('border-danger');
     });
 
-    $(document).on('click', '.schedule', () => open(`${location.origin}/teachers/schedule/?id=${$(this).parent().data('id')}`));
+    $(document).on('click', '.schedule', function() {
+        open(`${location.origin}/teachers/schedule/?id=${$(this).parent().data('id')}`)
+    });
 
     $(document).on('click', '.update', function () {
         $(this).toggleClass('update save').parent().find('input').removeAttr('disabled');
@@ -42,7 +44,7 @@ $(window).ready(() => {
                     url: '/api/addTeacher',
                     type: 'post',
                     data: {
-                        fio: el.find('input').val(),
+                        fio: el.find('input').val().capitalyzeAll(),
                     },
                     success: data => {
                         el.attr('data-id', data.id).find('input').attr('disabled', true);

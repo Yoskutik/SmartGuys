@@ -1,6 +1,11 @@
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-// if ($.cookie('admin').length === 0 && window.location.href)
+String.prototype.capitalyzeAll = function () {
+    var splitStr = this.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++)
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    return splitStr.join(' ');
+};
 
 function copyToClipboard(str) {
     const el = document.createElement('textarea');
