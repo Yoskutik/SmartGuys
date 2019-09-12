@@ -6,6 +6,9 @@ $(window).ready(() => {
     $('input[name=vacation]').mask('00.00.0000-00.00.0000');
     $('input[name=vacation]').on('click', () => $('input[name=vacation]').removeClass('border-danger'));
 
+    let attendanceIdForRemove = [];
+    $('.info__attendance .remove').hide();
+
     $(document).on('click', '.children__add_buttons .change', function() {
         $('input[disabled]').removeAttr('disabled');
         $('select[disabled]').removeAttr('disabled');
@@ -107,11 +110,27 @@ $(window).ready(() => {
 
     $(document).on('click', '.info__attendance .change', function () {
         $('.multyCheckbox.disabled').removeClass('disabled');
+        $(this).parent().parent().find('.remove').show();
         $(this).toggleClass('change save').text('Сохранить');
     });
 
-    $(document).on('click', '.info__attendance .save', function () {
+    $(document).on('click', '.info__attendance .save', async function () {
         if (!confirm('Сохранить изменения?')) return;
+
+        let deleting = new Promise(resolve => {
+            $.ajax({
+                url: '/api/removeAttendance',
+                type: 'post',
+                data: {
+                    ids: attendanceIdForRemove,
+                },
+                success: () => {
+                    attendanceIdForRemove = [];
+                    resolve();
+                },
+            })
+        });
+        await deleting;
 
         let attendance = [];
         for (let time in attend) {
@@ -133,5 +152,59 @@ $(window).ready(() => {
                 $(this).toggleClass('change save').text('Изменить');
             },
         });
+    });
+
+    $('.add-child-attendance .close').on('click', function () {
+        let parent = $(this).parent().parent();
+        parent.find('input[name=birthday]').val('');
+        parent.find('.multyCheckbox__item:visible').hide();
+        parent.find('.multyCheckbox__item').eq(0).show();
+        parent.find('.multyCheckbox__item').eq(7).show();
+        parent.hide();
+    });
+
+    $('.add-child-attendance .add').on('click', function () {
+        let parent = $(this).parent().parent();
+        let valid = true;
+        if (!parent.find('input[name=birthday]').val().match(/\d\d\.\d\d\.\d\d\d\d/)) {
+            valid = false;
+        }
+        if (parent.find('.multyCheckbox__item:visible').eq(0).index() === 0) {
+            valid = false;
+        }
+        if (parent.find('.multyCheckbox__item:visible').eq(1).index() === 0) {
+            valid = false;
+        }
+        if (!valid) {
+            toast('Заполнены не все поля');
+            return;
+        }
+
+        let day = parent.find('input[name=birthday]').val();
+        let [dd, mm, yyyy] = day.match(/\d+/g);
+        $.ajax({
+            url: '/api/addAttendance',
+            type: 'post',
+            data: {
+                attendance: [{
+                    child_id,
+                    lesson_type: parent.find('.multyCheckbox__item:visible').eq(0).index(),
+                    type: parent.find('.multyCheckbox__item:visible').eq(1).index(),
+                    time: `${yyyy}-${mm}-${dd}`,
+                }]
+            },
+            success: () => {
+                parent.find('.close').trigger('click');
+                toast('Посещаемость добавлена');
+            },
+            error: toast('Что-то пошло не так')
+        });
+    });
+
+    $('.attendance__btns .add').on('click', () => $('.add-child-attendance').show());
+
+    $('.info__attendance .remove').on('click', function() {
+        $(this).parent().parent().hide();
+        attendanceIdForRemove.push($(this).parent().parent().data('id'));
     });
 });

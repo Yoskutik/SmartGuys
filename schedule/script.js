@@ -25,10 +25,11 @@ $(window).ready(() => {
     $('.teacher-item div').on('click', function() {
         let el = $(this).parent().find('.inner');
         if (parseInt(el.css('max-height')) === 0) {
-            el.css('max-height', `${el[0].scrollHeight}px`)
+            el.css('max-height', `${el[0].scrollHeight}px`);
         } else {
             el.css('max-height', '0px');
         }
+        sleep(600).then(() => $('.schedule').css('max-height', `${$('.schedule__teachers')[0].scrollHeight}px`));
     });
 
     $('.alert .close').on('click', function () {

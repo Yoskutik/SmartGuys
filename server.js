@@ -84,47 +84,47 @@ function updateDayAttendance() {
 function _updateDayAttendance() {
   _updateDayAttendance = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee23() {
+  regeneratorRuntime.mark(function _callee24() {
     var attend, schedule, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, row;
 
-    return regeneratorRuntime.wrap(function _callee23$(_context24) {
+    return regeneratorRuntime.wrap(function _callee24$(_context25) {
       while (1) {
-        switch (_context24.prev = _context24.next) {
+        switch (_context25.prev = _context25.next) {
           case 0:
-            _context24.next = 2;
+            _context25.next = 2;
             return attendanceTable.get({
               where: "time = '".concat(getTime(), "'")
             });
 
           case 2:
-            attend = _context24.sent;
+            attend = _context25.sent;
 
             if (attend) {
-              _context24.next = 33;
+              _context25.next = 33;
               break;
             }
 
-            _context24.next = 6;
+            _context25.next = 6;
             return scheduleTable.getAll({
               where: "weekday = ".concat(new Date().getDay() - 1)
             });
 
           case 6:
-            schedule = _context24.sent;
+            schedule = _context25.sent;
             _iteratorNormalCompletion2 = true;
             _didIteratorError2 = false;
             _iteratorError2 = undefined;
-            _context24.prev = 10;
+            _context25.prev = 10;
             _iterator2 = schedule[Symbol.iterator]();
 
           case 12:
             if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-              _context24.next = 19;
+              _context25.next = 19;
               break;
             }
 
             row = _step2.value;
-            _context24.next = 16;
+            _context25.next = 16;
             return attendanceTable.add({
               time: getTime(),
               type: 0,
@@ -134,49 +134,49 @@ function _updateDayAttendance() {
 
           case 16:
             _iteratorNormalCompletion2 = true;
-            _context24.next = 12;
+            _context25.next = 12;
             break;
 
           case 19:
-            _context24.next = 25;
+            _context25.next = 25;
             break;
 
           case 21:
-            _context24.prev = 21;
-            _context24.t0 = _context24["catch"](10);
+            _context25.prev = 21;
+            _context25.t0 = _context25["catch"](10);
             _didIteratorError2 = true;
-            _iteratorError2 = _context24.t0;
+            _iteratorError2 = _context25.t0;
 
           case 25:
-            _context24.prev = 25;
-            _context24.prev = 26;
+            _context25.prev = 25;
+            _context25.prev = 26;
 
             if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
               _iterator2["return"]();
             }
 
           case 28:
-            _context24.prev = 28;
+            _context25.prev = 28;
 
             if (!_didIteratorError2) {
-              _context24.next = 31;
+              _context25.next = 31;
               break;
             }
 
             throw _iteratorError2;
 
           case 31:
-            return _context24.finish(28);
+            return _context25.finish(28);
 
           case 32:
-            return _context24.finish(25);
+            return _context25.finish(25);
 
           case 33:
           case "end":
-            return _context24.stop();
+            return _context25.stop();
         }
       }
-    }, _callee23, null, [[10, 21, 25, 33], [26,, 28, 32]]);
+    }, _callee24, null, [[10, 21, 25, 33], [26,, 28, 32]]);
   }));
   return _updateDayAttendance.apply(this, arguments);
 }
@@ -191,11 +191,11 @@ function backup() {
 function _backup() {
   _backup = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee24() {
+  regeneratorRuntime.mark(function _callee25() {
     var dir, files, date, options;
-    return regeneratorRuntime.wrap(function _callee24$(_context25) {
+    return regeneratorRuntime.wrap(function _callee25$(_context26) {
       while (1) {
-        switch (_context25.prev = _context25.next) {
+        switch (_context26.prev = _context26.next) {
           case 0:
             dir = _path["default"].join(require('os').homedir(), '.smartGuys');
 
@@ -227,17 +227,17 @@ function _backup() {
                 hidden: (0, _md["default"])("".concat(getTime(), "qwertyuiop"))
               }
             };
-            _context25.next = 9;
+            _context26.next = 9;
             return (0, _request["default"])(options, function (err, res, body) {
               if (!err) console.log(res.body);
             });
 
           case 9:
           case "end":
-            return _context25.stop();
+            return _context26.stop();
         }
       }
-    }, _callee24);
+    }, _callee25);
   }));
   return _backup.apply(this, arguments);
 }
@@ -1366,51 +1366,41 @@ function () {
     return _ref18.apply(this, arguments);
   };
 }());
-app.post('/api/payAnnual',
+app.post('/api/removeAttendance',
 /*#__PURE__*/
 function () {
   var _ref19 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee19(req, res) {
-    var child_id, annual;
+    var i;
     return regeneratorRuntime.wrap(function _callee19$(_context20) {
       while (1) {
         switch (_context20.prev = _context20.next) {
           case 0:
-            child_id = req.body.child_id;
-            _context20.next = 3;
-            return annualPaymentTable.get({
-              where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
-            });
+            _context20.t0 = regeneratorRuntime.keys(req.body.ids);
 
-          case 3:
-            annual = _context20.sent;
-
-            if (!annual) {
-              _context20.next = 11;
+          case 1:
+            if ((_context20.t1 = _context20.t0()).done) {
+              _context20.next = 7;
               break;
             }
 
-            delete req.body.child_id;
-            delete req.body.time;
-            _context20.next = 9;
-            return annualPaymentTable.update({
-              val: req.body,
-              where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
+            i = _context20.t1.value;
+            _context20.next = 5;
+            return attendanceTable.remove({
+              where: "id = ".concat(req.body.ids[i])
             });
 
-          case 9:
-            _context20.next = 13;
+          case 5:
+            _context20.next = 1;
             break;
 
-          case 11:
-            _context20.next = 13;
-            return annualPaymentTable.add(req.body);
+          case 7:
+            res.json({
+              status: 'OK'
+            });
 
-          case 13:
-            res.sendStatus(200);
-
-          case 14:
+          case 8:
           case "end":
             return _context20.stop();
         }
@@ -1422,23 +1412,51 @@ function () {
     return _ref19.apply(this, arguments);
   };
 }());
-app.post('/api/pay',
+app.post('/api/payAnnual',
 /*#__PURE__*/
 function () {
   var _ref20 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee20(req, res) {
+    var child_id, annual;
     return regeneratorRuntime.wrap(function _callee20$(_context21) {
       while (1) {
         switch (_context21.prev = _context21.next) {
           case 0:
-            _context21.next = 2;
-            return paymentTable.add(req.body);
-
-          case 2:
-            res.sendStatus(200);
+            child_id = req.body.child_id;
+            _context21.next = 3;
+            return annualPaymentTable.get({
+              where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
+            });
 
           case 3:
+            annual = _context21.sent;
+
+            if (!annual) {
+              _context21.next = 11;
+              break;
+            }
+
+            delete req.body.child_id;
+            delete req.body.time;
+            _context21.next = 9;
+            return annualPaymentTable.update({
+              val: req.body,
+              where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
+            });
+
+          case 9:
+            _context21.next = 13;
+            break;
+
+          case 11:
+            _context21.next = 13;
+            return annualPaymentTable.add(req.body);
+
+          case 13:
+            res.sendStatus(200);
+
+          case 14:
           case "end":
             return _context21.stop();
         }
@@ -1450,7 +1468,7 @@ function () {
     return _ref20.apply(this, arguments);
   };
 }());
-app.post('/api/addVacation',
+app.post('/api/pay',
 /*#__PURE__*/
 function () {
   var _ref21 = _asyncToGenerator(
@@ -1461,18 +1479,12 @@ function () {
         switch (_context22.prev = _context22.next) {
           case 0:
             _context22.next = 2;
-            return vacationTable.remove({
-              where: "child_id = ".concat(req.body.child_id)
-            });
+            return paymentTable.add(req.body);
 
           case 2:
-            _context22.next = 4;
-            return vacationTable.add(req.body);
-
-          case 4:
             res.sendStatus(200);
 
-          case 5:
+          case 3:
           case "end":
             return _context22.stop();
         }
@@ -1484,54 +1496,29 @@ function () {
     return _ref21.apply(this, arguments);
   };
 }());
-app.post('/api/getTodayPayment',
+app.post('/api/addVacation',
 /*#__PURE__*/
 function () {
   var _ref22 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee22(req, res) {
-    var m, y, d, nonCash, cash;
     return regeneratorRuntime.wrap(function _callee22$(_context23) {
       while (1) {
         switch (_context23.prev = _context23.next) {
           case 0:
-            m = new Date().getMonth() + 1;
-            m = m > 9 ? m : '0' + m;
-            y = new Date().getFullYear();
-            d = new Date().getDate();
-            d = d > 9 ? d : '0' + d;
-            nonCash = 0;
-            _context23.next = 8;
-            return paymentTable.getAll({
-              where: "type = 0 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "'")
+            _context23.next = 2;
+            return vacationTable.remove({
+              where: "child_id = ".concat(req.body.child_id)
             });
 
-          case 8:
-            _context23.t0 = function (row) {
-              nonCash += row.amount;
-            };
+          case 2:
+            _context23.next = 4;
+            return vacationTable.add(req.body);
 
-            _context23.sent.forEach(_context23.t0);
+          case 4:
+            res.sendStatus(200);
 
-            cash = 0;
-            _context23.next = 13;
-            return paymentTable.getAll({
-              where: "type = 1 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "'")
-            });
-
-          case 13:
-            _context23.t1 = function (row) {
-              cash += row.amount;
-            };
-
-            _context23.sent.forEach(_context23.t1);
-
-            res.json({
-              nonCash: nonCash,
-              cash: cash
-            });
-
-          case 16:
+          case 5:
           case "end":
             return _context23.stop();
         }
@@ -1541,6 +1528,65 @@ function () {
 
   return function (_x43, _x44) {
     return _ref22.apply(this, arguments);
+  };
+}());
+app.post('/api/getTodayPayment',
+/*#__PURE__*/
+function () {
+  var _ref23 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee23(req, res) {
+    var m, y, d, nonCash, cash;
+    return regeneratorRuntime.wrap(function _callee23$(_context24) {
+      while (1) {
+        switch (_context24.prev = _context24.next) {
+          case 0:
+            m = new Date().getMonth() + 1;
+            m = m > 9 ? m : '0' + m;
+            y = new Date().getFullYear();
+            d = new Date().getDate();
+            d = d > 9 ? d : '0' + d;
+            nonCash = 0;
+            _context24.next = 8;
+            return paymentTable.getAll({
+              where: "type = 0 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "'")
+            });
+
+          case 8:
+            _context24.t0 = function (row) {
+              nonCash += row.amount;
+            };
+
+            _context24.sent.forEach(_context24.t0);
+
+            cash = 0;
+            _context24.next = 13;
+            return paymentTable.getAll({
+              where: "type = 1 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "'")
+            });
+
+          case 13:
+            _context24.t1 = function (row) {
+              cash += row.amount;
+            };
+
+            _context24.sent.forEach(_context24.t1);
+
+            res.json({
+              nonCash: nonCash,
+              cash: cash
+            });
+
+          case 16:
+          case "end":
+            return _context24.stop();
+        }
+      }
+    }, _callee23);
+  }));
+
+  return function (_x45, _x46) {
+    return _ref23.apply(this, arguments);
   };
 }());
 app.use(function (request, response) {

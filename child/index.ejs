@@ -15,6 +15,20 @@
     <style>
         .multyCheckbox_type {
             width: 45px;
+            color: #fff;
+        }
+        .info__attendance .remove {
+            border: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .info__attendance .remove:after {
+            content: url(/assets/icons/trash.png);
         }
     </style>
 </head>
@@ -132,24 +146,29 @@
                             Посещаемость
                             <ul>
                                 <% attendance.forEach(row => { %>
-                                    <li data-time="<%= row.time %>" data-lesson-type="<%= row.lesson_type %>">
+                                    <li data-time="<%= row.time %>" data-lesson-type="<%= row.lesson_type %>"
+                                        data-id="<%= row.id %>">
                                         <% let [yyyy, mm, dd] = row.time.match(/\d+/g); %>
                                         <%= `${dd}.${mm}.${yyyy}` %>
-                                        <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
-                                            items: [
-                                                {color: '#ededed'},
-                                                {color: '#068f0f', content: {text: 'П'}},
-                                                {color: '#e8e120', content: {text: 'Б'}},
-                                                {color: '#e82020', content: {text: 'О'}},
-                                            ],
-                                            className: 'disabled',
-                                            chosen: row.type,
-                                        }); %>
+                                        <div style="display: flex">
+                                            <span class="remove"></span>
+                                            <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                                                items: [
+                                                    {color: '#ededed'},
+                                                    {color: '#068f0f', content: {text: 'П'}},
+                                                    {color: '#e8e120', content: {text: 'Б'}},
+                                                    {color: '#e82020', content: {text: 'О'}},
+                                                ],
+                                                className: 'disabled',
+                                                chosen: row.type,
+                                            }); %>
+                                        </div>
                                     </li>
                                 <% }) %>
                             </ul>
                             <div class="attendance__btns justify-content-end">
                                 <button type="button" class="btn btn-info change">Изменить</button>
+                                <button type="button" class="btn btn-info add">Добавить</button>
                             </div>
                         </div>
                     </div>
@@ -158,6 +177,53 @@
                 <b>Ребенок не найден</b>
             <% } %>
         </div>
+    </div>
+</div>
+<div class="add-child-attendance" style="
+    display: none;
+    position: fixed;
+    width: 370px;
+    height: 210px;
+    background: white;
+    left: calc(50vw - 185px);
+    top: calc(50vh - 110px);
+    border: 1px solid #E0E0E0;">
+    <div style="display: flex; padding: 13px 8px 5px; border-bottom: 1px solid #E0E0E0;">
+        <h1 style="font-size: 18px; margin: 0">Добавление посещаемости</h1>
+        <button type="button" class="close" aria-label="Close" style="margin: -5px 0 0 auto;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div style="padding: 10px;">
+        <div style="display: grid; grid-template-columns: 120px 150px; grid-gap: 10px;">
+            <span>Дата: </span>
+            <input name="birthday" type="text" style="height: 28px; padding: 0 5px;">
+            <span>Тип занятия: </span>
+            <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                items: [
+                    {color: 'white'},
+                    {color: '#8869bf', content: {text: 'Груп'}},
+                    {color: '#5f6693', content: {text: 'Ма 1'}},
+                    {color: '#75ced2', content: {text: 'Ма 2'}},
+                    {color: '#6a6683', content: {text: 'Англ'}},
+                    {color: '#94d7d6', content: {text: 'ИЗО'}},
+                    {color: '#bfb069', content: {text: 'Инд'}},
+                ],
+                className: 'multyCheckbox_type',
+            }); %>
+            <span>Тип посещения: </span>
+            <div style="color: #fff;">
+                <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                    items: [
+                        {color: '#ededed'},
+                        {color: '#068f0f', content: {text: 'П'}},
+                        {color: '#e8e120', content: {text: 'Б'}},
+                        {color: '#e82020', content: {text: 'О'}},
+                    ],
+                }); %>
+            </div>
+        </div>
+        <button type="button" class="btn btn-info add" style="padding: 2px 10px; position: absolute; right: 10px; bottom: 10px;">Добавить</button>
     </div>
 </div>
 <% include ../assets/elements/footer.ejs %>
