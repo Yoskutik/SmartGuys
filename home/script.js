@@ -16,8 +16,12 @@ $(window).ready(() => {
     updateTime();
 
     let params = new URLSearchParams(window.location.search);
-    if (params.get('new_admin'))
+    if (params.get('new_admin')) {
         toast(`Вы зашли под именем ${params.get('new_admin')}`);
+        $.cookie('admin', params.get('new_admin'), {
+
+        });
+    }
 
     $('.form__schedule_children-item .li div').on('click', function() {
         window.open(`${window.location.origin}/child/?id=${$(this).parent().data('id')}`);
