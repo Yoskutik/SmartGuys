@@ -4,6 +4,7 @@ $(window).ready(() => {
     let attend = {};
 
     $('input[name=vacation]').mask('00.00.0000-00.00.0000');
+    $('input[name=date]').mask('00.00.0000');
     $('input[name=vacation]').on('click', () => $('input[name=vacation]').removeClass('border-danger'));
 
     let attendanceIdForRemove = [];
@@ -156,7 +157,7 @@ $(window).ready(() => {
 
     $('.add-child-attendance .close').on('click', function () {
         let parent = $(this).parent().parent();
-        parent.find('input[name=birthday]').val('');
+        parent.find('input[name=date]').val('');
         parent.find('.multyCheckbox__item:visible').hide();
         parent.find('.multyCheckbox__item').eq(0).show();
         parent.find('.multyCheckbox__item').eq(7).show();
@@ -166,7 +167,7 @@ $(window).ready(() => {
     $('.add-child-attendance .add').on('click', function () {
         let parent = $(this).parent().parent();
         let valid = true;
-        if (!parent.find('input[name=birthday]').val().match(/\d\d\.\d\d\.\d\d\d\d/)) {
+        if (!parent.find('input[name=date]').val().match(/\d\d\.\d\d\.\d\d\d\d/)) {
             valid = false;
         }
         if (parent.find('.multyCheckbox__item:visible').eq(0).index() === 0) {
@@ -180,7 +181,7 @@ $(window).ready(() => {
             return;
         }
 
-        let day = parent.find('input[name=birthday]').val();
+        let day = parent.find('input[name=date]').val();
         let [dd, mm, yyyy] = day.match(/\d+/g);
         $.ajax({
             url: '/api/addAttendance',

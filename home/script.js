@@ -18,9 +18,6 @@ $(window).ready(() => {
     let params = new URLSearchParams(window.location.search);
     if (params.get('new_admin')) {
         toast(`Вы зашли под именем ${params.get('new_admin')}`);
-        $.cookie('admin', params.get('new_admin'), {
-
-        });
     }
 
     $('.form__schedule_children-item .li div').on('click', function() {

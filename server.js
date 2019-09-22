@@ -674,7 +674,7 @@ function () {
             _context5.t6 = _context5.sent;
             _context5.next = 23;
             return vacationTable.get({
-              where: "child_id = ".concat(req.query.id, " AND time LIKE '%").concat(new Date().getFullYear(), "%'")
+              where: "child_id = ".concat(req.query.id, " AND period LIKE '%").concat(new Date().getFullYear(), "%'")
             });
 
           case 23:
