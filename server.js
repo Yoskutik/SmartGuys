@@ -1344,30 +1344,39 @@ function () {
 
           case 1:
             if ((_context19.t1 = _context19.t0()).done) {
-              _context19.next = 9;
+              _context19.next = 11;
               break;
             }
 
             i = _context19.t1.value;
-            _context19.next = 5;
+
+            if (!(req.body.attendance[i].time === undefined)) {
+              _context19.next = 5;
+              break;
+            }
+
+            return _context19.abrupt("continue", 1);
+
+          case 5:
+            _context19.next = 7;
             return attendanceTable.remove({
               where: "child_id = ".concat(req.body.attendance[i].child_id, " \n                AND time = '").concat(req.body.attendance[i].time, "'\n                AND lesson_type = ").concat(req.body.attendance[i].lesson_type)
             });
 
-          case 5:
-            _context19.next = 7;
+          case 7:
+            _context19.next = 9;
             return attendanceTable.add(req.body.attendance[i]);
 
-          case 7:
+          case 9:
             _context19.next = 1;
             break;
 
-          case 9:
+          case 11:
             res.json({
               status: 'OK'
             });
 
-          case 10:
+          case 12:
           case "end":
             return _context19.stop();
         }
@@ -1613,11 +1622,12 @@ app.listen(port, address, function () {
   console.log();
   console.log();
   console.log('\t\x1b[1m\x1b[36mДобро пожаловать в \x1b[4mУмники и Умницы. Администрирование\x1b[0m\x1b[1m\x1b[36m!\x1b[0m');
-  console.log('\t\x1b[1m\x1b[36mК сайту можно обратиться по ссылке:\x1b[0m');
+  console.log('\t\x1b[1m\x1b[36mК сайту можно обратиться по ссылкам:\x1b[0m');
   console.log('\t\x1b[1m\x1b[36m - \x1b[4mhttp://127.0.0.1\x1b[0m \x1b[1m\x1b[36m-\x1b[0m');
+  console.log('\t\x1b[1m\x1b[36m - \x1b[4mhttp://localhost\x1b[0m \x1b[1m\x1b[36m-\x1b[0m');
   console.log();
   console.log();
-  (0, _opn["default"])('http://127.0.0.1/');
+  (0, _opn["default"])('http://localhost');
 });
 
 String.prototype.validFor = function (date) {
