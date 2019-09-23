@@ -74,7 +74,7 @@ $(window).ready(() => {
             },
             success: data => {
                 $('input:not([disabled])').attr('disabled', true);
-                $('select:not([disabled])').attr('disabled', true);
+                $('.children__add_form select:not([disabled])').attr('disabled', true);
                 $('.multyCheckbox:not(.disabled)').addClass('disabled');
                 $('.children__add_schedule:not(.disabled)').addClass('disabled');
                 $(this).toggleClass('change save').text('Изменить');
@@ -149,8 +149,10 @@ $(window).ready(() => {
             data: { attendance },
             success: () => {
                 toast('Посещаемость отмечена');
-                $('.multyCheckbox').addClass('disabled');
-                $(this).toggleClass('change save').text('Изменить');
+                let parent = $(this).parent().parent();
+                parent.find('.multyCheckbox').addClass('disabled');
+                parent.find('.remove').hide();
+                parent.find('.save').toggleClass('change save').text('Изменить');
             },
         });
     });

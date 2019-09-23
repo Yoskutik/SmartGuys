@@ -977,12 +977,25 @@ function () {
             break;
 
           case 34:
-            res.render('teachers/schedule.ejs', {
-              admin: req.cookies.admin,
-              schedule: schedule
+            _context10.t2 = res;
+            _context10.t3 = req.cookies.admin;
+            _context10.t4 = schedule;
+            _context10.next = 39;
+            return teacherTable.get({
+              where: "id = ".concat(req.query.id)
             });
 
-          case 35:
+          case 39:
+            _context10.t5 = _context10.sent.fio;
+            _context10.t6 = {
+              admin: _context10.t3,
+              schedule: _context10.t4,
+              fio: _context10.t5
+            };
+
+            _context10.t2.render.call(_context10.t2, 'teachers/schedule.ejs', _context10.t6);
+
+          case 42:
           case "end":
             return _context10.stop();
         }
