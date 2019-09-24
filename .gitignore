@@ -2,7 +2,6 @@
 /src/
 /.babelrc
 /.gitignore
-/db.db
 /package.json
 /package-lock.json
 
