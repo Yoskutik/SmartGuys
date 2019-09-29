@@ -22,6 +22,8 @@ var _md = _interopRequireDefault(require("md5"));
 
 var _fs = _interopRequireDefault(require("fs"));
 
+var _os = _interopRequireDefault(require("os"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } else { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } } return target; }
@@ -212,7 +214,7 @@ function _backup() {
                 _fs["default"].unlinkSync(_path["default"].join(dir, file));
               }
             });
-            (0, _nodeJsZip.zip)(_path["default"].join(__dirname, 'db.db'), {
+            (0, _nodeJsZip.zip)("".concat(_os["default"].homedir(), "/\u0423\u043C\u043D\u0438\u043A\u0438 \u0438 \u0443\u043C\u043D\u0438\u0446\u044B/db.db"), {
               name: getTime(),
               dir: dir
             });
