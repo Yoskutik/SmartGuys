@@ -162,8 +162,7 @@ $(window).ready(() => {
                 let w = createVacation();
                 w.onload = () => {
                     w.print();
-                    w.close();
-                    location.reload();
+                    w.onclose = () => location.reload();
                 }
             },
         });
