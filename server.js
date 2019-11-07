@@ -53,7 +53,36 @@ var paymentTable = new _db["default"]('payment');
 var vacationTable = new _db["default"]('vacation');
 var scheduleTable = new _db["default"]('schedule');
 var attendanceTable = new _db["default"]('attendance');
-var annualPaymentTable = new _db["default"]('annual_payment'); // Requisites
+var annualPaymentTable = new _db["default"]('annual_payment');
+
+function log(_x) {
+  return _log.apply(this, arguments);
+} // Requisites
+
+
+function _log() {
+  _log = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee24(message) {
+    var _toISOString$match, _toISOString$match2, yyyy, mm, dd, _toString$match, _toString$match2, h, m;
+
+    return regeneratorRuntime.wrap(function _callee24$(_context25) {
+      while (1) {
+        switch (_context25.prev = _context25.next) {
+          case 0:
+            _toISOString$match = new Date().toISOString().match(/\d+/g), _toISOString$match2 = _slicedToArray(_toISOString$match, 3), yyyy = _toISOString$match2[0], mm = _toISOString$match2[1], dd = _toISOString$match2[2];
+            _toString$match = new Date().toString().match(/\d+/g), _toString$match2 = _slicedToArray(_toString$match, 4), h = _toString$match2[2], m = _toString$match2[3];
+            console.log("\x1B[1m\x1B[36m[\x1B[4m".concat(dd, ".").concat(mm, ".").concat(yyyy, " ").concat(h, ":").concat(m, "\x1B[0m\x1B[1m\x1B[36m] ").concat(message, "\x1B[0m"));
+
+          case 3:
+          case "end":
+            return _context25.stop();
+        }
+      }
+    }, _callee24);
+  }));
+  return _log.apply(this, arguments);
+}
 
 var ITN, PSRN, prices;
 
@@ -86,47 +115,47 @@ function updateDayAttendance() {
 function _updateDayAttendance() {
   _updateDayAttendance = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee24() {
+  regeneratorRuntime.mark(function _callee25() {
     var attend, schedule, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, row;
 
-    return regeneratorRuntime.wrap(function _callee24$(_context25) {
+    return regeneratorRuntime.wrap(function _callee25$(_context26) {
       while (1) {
-        switch (_context25.prev = _context25.next) {
+        switch (_context26.prev = _context26.next) {
           case 0:
-            _context25.next = 2;
+            _context26.next = 2;
             return attendanceTable.get({
               where: "time = '".concat(getTime(), "'")
             });
 
           case 2:
-            attend = _context25.sent;
+            attend = _context26.sent;
 
             if (attend) {
-              _context25.next = 33;
+              _context26.next = 33;
               break;
             }
 
-            _context25.next = 6;
+            _context26.next = 6;
             return scheduleTable.getAll({
               where: "weekday = ".concat(new Date().getDay() - 1)
             });
 
           case 6:
-            schedule = _context25.sent;
+            schedule = _context26.sent;
             _iteratorNormalCompletion2 = true;
             _didIteratorError2 = false;
             _iteratorError2 = undefined;
-            _context25.prev = 10;
+            _context26.prev = 10;
             _iterator2 = schedule[Symbol.iterator]();
 
           case 12:
             if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-              _context25.next = 19;
+              _context26.next = 19;
               break;
             }
 
             row = _step2.value;
-            _context25.next = 16;
+            _context26.next = 16;
             return attendanceTable.add({
               time: getTime(),
               type: 0,
@@ -136,49 +165,49 @@ function _updateDayAttendance() {
 
           case 16:
             _iteratorNormalCompletion2 = true;
-            _context25.next = 12;
+            _context26.next = 12;
             break;
 
           case 19:
-            _context25.next = 25;
+            _context26.next = 25;
             break;
 
           case 21:
-            _context25.prev = 21;
-            _context25.t0 = _context25["catch"](10);
+            _context26.prev = 21;
+            _context26.t0 = _context26["catch"](10);
             _didIteratorError2 = true;
-            _iteratorError2 = _context25.t0;
+            _iteratorError2 = _context26.t0;
 
           case 25:
-            _context25.prev = 25;
-            _context25.prev = 26;
+            _context26.prev = 25;
+            _context26.prev = 26;
 
             if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
               _iterator2["return"]();
             }
 
           case 28:
-            _context25.prev = 28;
+            _context26.prev = 28;
 
             if (!_didIteratorError2) {
-              _context25.next = 31;
+              _context26.next = 31;
               break;
             }
 
             throw _iteratorError2;
 
           case 31:
-            return _context25.finish(28);
+            return _context26.finish(28);
 
           case 32:
-            return _context25.finish(25);
+            return _context26.finish(25);
 
           case 33:
           case "end":
-            return _context25.stop();
+            return _context26.stop();
         }
       }
-    }, _callee24, null, [[10, 21, 25, 33], [26,, 28, 32]]);
+    }, _callee25, null, [[10, 21, 25, 33], [26,, 28, 32]]);
   }));
   return _updateDayAttendance.apply(this, arguments);
 }
@@ -193,11 +222,11 @@ function backup() {
 function _backup() {
   _backup = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee25() {
+  regeneratorRuntime.mark(function _callee26() {
     var dir, files, date, options;
-    return regeneratorRuntime.wrap(function _callee25$(_context26) {
+    return regeneratorRuntime.wrap(function _callee26$(_context27) {
       while (1) {
-        switch (_context26.prev = _context26.next) {
+        switch (_context27.prev = _context27.next) {
           case 0:
             dir = _path["default"].join(require('os').homedir(), '.smartGuys');
 
@@ -229,17 +258,17 @@ function _backup() {
                 hidden: (0, _md["default"])("".concat(getTime(), "qwertyuiop"))
               }
             };
-            _context26.next = 9;
+            _context27.next = 9;
             return (0, _request["default"])(options, function (err, res, body) {
               if (!err) console.log(res.body);
             });
 
           case 9:
           case "end":
-            return _context26.stop();
+            return _context27.stop();
         }
       }
-    }, _callee25);
+    }, _callee26);
   }));
   return _backup.apply(this, arguments);
 }
@@ -370,6 +399,7 @@ function () {
 
           case 35:
             if (req.query.new_admin) {
+              log("\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440 ".concat(req.query.new_admin, " \u0432\u043E\u0448\u0435\u043B \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443."));
               expires = new Date();
               expires.setHours(0);
               expires.setMinutes(0);
@@ -394,7 +424,7 @@ function () {
     }, _callee);
   }));
 
-  return function (_x, _x2) {
+  return function (_x2, _x3) {
     return _ref.apply(this, arguments);
   };
 }());
@@ -420,7 +450,7 @@ function () {
     }, _callee2);
   }));
 
-  return function (_x3, _x4) {
+  return function (_x4, _x5) {
     return _ref2.apply(this, arguments);
   };
 }());
@@ -612,7 +642,7 @@ function () {
     }, _callee3);
   }));
 
-  return function (_x5, _x6) {
+  return function (_x6, _x7) {
     return _ref3.apply(this, arguments);
   };
 }());
@@ -708,7 +738,7 @@ function () {
     }, _callee4);
   }));
 
-  return function (_x7, _x8) {
+  return function (_x8, _x9) {
     return _ref4.apply(this, arguments);
   };
 }());
@@ -775,7 +805,7 @@ function () {
     }, _callee5);
   }));
 
-  return function (_x9, _x10) {
+  return function (_x10, _x11) {
     return _ref5.apply(this, arguments);
   };
 }());
@@ -805,7 +835,7 @@ function () {
     }, _callee6);
   }));
 
-  return function (_x11, _x12) {
+  return function (_x12, _x13) {
     return _ref6.apply(this, arguments);
   };
 }());
@@ -829,7 +859,7 @@ function () {
     }, _callee7);
   }));
 
-  return function (_x13, _x14) {
+  return function (_x14, _x15) {
     return _ref7.apply(this, arguments);
   };
 }());
@@ -865,7 +895,7 @@ function () {
     }, _callee8);
   }));
 
-  return function (_x15, _x16) {
+  return function (_x16, _x17) {
     return _ref8.apply(this, arguments);
   };
 }());
@@ -1005,7 +1035,7 @@ function () {
     }, _callee9, null, [[14, 18, 22, 30], [23,, 25, 29]]);
   }));
 
-  return function (_x17, _x18) {
+  return function (_x18, _x19) {
     return _ref9.apply(this, arguments);
   };
 }());
@@ -1044,11 +1074,12 @@ function () {
             break;
 
           case 10:
+            log("\u0420\u0435\u0431\u0451\u043D\u043E\u043A ".concat(req.body.child.fio, " \u0431\u044B\u043B \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443."));
             res.json({
               status: 'OK'
             });
 
-          case 11:
+          case 12:
           case "end":
             return _context11.stop();
         }
@@ -1056,7 +1087,7 @@ function () {
     }, _callee10);
   }));
 
-  return function (_x19, _x20) {
+  return function (_x20, _x21) {
     return _ref10.apply(this, arguments);
   };
 }());
@@ -1070,11 +1101,12 @@ function () {
       while (1) {
         switch (_context12.prev = _context12.next) {
           case 0:
+            log("\u0423\u0447\u0438\u0442\u0435\u043B\u044C ".concat(req.body.fio, " \u0431\u044B\u043B \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443."));
             _context12.t0 = res;
-            _context12.next = 3;
+            _context12.next = 4;
             return teacherTable.add(req.body);
 
-          case 3:
+          case 4:
             _context12.t1 = _context12.sent;
             _context12.t2 = {
               id: _context12.t1
@@ -1082,7 +1114,7 @@ function () {
 
             _context12.t0.json.call(_context12.t0, _context12.t2);
 
-          case 6:
+          case 7:
           case "end":
             return _context12.stop();
         }
@@ -1090,7 +1122,7 @@ function () {
     }, _callee11);
   }));
 
-  return function (_x21, _x22) {
+  return function (_x22, _x23) {
     return _ref11.apply(this, arguments);
   };
 }());
@@ -1124,7 +1156,7 @@ function () {
     }, _callee12);
   }));
 
-  return function (_x23, _x24) {
+  return function (_x24, _x25) {
     return _ref12.apply(this, arguments);
   };
 }());
@@ -1158,7 +1190,7 @@ function () {
     }, _callee13);
   }));
 
-  return function (_x25, _x26) {
+  return function (_x26, _x27) {
     return _ref13.apply(this, arguments);
   };
 }());
@@ -1206,11 +1238,12 @@ function () {
             break;
 
           case 12:
+            log("\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E ".concat(req.body.child.fio, " \u0431\u044B\u043B\u0430 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430."));
             res.json({
               status: b ? 'OK' : 'ERROR'
             });
 
-          case 13:
+          case 14:
           case "end":
             return _context15.stop();
         }
@@ -1218,7 +1251,7 @@ function () {
     }, _callee14);
   }));
 
-  return function (_x27, _x28) {
+  return function (_x28, _x29) {
     return _ref14.apply(this, arguments);
   };
 }());
@@ -1244,9 +1277,10 @@ function () {
             });
 
           case 4:
+            log("\u0420\u0435\u0431\u0451\u043D\u043E\u043A ".concat(req.body.fio, " \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u0438\u0437 \u0441\u0438\u0441\u0442\u0435\u043C\u044B."));
             res.sendStatus(200);
 
-          case 5:
+          case 6:
           case "end":
             return _context16.stop();
         }
@@ -1254,7 +1288,7 @@ function () {
     }, _callee15);
   }));
 
-  return function (_x29, _x30) {
+  return function (_x30, _x31) {
     return _ref15.apply(this, arguments);
   };
 }());
@@ -1277,11 +1311,12 @@ function () {
             });
 
           case 2:
+            log("\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E ".concat(req.body.fio, " \u0431\u044B\u043B\u0430 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430."));
             res.json({
               status: 'OK'
             });
 
-          case 3:
+          case 4:
           case "end":
             return _context17.stop();
         }
@@ -1289,7 +1324,7 @@ function () {
     }, _callee16);
   }));
 
-  return function (_x31, _x32) {
+  return function (_x32, _x33) {
     return _ref16.apply(this, arguments);
   };
 }());
@@ -1315,11 +1350,12 @@ function () {
             });
 
           case 4:
+            log("\u0423\u0447\u0438\u0442\u0435\u043B\u044C ".concat(req.body.fio, " \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u0438\u0437 \u0441\u0438\u0441\u0442\u0435\u043C\u044B."));
             res.json({
               status: 'OK'
             });
 
-          case 5:
+          case 6:
           case "end":
             return _context18.stop();
         }
@@ -1327,7 +1363,7 @@ function () {
     }, _callee17);
   }));
 
-  return function (_x33, _x34) {
+  return function (_x34, _x35) {
     return _ref17.apply(this, arguments);
   };
 }());
@@ -1374,11 +1410,15 @@ function () {
             break;
 
           case 11:
+            if (req.body.attendance) {
+              log("\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0442\u0430\u0431\u043B\u0438\u0446\u044B \u043F\u043E\u0441\u0435\u0449\u0430\u0435\u043C\u043E\u0441\u0442\u0438. \u0412\u0441\u0435\u0433\u043E \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u043E ".concat(req.body.attendance.length, " \u0441\u0442\u0440\u043E\u043A."));
+            }
+
             res.json({
               status: 'OK'
             });
 
-          case 12:
+          case 13:
           case "end":
             return _context19.stop();
         }
@@ -1386,7 +1426,7 @@ function () {
     }, _callee18);
   }));
 
-  return function (_x35, _x36) {
+  return function (_x36, _x37) {
     return _ref18.apply(this, arguments);
   };
 }());
@@ -1420,11 +1460,15 @@ function () {
             break;
 
           case 7:
+            if (req.body.ids) {
+              log("\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0442\u0430\u0431\u043B\u0438\u0446\u044B \u043F\u043E\u0441\u0435\u0449\u0430\u0435\u043C\u043E\u0441\u0442\u0438. \u0412\u0441\u0435\u0433\u043E \u0443\u0434\u0430\u043B\u0435\u043D\u043E ".concat(req.body.ids.length, " \u0441\u0442\u0440\u043E\u043A."));
+            }
+
             res.json({
               status: 'OK'
             });
 
-          case 8:
+          case 9:
           case "end":
             return _context20.stop();
         }
@@ -1432,7 +1476,7 @@ function () {
     }, _callee19);
   }));
 
-  return function (_x37, _x38) {
+  return function (_x38, _x39) {
     return _ref19.apply(this, arguments);
   };
 }());
@@ -1442,45 +1486,54 @@ function () {
   var _ref20 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee20(req, res) {
-    var child_id, annual;
+    var child_id, child, annual, forWhat;
     return regeneratorRuntime.wrap(function _callee20$(_context21) {
       while (1) {
         switch (_context21.prev = _context21.next) {
           case 0:
             child_id = req.body.child_id;
             _context21.next = 3;
+            return childTable.get({
+              where: "id = ".concat(child_id)
+            });
+
+          case 3:
+            child = _context21.sent;
+            _context21.next = 6;
             return annualPaymentTable.get({
               where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
             });
 
-          case 3:
+          case 6:
             annual = _context21.sent;
 
             if (!annual) {
-              _context21.next = 11;
+              _context21.next = 14;
               break;
             }
 
             delete req.body.child_id;
             delete req.body.time;
-            _context21.next = 9;
+            _context21.next = 12;
             return annualPaymentTable.update({
               val: req.body,
               where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
             });
 
-          case 9:
-            _context21.next = 13;
+          case 12:
+            _context21.next = 16;
             break;
 
-          case 11:
-            _context21.next = 13;
+          case 14:
+            _context21.next = 16;
             return annualPaymentTable.add(req.body);
 
-          case 13:
+          case 16:
+            forWhat = "".concat(req.body.fee ? "Ежегодный взнос" : "") + "".concat(req.body.book ? (req.body.fee ? ", " : "") + "Пособие" : "") + "".concat(req.body.fee_3 ? (req.body.fee || req.body.book ? ", " : "") + "Пособие_3" : "");
+            log("\u041F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0430 \u043E\u043F\u043B\u0430\u0442\u0430 \u0437\u0430 ".concat(forWhat, " \u043E\u0442 ").concat(child.fio, "."));
             res.sendStatus(200);
 
-          case 14:
+          case 19:
           case "end":
             return _context21.stop();
         }
@@ -1488,7 +1541,7 @@ function () {
     }, _callee20);
   }));
 
-  return function (_x39, _x40) {
+  return function (_x40, _x41) {
     return _ref20.apply(this, arguments);
   };
 }());
@@ -1498,17 +1551,26 @@ function () {
   var _ref21 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee21(req, res) {
+    var child;
     return regeneratorRuntime.wrap(function _callee21$(_context22) {
       while (1) {
         switch (_context22.prev = _context22.next) {
           case 0:
             _context22.next = 2;
-            return paymentTable.add(req.body);
+            return childTable.get({
+              where: "id = ".concat(req.body.child_id)
+            });
 
           case 2:
+            child = _context22.sent;
+            _context22.next = 5;
+            return paymentTable.add(req.body);
+
+          case 5:
+            log("\u041F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0430 \u043E\u043F\u043B\u0430\u0442\u0430 \u043D\u0430 \u0441\u0443\u043C\u043C\u0443 ".concat(req.body.amount, "\u0440 \u043E\u0442 ").concat(child.fio, " \u043F\u043E ").concat(req.body.type === '0' ? "безналичному" : "наличному", " \u0440\u0430\u0441\u0447\u0435\u0442\u0443."));
             res.sendStatus(200);
 
-          case 3:
+          case 7:
           case "end":
             return _context22.stop();
         }
@@ -1516,7 +1578,7 @@ function () {
     }, _callee21);
   }));
 
-  return function (_x41, _x42) {
+  return function (_x42, _x43) {
     return _ref21.apply(this, arguments);
   };
 }());
@@ -1526,23 +1588,31 @@ function () {
   var _ref22 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee22(req, res) {
+    var child;
     return regeneratorRuntime.wrap(function _callee22$(_context23) {
       while (1) {
         switch (_context23.prev = _context23.next) {
           case 0:
             _context23.next = 2;
+            return childTable.get({
+              where: "id = ".concat(req.body.child_id)
+            });
+
+          case 2:
+            child = _context23.sent;
+            _context23.next = 5;
             return vacationTable.remove({
               where: "child_id = ".concat(req.body.child_id)
             });
 
-          case 2:
-            _context23.next = 4;
+          case 5:
+            _context23.next = 7;
             return vacationTable.add(req.body);
 
-          case 4:
+          case 7:
             res.sendStatus(200);
 
-          case 5:
+          case 8:
           case "end":
             return _context23.stop();
         }
@@ -1550,7 +1620,7 @@ function () {
     }, _callee22);
   }));
 
-  return function (_x43, _x44) {
+  return function (_x44, _x45) {
     return _ref22.apply(this, arguments);
   };
 }());
@@ -1609,7 +1679,7 @@ function () {
     }, _callee23);
   }));
 
-  return function (_x45, _x46) {
+  return function (_x46, _x47) {
     return _ref23.apply(this, arguments);
   };
 }());
@@ -1627,7 +1697,6 @@ app.listen(port, address, function () {
   console.log('\t\x1b[1m\x1b[36mК сайту можно обратиться по ссылкам:\x1b[0m');
   console.log('\t\x1b[1m\x1b[36m - \x1b[4mhttp://127.0.0.1\x1b[0m \x1b[1m\x1b[36m-\x1b[0m');
   console.log('\t\x1b[1m\x1b[36m - \x1b[4mhttp://localhost\x1b[0m \x1b[1m\x1b[36m-\x1b[0m');
-  console.log();
   console.log();
   (0, _opn["default"])('http://localhost');
 });

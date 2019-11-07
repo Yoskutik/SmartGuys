@@ -8,6 +8,7 @@ $(window).ready(() => {
                     type: 'post',
                     data: {
                         id: el.data('id'),
+                        fio: el.find('input').val().trim(),
                     },
                     success: () => {
                         toast(`Учитель ${el.find('input').val().trim()} был удален`);

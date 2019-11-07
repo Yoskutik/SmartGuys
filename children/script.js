@@ -121,7 +121,7 @@ $(window).ready(() => {
         $('.children__add_form').append(`
             <span></span>
             <div class="children__add_schedule">
-                <span class="multyCheckbox">
+                <span class="multyCheckbox multyCheckbox_type">
                      <span class="multyCheckbox__item" style="background: white"></span>
                      <span class="multyCheckbox__item" style="background: #8869bf; display: none">Груп</span>
                      <span class="multyCheckbox__item" style="background: #5f6693; display: none">Ма 1</span>

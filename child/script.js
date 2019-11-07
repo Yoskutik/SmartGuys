@@ -95,6 +95,7 @@ $(window).ready(() => {
             type: 'post',
             data: {
                 id: child_id,
+                fio: $('input[name=fio]').val(),
             },
             success: () => {
                 location.reload();

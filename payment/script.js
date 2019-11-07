@@ -160,10 +160,11 @@ $(window).ready(() => {
             },
             success: () => {
                 let w = createVacation();
-                w.onload = () => {
-                    w.print();
-                    w.onclose = () => location.reload();
-                }
+                w.onafterprint = () => {
+                    w.close();
+                    location.reload();
+                };
+                w.onload = () => w.print();
             },
         });
 
