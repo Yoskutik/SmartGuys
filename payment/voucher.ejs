@@ -36,7 +36,7 @@ let additional = +query.additional;
     <% const passes = parseInt(query.passes); %>
     <% const passesIll = parseInt(query.passesIll); %>
     <% const attendanceAmount = count > 8 ? prices.visit * 8 : prices.visit * count; %>
-    <div class="row">
+    <div style="display: flex">
         <div style="margin: 20px 20px 0 20px; width: 400px;">
             <div class="payment">
                 <div class="payment__row">
@@ -216,8 +216,6 @@ let additional = +query.additional;
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div style="margin: 20px 20px 0 20px; width: 400px;">
             <div class="payment">
                 <div class="payment__row">

@@ -225,9 +225,7 @@ String.prototype.toCamelCase = function () {
 };
 
 function createVacation() {
-    let w = '440';
-    let h = '590';
-    let title = '';
+    let title = 'Кассовый чек';
     let url = encodeURI(`/payment/voucher/?${[
         `fio=${data.fio}`,
         `group=${$('.custom-number-input__input').eq(0).val()}/${data.attendance.group.passes}/${data.attendance.group.ill}`,
@@ -245,18 +243,5 @@ function createVacation() {
         `total=${getTotal()}`,
         `type=${+$('input[type=radio]:checked').val()}`,
     ].join('&')}`);
-    let dualScreenLeft = window.screenLeft || window.screenX;
-    let dualScreenTop = window.screenTop || window.screenY;
-
-    let width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-    let height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-
-    let systemZoom = width / window.screen.availWidth;
-    let left = (width - w) / 2 / systemZoom + dualScreenLeft;
-    let top = (height - h) / 2 / systemZoom + dualScreenTop;
-    return window.open(
-        url,
-        title,
-        'scrollbars=yes, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left
-    );
+    return window.open(url, title);
 }
