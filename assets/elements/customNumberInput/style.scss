@@ -1,0 +1,75 @@
+$customNumberInputHeight : 12px;
+
+.custom-number-input {
+  height: $customNumberInputHeight * 2 + 2px;
+  position: relative;
+  width: 50px;
+
+  &__input {
+    width: calc(100% - #{$customNumberInputHeight});
+    border: 1px solid lighten(gray, 20%);
+    border-radius: 5px 0 0 5px;
+    height: calc(100% - 1px);
+    box-sizing: border-box;
+    position: absolute;
+    outline: none;
+    padding: 3px;
+  }
+
+  &__up, &__down {
+    border: 1px solid lighten(gray, 20%);
+    position: absolute;
+    cursor: pointer;
+    height: 13px;
+    width: 13px;
+
+    &:hover {
+      background: #E0E0E0;
+    }
+
+    &:active {
+      background: darken(#E0E0E0, 20px);
+    }
+
+    &:before, &:after {
+      background: lighten(black, 30%);
+      position: absolute;
+      display: block;
+      height: 2px;
+      content: '';
+      width: 6px;
+      left: 1px;
+      top: 5px;
+    }
+  }
+
+  &__up {
+    border-radius: 0 5px 0 0;
+    right: 0;
+    top: 0;
+
+    &:before {
+      left: 4px;
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__down {
+    border-radius: 0 0 5px 0;
+    top: 12px;
+    right: 0;
+
+    &:before {
+      left: 4px;
+      transform: rotate(-45deg);
+    }
+
+    &:after {
+      transform: rotate(45deg);
+    }
+  }
+}

@@ -1,0 +1,124 @@
+@import '../assets/css/Variables';
+
+.navigation {
+  position: relative;
+  padding: 0;
+
+  &__link {
+    cursor: pointer;
+  }
+
+  &__update {
+    position: absolute;
+    cursor: pointer;
+    right: 4px;
+    top: 5px;
+  }
+
+  &__loader {
+    position: absolute;
+    display: none;
+    right: 0;
+    top: 1px;
+  }
+}
+
+.schedule {
+  border: 1px solid $border_color;
+  margin-bottom: 10px;
+  align-items: start;
+  border-top: none;
+  overflow: hidden;
+  display: flex;
+  padding: 0;
+
+  &__btns {
+    margin-bottom: 20px;
+    display: flex;
+    padding: 0;
+  }
+
+  &__children, &__teachers {
+    transition-duration: 0.8s;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    display: flex;
+    width: 100%;
+  }
+
+  &__weekday {
+    border: 1px solid $border_color;
+    border-radius: 5px 5px 0 0;
+    width: calc(100% / 3 - 20px);
+    margin: 10px;
+
+    &_title {
+      border-bottom: 1px solid $border_color;
+      padding: 5px 10px;
+      display: block;
+    }
+
+    &_list {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+
+      li {
+        border-bottom: 1px solid $border_color;
+        list-style: none;
+        cursor: pointer;
+        width: 100%;
+
+        & > div {
+          display: flex;
+          padding: 7px;
+
+          &:hover {
+            background: lighten($border_color, 5%);
+          }
+
+          &:active {
+            background: $border_color;
+          }
+        }
+
+        &:last-child {
+          margin-bottom: -1px;
+        }
+
+        .time {
+          margin-left: auto;
+        }
+      }
+
+      &.inner {
+        margin-bottom: -1px;
+        overflow: hidden;
+        max-height: 0;
+        transition-duration: 0.5s;
+
+        li {
+          border-top: 1px solid $border_color;
+          border-bottom: none;
+          position: relative;
+        }
+
+        div {
+          padding-left: 25px;
+        }
+
+        .multyCheckbox {
+          position: absolute;
+          color: #fff;
+          right: 7px;
+          top: 7px;
+        }
+      }
+    }
+  }
+}
+
+.alert .close {
+  user-select: none;
+  outline: none;
+}

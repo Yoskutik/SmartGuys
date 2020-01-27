@@ -1,0 +1,139 @@
+@import '../assets/css/Variables';
+
+.form {
+  margin: 5px 0 20px;
+
+  &__finder {
+    position: relative;
+    outline: none;
+    width: 100%;
+
+    &:after {
+      content: url(/assets/icons/search.png);
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+
+    &_input {
+      padding: 3px 34px 3px 3px;
+      height: 34px;
+      width: 100%;
+    }
+
+    &_loader {
+      position: absolute;
+      border-width: 3px;
+      display: none;
+      height: 24px;
+      width: 24px;
+      right: 6px;
+      top: 5px;
+    }
+
+    &_list {
+      position: absolute;
+      padding: 0;
+      z-index: 1;
+      width: 80%;
+      margin: 0;
+      top: 34px;
+    }
+  }
+
+  &__schedule {
+    position: relative;
+
+    &_title {
+      display: block;
+      padding: 5px;
+    }
+
+    &_children {
+      border: 1px solid lighten(gray, 10%);
+      flex-direction: column;
+      display: flex;
+
+      &-item {
+        border-bottom: 1px solid lighten(gray, 10%);
+        justify-content: space-between;
+        display: flex;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      &-title {
+        display: block;
+        padding: 5px;
+        width: 270px;
+      }
+
+      ul {
+        border-left: 1px solid lighten(gray, 10%);
+        padding: 0;
+        width: 80%;
+        margin: 0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      li {
+        border-bottom: none;
+        border-right: none;
+        border-left: none;
+      }
+    }
+
+    &_btns {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      button, a {
+        padding: 2px 6px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.li {
+  border: 1px solid  lighten(gray, 10%);
+  position: relative;
+  background: white;
+  margin-top: -1px;
+  list-style: none;
+  cursor: pointer;
+  width: 100%;
+
+  div {
+    align-items: center;
+    display: flex;
+    padding: 7px;
+
+    &:hover {
+      background: lighten($border_color, 5%);
+    }
+
+    &:active {
+      background: $border_color;
+    }
+  }
+
+  .at {
+    margin: 0 5px 0 auto;
+  }
+
+  .multyCheckbox {
+    position: absolute;
+    font-size: 14px;
+    right: -33px;
+    color: #fff;
+    top: 6px;
+  }
+}

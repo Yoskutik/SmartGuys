@@ -8,7 +8,6 @@
     <script src="/assets/elements/multyCheckbox/multyCheckbox.js"></script>
 </head>
 <body>
-<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
 <%- include('../assets/elements/header', {admin: admin}); %>
 <div class="body container-fluid">
     <div class="row justify-content-center">
@@ -62,11 +61,13 @@
                     <% if (Object.keys(teachers).length > 0) { %>
                         <div class="form__schedule_btns justify-content-end">
                             <button type="button" class="btn btn-info send">Отправить посещаемость</button>
+                            <a class="btn btn-info" href="/payment/report/" target="_blank">Сегодняшний расчет</a>
+                        </div>
+                    <% } else { %>
+                        <div class="form__schedule_btns justify-content-end">
+                            <a class="btn btn-info" href="/payment/report/" target="_blank">Сегодняшний расчет</a>
                         </div>
                     <% } %>
-                    <div class="form__schedule_btns justify-content-end">
-                        <button type="button" class="btn btn-info today_calculation">Сегодняшний расчет</button>
-                    </div>
                 </div>
             </div>
         </div>

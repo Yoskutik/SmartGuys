@@ -76,4 +76,9 @@ input[disabled], select[disabled] {
   content: url(/assets/icons/trash.png);
 }
 
+.children__add {
+  max-height: inherit;
+  overflow: visible;
+}
+
 /*# sourceMappingURL=style.css.map */

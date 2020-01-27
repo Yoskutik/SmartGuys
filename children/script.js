@@ -8,6 +8,11 @@ $(window).ready(() => {
     $('input').on('focus', e => e.target.classList.remove('border-danger'));
     $('.multyCheckbox').on('click', e => $(e.target).parent().removeClass('border-danger'));
 
+    if ($.cookie('payed')) {
+        toast($.cookie('payed'));
+        $.cookie('payed', '', { path: '/children/', expires: -1 });
+    }
+
     $('.children__add_buttons .add').on('click', () => {
         if (!verifyInputs()) return;
         let input = $('input');
@@ -147,6 +152,15 @@ $(window).ready(() => {
             </div>
         `);
         $('.time').mask('00:00-00:00');
+    });
+
+    $('.children__window_add button').on('click', () => {
+        $('.children__add').css('max-height', `${$('.children__add')[0].scrollHeight}px`);
+        $('.children__window_add').remove();
+        sleep(700).then(() => {
+            $('.children__window').css('margin-bottom', '0');
+            $('.children__add').css('overflow', 'visible');
+        });
     });
 });
 

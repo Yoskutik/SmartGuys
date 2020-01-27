@@ -40,7 +40,6 @@
     </style>
 </head>
 <body>
-<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
 <div class="body container-fluid">
     <div class="login">
         <form>
@@ -61,21 +60,9 @@
         expires.setMinutes(0);
         expires.setSeconds(0);
         expires.setTime(expires.getTime() + 24 * 60 * 60 * 1000);
-        // $.cookie('admin', $('input').val(), {
-        //     // domain: window.location.host,
-        //     path: ``,
-        //     expires,
-        // });
-        // $.ajax({
-        //     url: '/login/',
-        //     type: 'post',
-        //     data: {
-        //         fio: $('input').val()
-        //     },
-        //     success: data => {
-                window.location.href = `${window.location.origin}/?new_admin=${$('input').val()}`;
-            // }
-        // })
+        $.cookie('admin', $('input').val(), { path: '/', expires });
+        $.cookie('new_admin', '1', { path: '/' });
+        location.href = location.origin;
     });
 
     $('input').on('focus', () => $('input').removeClass('border-danger'));

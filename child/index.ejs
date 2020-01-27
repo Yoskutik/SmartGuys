@@ -14,11 +14,10 @@
     <script src="/child/script.js"></script>
 </head>
 <body>
-<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
 <%- include('../assets/elements/header', {admin: admin}); %>
 <div class="body container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="children__window">
             <% if (child) { %>
                 <div class="children__add">
                     <form class="children__add_form">

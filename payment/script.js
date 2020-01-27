@@ -13,24 +13,24 @@ $(window).ready(() => {
         if (this.checked) {
             $('.counter, .price__visit').css('display', 'flex');
             let val = $('.comment__message').val();
-            if (!val.includes('Посещаемость;'))
-                $('.comment__message').val(`${val} Посещаемость;`.trim());
+            if (!val.includes('Посещаемость,'))
+                $('.comment__message').val(`${val} Посещаемость,`.trim());
         } else {
             $('.counter, .price__visit').hide();
             let val = $('.comment__message').val();
-            $('.comment__message').val(val.replace(/Посещаемость;/g, '').trim());
+            $('.comment__message').val(val.replace(/Посещаемость,/g, '').trim());
         }
     });
 
     $('#fee').on('click', function() {
         if (this.checked) {
             let val = $('.comment__message').val();
-            if (!val.includes('Ежегодный взнос;'))
-                $('.comment__message').val(`${val} Ежегодный взнос;`.trim());
+            if (!val.includes('Ежегодный взнос,'))
+                $('.comment__message').val(`${val} Ежегодный взнос,`.trim());
         } else {
             $('.counter, .price__visit').hide();
             let val = $('.comment__message').val();
-            $('.comment__message').val(val.replace(/Ежегодный взнос;/g, '').trim());
+            $('.comment__message').val(val.replace(/Ежегодный взнос,/g, '').trim());
         }
     });
 
@@ -40,7 +40,7 @@ $(window).ready(() => {
             $(this).parent().find('.custom-number-input')
                 .find('input').trigger('change');
         else
-            $('.comment__message').val(val.replace(/Посещаемость \d+ р\.;/g, '').trim());
+            $('.comment__message').val(val.replace(/Посещаемость \d+ р\.,/g, '').trim());
     });
     $('#forMentalArifm1').on('click', function () {
         let val = $('.comment__message').val();
@@ -48,7 +48,7 @@ $(window).ready(() => {
             $(this).parent().find('.custom-number-input')
                 .find('input').trigger('change');
         else
-            $('.comment__message').val(val.replace(/Ментальная арифметика I \d+ р\.;/g, '').trim());
+            $('.comment__message').val(val.replace(/Ментальная арифметика I \d+ р\.,/g, '').trim());
     });
     $('#forMentalArifm2').on('click', function () {
         let val = $('.comment__message').val();
@@ -64,7 +64,7 @@ $(window).ready(() => {
             $(this).parent().find('.custom-number-input')
                 .find('input').trigger('change');
         else
-            $('.comment__message').val(val.replace(/Английский язык \d+ р\.;/g, '').trim());
+            $('.comment__message').val(val.replace(/Английский язык \d+ р\.,/g, '').trim());
     });
     $('#forPainting').on('click', function () {
         let val = $('.comment__message').val();
@@ -72,30 +72,30 @@ $(window).ready(() => {
             $(this).parent().find('.custom-number-input')
                 .find('input').trigger('change');
         else
-            $('.comment__message').val(val.replace(/ИЗО студия \d+ р\.;/g, '').trim());
+            $('.comment__message').val(val.replace(/ИЗО студия \d+ р\.,/g, '').trim());
     });
 
     $('#books').on('click', function() {
         if (this.checked) {
             let val = $('.comment__message').val();
-            if (!val.includes('Пособие;'))
-                $('.comment__message').val(`${val} Пособие;`.trim());
+            if (!val.includes('Пособие,'))
+                $('.comment__message').val(`${val} Пособие,`.trim());
         } else {
             $('.counter, .price__visit').hide();
             let val = $('.comment__message').val();
-            $('.comment__message').val(val.replace(/Пособие;/g, '').trim());
+            $('.comment__message').val(val.replace(/Пособие,/g, '').trim());
         }
     });
 
     $('#books_3').on('click', function() {
         if (this.checked) {
             let val = $('.comment__message').val();
-            if (!val.includes('Пособие;'))
-                $('.comment__message').val(`${val} Пособие 3;`.trim());
+            if (!val.includes('Пособие,'))
+                $('.comment__message').val(`${val} Пособие 3,`.trim());
         } else {
             $('.counter, .price__visit').hide();
             let val = $('.comment__message').val();
-            $('.comment__message').val(val.replace(/Пособие 3;/g, '').trim());
+            $('.comment__message').val(val.replace(/Пособие 3,/g, '').trim());
         }
     });
 
@@ -107,10 +107,10 @@ $(window).ready(() => {
             .on('change', function () {
                 if ($(this).parent().parent().find('input[type=checkbox]').is(':not(:checked)')) return;
                 let val = $('.comment__message').val();
-                val = val.replace(new RegExp(`${str} \\d+ р.;`, 'g'), '').trim();
+                val = val.replace(new RegExp(`${str} \\d+ р.,`, 'g'), '').trim();
                 $('.comment__message').val(val);
                 if (+this.value > 0)
-                    $('.comment__message').val(`${val} ${str} ${this.value} р.;`.trim());
+                    $('.comment__message').val(`${val} ${str} ${this.value} р.,`.trim());
             })
             .trigger('change');
     });
@@ -118,10 +118,10 @@ $(window).ready(() => {
     $('.additional').on('input', function () {
         $('.payment__row_body.total').text(`${getTotal()} ₽`);
         let val = $('.comment__message').val();
-        val = val.replace(/Дополнительно \d+ ₽;/g, '').trim();
+        val = val.replace(/Дополнительно \d+ ₽,/g, '').trim();
         $('.comment__message').val(val);
         if (+this.value > 0)
-            $('.comment__message').val(`${val} Дополнительно ${+this.value} ₽;`.trim());
+            $('.comment__message').val(`${val} Дополнительно ${+this.value} ₽,`.trim());
     });
 
     $('.pay').on('click', async () => {
@@ -148,13 +148,17 @@ $(window).ready(() => {
             });
         }
         await annualPost;
+        let [, , h, m] = new Date().toString().match(/\d+/g);
+        let total = getTotal();
+        let comment = $('.comment__message').val().trim();
+        comment = comment.charAt(comment.length - 1) === ',' ?  comment.substring(0, comment.length - 1) : comment;
         $.ajax({
             url: '/api/pay',
             type: 'post',
             data: {
-                amount: getTotal(),
-                time: getTime(),
-                comment: $('.comment__message').val(),
+                amount: total,
+                time: `${getTime()} ${h}:${m}`,
+                comment: comment,
                 type: +$('input[type=radio]:checked').val(),
                 child_id,
             },
@@ -162,7 +166,8 @@ $(window).ready(() => {
                 let w = createVacation();
                 w.onafterprint = () => {
                     w.close();
-                    location.reload();
+                    $.cookie('payed', `За ${data.fio} заплачено ${total}`, { path: '/children/' });
+                    location.href = '/children/';
                 };
                 w.onload = () => w.print();
             },

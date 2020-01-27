@@ -98,7 +98,8 @@ $(window).ready(() => {
                 fio: $('input[name=fio]').val(),
             },
             success: () => {
-                location.reload();
+                $.cookie('removed', $('input[name=fio]').val(), {path: '/'});
+                location.href = '/';
             }
         });
     });

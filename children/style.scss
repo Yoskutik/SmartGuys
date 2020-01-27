@@ -1,0 +1,196 @@
+@import '../assets/css/Variables';
+
+.body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.children {
+  height: calc(100% - 20px);
+
+  &__window {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    width: 630px;
+    margin-bottom: 100px;
+    position: relative;
+    transition-duration: 0.6s;
+
+    &_add {
+      position: absolute;
+      right: 0;
+
+      button {
+        position: relative;
+        top: 30px;
+      }
+    }
+  }
+
+  &__finder {
+    margin-bottom: 20px;
+    align-items: center;
+    position: relative;
+    display: flex;
+    width: 100%;
+
+    input {
+      padding-right: 30px;
+      margin-left: 10px;
+      flex: 1;
+    }
+
+    &:after {
+      content: url(/assets/icons/search.png);
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+
+    &_list {
+      right: 0;
+      top: 33px;
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+  }
+
+  &__add {
+    margin-bottom: 30px;
+    overflow: hidden;
+    transition-duration: 0.6s;
+    max-height: 0;
+    position: relative;
+    width: 100%;
+
+    &_title {
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    &_schedule {
+      align-items: center;
+      position: relative;
+      display: flex;
+
+      .fio {
+        margin-left: -1px;
+        flex: 1;
+      }
+
+      .weekdays {
+        width: 135px;
+      }
+
+      .time {
+        margin-left: -1px;
+        width: 105px;
+      }
+
+      .multyCheckbox {
+        margin-right: 5px;
+        color: white;
+      }
+
+      .add, .remove {
+        border: 1px solid $border_color;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        background: white;
+        cursor: pointer;
+        display: flex;
+        height: 24px;
+        right: -30px;
+        width: 24px;
+        top: 5px;
+
+        &:hover {
+          background: lighten($border_color, 5%);
+        }
+
+        &:active {
+          background: $border_color;
+        }
+      }
+
+      .add:after {
+        content: url(/assets/icons/add.png);
+      }
+
+      .remove:after {
+        content: url(/assets/icons/trash.png);
+      }
+
+      &_teachers {
+        top: 33px;
+        right: 0;
+      }
+    }
+
+    &_form {
+      grid-template-columns: 130px auto;
+      grid-gap: 10px;
+      display: grid;
+
+      & > span {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &_buttons {
+      display: flex;
+
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+input {
+  border: 1px solid $border_color;
+  padding: 3px;
+  height: 34px;
+}
+
+select.custom-select {
+  border-color: $border_color;
+  border-radius: 0;
+  height: 34px;
+  padding: 3px;
+}
+
+.dropdown_list {
+  border: 1px solid $border_color;
+  position: absolute;
+  display: none;
+  padding: 0;
+  z-index: 1;
+
+  li {
+    border-bottom: 1px solid $border_color;
+    background: white;
+    list-style: none;
+    cursor: pointer;
+    padding: 5px;
+
+    &:last-child {
+      border: none;
+    }
+
+    &:hover {
+      background: lighten($border_color, 5%);
+    }
+
+    &:active {
+      background: $border_color;
+    }
+  }
+}

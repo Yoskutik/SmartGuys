@@ -1,0 +1,73 @@
+@import '../assets/css/Variables';
+
+.teachers {
+  margin-top: 30px;
+
+  &__list {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    li {
+      border: 1px solid $border_color;
+      margin-bottom: -1px;
+      position: relative;
+      list-style: none;
+      cursor: pointer;
+      width: 100%;
+
+      & > input {
+        border: none;
+        background: white;
+        padding: 3px;
+        width: 100%;
+      }
+    }
+
+    span {
+      border: 1px solid $border_color;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      display: flex;
+      right: -30px;
+      height: 24px;
+      width: 24px;
+      top: 3px;
+
+      &.save:after {
+        content: url(/assets/icons/save.png);
+      }
+
+      &.update:after {
+        background: url(/assets/icons/refresh.png);
+        background-size: 16px 16px;
+        display: inline-block;
+        height: 16px;
+        width: 16px;
+        content: '';
+      }
+
+      &.remove {
+        right: -59px;
+
+        &:after {
+          content: url(/assets/icons/trash.png);
+        }
+      }
+
+      &:hover {
+        background: lighten($border_color, 5%);
+      }
+
+      &:active {
+        background: $border_color;
+      }
+    }
+  }
+}
+
+.btns {
+  display: flex;
+  margin: 10px 0 20px;
+}

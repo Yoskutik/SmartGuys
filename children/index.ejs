@@ -13,15 +13,17 @@
     </style>
 </head>
 <body>
-<%- include('../assets/elements/loader', {className: 'main-loader'}); %>
 <%- include('../assets/elements/header', {admin: admin}) %>
 <div class="body container-fluid">
     <div class="row justify-content-center children">
-        <div class="col-lg-6 col-md-8 col-sm-10">
+        <div class="children__window">
             <label class="children__finder">
                 Поиск ребенка:
                 <input type="text" placeholder="ФИО">
             </label>
+            <div class="children__window_add">
+                <button class="btn btn-info">Добавить нового ребенка</button>
+            </div>
             <ul class="children__finder_list dropdown_list"></ul>
             <div class="children__add">
                 <form class="children__add_form">

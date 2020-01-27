@@ -1,10 +1,4 @@
 /.idea/
-/src/
 /.babelrc
-/.gitignore
 /package.json
 /package-lock.json
-
-*.scss
-*.css.map
-*.md

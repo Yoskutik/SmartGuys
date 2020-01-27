@@ -1,0 +1,81 @@
+@import './node_modules/bootstrap/scss/bootstrap';
+@import './assets/css/Variables';
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: AleksandraC, sans-serif;
+}
+
+.header {
+  margin: 25px 0 20px;
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $border_color;
+
+  .container {
+    display: flex;
+    align-items: center;
+  }
+
+  .admin {
+    text-transform: none;
+    margin-left: auto;
+  }
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: 0.9s;
+  opacity: 1;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  transition-duration: 1s;
+  opacity: 0;
+  transform: translate(0, 100px);
+}
+
+.footer {
+  background-color: #1d262d;
+  padding: 15px 0 30px 0;
+  border-top: 2px solid #CCC;
+  color: white;
+  flex-wrap: wrap;
+  margin-top: auto;
+
+  .container {
+    position: relative;
+  }
+
+  &__copyright {
+    position: absolute;
+    right: 0;
+    font-size: 14px;
+    color: #869FB2;
+  }
+}
+
+@font-face {
+  font-family: Gotham;
+  src: url(assets/fonts/Gotham.otf);
+}
+
+@font-face {
+  font-family: AleksandraC;
+  src: url(assets/fonts/AleksandraC.otf);
+}

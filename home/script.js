@@ -16,8 +16,13 @@ $(window).ready(() => {
     updateTime();
 
     let params = new URLSearchParams(window.location.search);
-    if (params.get('new_admin')) {
-        toast(`Вы зашли под именем ${params.get('new_admin')}`);
+    if ($.cookie('new_admin')) {
+        toast(`Вы зашли под именем ${$.cookie('admin')}`);
+        $.cookie('new_admin', '', {expires: -1});
+    }
+    if ($.cookie('removed')) {
+        toast(`Ребенок ${$.cookie('removed')} удален.`);
+        $.cookie('removed', '', {expires: -1});
     }
 
     $('.form__schedule_children-item .li div').on('click', function() {
@@ -58,14 +63,7 @@ $(window).ready(() => {
         $(this).removeClass('border-danger');
     });
 
-    $('.today_calculation').on('click', () => {
-        $.ajax({
-            url: '/api/getTodayPayment',
-            type: 'post',
-            data: {},
-            success: data => {
-                toast(`Безналичный: ${data.nonCash} ₽, Наличный: ${data.cash} ₽`);
-            }
-        });
-    });
+    if (!$('.form__schedule_children').html().trim()) {
+        $('.form__schedule_children').css('border', 'none');
+    }
 });

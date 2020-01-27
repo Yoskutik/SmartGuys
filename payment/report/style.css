@@ -1,0 +1,92 @@
+.payments {
+  max-width: 1200px;
+  min-width: 800px;
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.payments td, .payments th {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+}
+.payments th {
+  text-align: center;
+}
+.payments .time {
+  width: 80px;
+  text-align: center;
+}
+.payments .amount {
+  width: 90px;
+}
+.payments td.amount {
+  text-align: right;
+}
+.payments .type {
+  width: 85px;
+}
+.payments .child, .payments .admin {
+  width: 200px;
+}
+.payments .child:not(th) {
+  cursor: pointer;
+}
+.payments .child:not(th):hover {
+  background: skyblue;
+}
+.payments .comment {
+  min-width: 290px;
+  max-width: 690px;
+  cursor: pointer;
+}
+.payments .comment span {
+  max-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+}
+.payments .comment:not(th):hover {
+  background: skyblue;
+}
+.payments .comment.unwrapped span {
+  max-height: initial;
+  white-space: initial;
+}
+.payments tr:first-child {
+  background: #f2f2f2;
+}
+.payments tr:nth-child(2n+2) {
+  background: #fafafa;
+}
+.payments tr:nth-child(n+2):hover {
+  background: lightgoldenrodyellow;
+}
+
+.total {
+  max-width: 1200px;
+  min-width: 800px;
+  width: 80%;
+  margin: 20px auto 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.total__table {
+  border-collapse: collapse;
+}
+.total__table td {
+  border: 1px solid #e0e0e0;
+  padding: 8px 15px;
+}
+.total__table td:last-child {
+  text-align: right;
+}
+.total__table tr:nth-child(2n+1) {
+  background: #fafafa;
+}
+.total__table tr:hover {
+  background: lightgoldenrodyellow;
+}
+
+/*# sourceMappingURL=style.css.map */

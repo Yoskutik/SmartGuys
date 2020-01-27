@@ -1,0 +1,117 @@
+.payments {
+  max-width: 1200px;
+  min-width: 800px;
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  td, th {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+  }
+
+  th {
+    text-align: center;
+  }
+
+  .time {
+    width: 80px;
+    text-align: center;
+  }
+
+  .amount {
+    width: 90px;
+  }
+
+  td.amount {
+    text-align: right;
+  }
+
+  .type {
+    width: 85px;
+  }
+
+  .child, .admin {
+    width: 200px;
+  }
+
+  .child {
+    &:not(th) {
+      cursor: pointer;
+
+      &:hover {
+        background: skyblue;
+      }
+    }
+  }
+
+  .comment {
+    min-width: 290px;
+    max-width: 690px;
+    cursor: pointer;
+
+    span {
+      max-height: 18px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+    }
+
+    &:not(th):hover {
+      background: skyblue;
+    }
+
+    &.unwrapped span{
+      max-height: initial;
+      white-space: initial;
+    }
+  }
+
+  tr {
+    &:first-child {
+      background: lighten(#e0e0e0, 7%);
+    }
+
+    &:nth-child(2n + 2) {
+      background: lighten(#e0e0e0, 10%);
+    }
+
+    &:nth-child(n + 2):hover {
+      background: lightgoldenrodyellow;
+    }
+  }
+}
+
+.total {
+  max-width: 1200px;
+  min-width: 800px;
+  width: 80%;
+  margin: 20px auto 0;
+  display: flex;
+  justify-content: flex-end;
+
+  &__table {
+    border-collapse: collapse;
+
+    td {
+      border: 1px solid #e0e0e0;
+      padding: 8px 15px;
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+
+    tr {
+      &:nth-child(2n + 1) {
+        background: lighten(#e0e0e0, 10%);
+      }
+
+      &:hover {
+        background: lightgoldenrodyellow;
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+@import '../assets/css/Variables';
+
+.disabled {
+  .add, .remove {
+    display: none;
+  }
+
+  .weekdays {
+    width: 126px;
+  }
+}
+
+input[disabled], select[disabled] {
+  background: #fff !important;
+  border-color: #fff;
+}
+
+.info {
+  justify-content: space-between;
+  display: flex;
+
+  &__attendance, &__payment-list {
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    display: flex;
+    width: 250px;
+
+    ul {
+      border: 1px solid $border_color;
+      overscroll-behavior-y: contain;
+      overflow: auto;
+      margin: 10px 0;
+      max-height: 150px;
+      width: 100%;
+      padding: 0;
+
+      li {
+        border-bottom: 1px solid $border_color;
+        justify-content: space-between;
+        margin-bottom: -1px;
+        list-style: none;
+        display: flex;
+        padding: 5px;
+        width: 100%;
+      }
+
+      .multyCheckbox {
+        color: #fff;
+      }
+    }
+
+    &__btns {
+      display: flex;
+      width: 100%;
+
+      button {
+        padding: 2px 4px;
+      }
+    }
+  }
+
+  &__payment-list {
+    width: calc(100% - 270px);
+
+    ul {
+      max-height: 200px;
+    }
+  }
+}
+
+.multyCheckbox_type {
+  width: 45px;
+  color: #fff;
+}
+.info__attendance .remove {
+  border: 1px solid #E0E0E0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.info__attendance .remove:after {
+  content: url(/assets/icons/trash.png);
+}
+
+.children__add {
+  max-height: inherit;
+  overflow: visible;
+}

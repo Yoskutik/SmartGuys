@@ -1,0 +1,65 @@
+@import 'Variables';
+
+.styled-checkbox {
+  display: none;
+
+  & + label {
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  // Box.
+  & + label:before {
+    content: '';
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 1px solid $border_color;
+    border-radius: 5px;
+  }
+
+  // Box hover
+  &:hover + label:before {
+    border-width: 0;
+    background: #f35429;
+  }
+
+  // Box checked
+  &:checked + label:before {
+    border-width: 0;
+    background: #f35429;
+  }
+
+  // Disabled state label.
+  &:disabled + label {
+    color: #b8b8b8;
+    cursor: auto;
+  }
+
+  // Disabled box.
+  &:disabled + label:before {
+    border-width: 0;
+    box-shadow: none;
+    background: #ddd;
+  }
+
+  // Check mark. Could be replaced with an image
+  &:checked + label:after {
+    content: url(/assets/icons/checked.png);
+    position: absolute;
+    left: 3px;
+    top: 5px;
+  }
+
+  &.danger + label:before {
+    border-color: #dc3545;
+  }
+}

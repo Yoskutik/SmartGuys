@@ -63,12 +63,12 @@ function log(_x) {
 function _log() {
   _log = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee24(message) {
+  regeneratorRuntime.mark(function _callee25(message) {
     var _toISOString$match, _toISOString$match2, yyyy, mm, dd, _toString$match, _toString$match2, h, m;
 
-    return regeneratorRuntime.wrap(function _callee24$(_context25) {
+    return regeneratorRuntime.wrap(function _callee25$(_context26) {
       while (1) {
-        switch (_context25.prev = _context25.next) {
+        switch (_context26.prev = _context26.next) {
           case 0:
             _toISOString$match = new Date().toISOString().match(/\d+/g), _toISOString$match2 = _slicedToArray(_toISOString$match, 3), yyyy = _toISOString$match2[0], mm = _toISOString$match2[1], dd = _toISOString$match2[2];
             _toString$match = new Date().toString().match(/\d+/g), _toString$match2 = _slicedToArray(_toString$match, 4), h = _toString$match2[2], m = _toString$match2[3];
@@ -76,10 +76,10 @@ function _log() {
 
           case 3:
           case "end":
-            return _context25.stop();
+            return _context26.stop();
         }
       }
-    }, _callee24);
+    }, _callee25);
   }));
   return _log.apply(this, arguments);
 }
@@ -115,47 +115,47 @@ function updateDayAttendance() {
 function _updateDayAttendance() {
   _updateDayAttendance = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee25() {
-    var attend, schedule, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, row;
+  regeneratorRuntime.mark(function _callee26() {
+    var attend, schedule, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, row;
 
-    return regeneratorRuntime.wrap(function _callee25$(_context26) {
+    return regeneratorRuntime.wrap(function _callee26$(_context27) {
       while (1) {
-        switch (_context26.prev = _context26.next) {
+        switch (_context27.prev = _context27.next) {
           case 0:
-            _context26.next = 2;
+            _context27.next = 2;
             return attendanceTable.get({
               where: "time = '".concat(getTime(), "'")
             });
 
           case 2:
-            attend = _context26.sent;
+            attend = _context27.sent;
 
             if (attend) {
-              _context26.next = 33;
+              _context27.next = 33;
               break;
             }
 
-            _context26.next = 6;
+            _context27.next = 6;
             return scheduleTable.getAll({
               where: "weekday = ".concat(new Date().getDay() - 1)
             });
 
           case 6:
-            schedule = _context26.sent;
-            _iteratorNormalCompletion2 = true;
-            _didIteratorError2 = false;
-            _iteratorError2 = undefined;
-            _context26.prev = 10;
-            _iterator2 = schedule[Symbol.iterator]();
+            schedule = _context27.sent;
+            _iteratorNormalCompletion3 = true;
+            _didIteratorError3 = false;
+            _iteratorError3 = undefined;
+            _context27.prev = 10;
+            _iterator3 = schedule[Symbol.iterator]();
 
           case 12:
-            if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-              _context26.next = 19;
+            if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
+              _context27.next = 19;
               break;
             }
 
-            row = _step2.value;
-            _context26.next = 16;
+            row = _step3.value;
+            _context27.next = 16;
             return attendanceTable.add({
               time: getTime(),
               type: 0,
@@ -164,50 +164,50 @@ function _updateDayAttendance() {
             });
 
           case 16:
-            _iteratorNormalCompletion2 = true;
-            _context26.next = 12;
+            _iteratorNormalCompletion3 = true;
+            _context27.next = 12;
             break;
 
           case 19:
-            _context26.next = 25;
+            _context27.next = 25;
             break;
 
           case 21:
-            _context26.prev = 21;
-            _context26.t0 = _context26["catch"](10);
-            _didIteratorError2 = true;
-            _iteratorError2 = _context26.t0;
+            _context27.prev = 21;
+            _context27.t0 = _context27["catch"](10);
+            _didIteratorError3 = true;
+            _iteratorError3 = _context27.t0;
 
           case 25:
-            _context26.prev = 25;
-            _context26.prev = 26;
+            _context27.prev = 25;
+            _context27.prev = 26;
 
-            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-              _iterator2["return"]();
+            if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+              _iterator3["return"]();
             }
 
           case 28:
-            _context26.prev = 28;
+            _context27.prev = 28;
 
-            if (!_didIteratorError2) {
-              _context26.next = 31;
+            if (!_didIteratorError3) {
+              _context27.next = 31;
               break;
             }
 
-            throw _iteratorError2;
+            throw _iteratorError3;
 
           case 31:
-            return _context26.finish(28);
+            return _context27.finish(28);
 
           case 32:
-            return _context26.finish(25);
+            return _context27.finish(25);
 
           case 33:
           case "end":
-            return _context26.stop();
+            return _context27.stop();
         }
       }
-    }, _callee25, null, [[10, 21, 25, 33], [26,, 28, 32]]);
+    }, _callee26, null, [[10, 21, 25, 33], [26,, 28, 32]]);
   }));
   return _updateDayAttendance.apply(this, arguments);
 }
@@ -222,11 +222,11 @@ function backup() {
 function _backup() {
   _backup = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee26() {
+  regeneratorRuntime.mark(function _callee27() {
     var dir, files, date, options;
-    return regeneratorRuntime.wrap(function _callee26$(_context27) {
+    return regeneratorRuntime.wrap(function _callee27$(_context28) {
       while (1) {
-        switch (_context27.prev = _context27.next) {
+        switch (_context28.prev = _context28.next) {
           case 0:
             dir = _path["default"].join(require('os').homedir(), '.smartGuys');
 
@@ -258,17 +258,17 @@ function _backup() {
                 hidden: (0, _md["default"])("".concat(getTime(), "qwertyuiop"))
               }
             };
-            _context27.next = 9;
+            _context28.next = 9;
             return (0, _request["default"])(options, function (err, res, body) {
               if (!err) console.log(res.body);
             });
 
           case 9:
           case "end":
-            return _context27.stop();
+            return _context28.stop();
         }
       }
-    }, _callee26);
+    }, _callee27);
   }));
   return _backup.apply(this, arguments);
 }
@@ -1039,38 +1039,135 @@ function () {
     return _ref9.apply(this, arguments);
   };
 }());
-app.post('/api/addChild',
+app.get('/payment/report/',
 /*#__PURE__*/
 function () {
   var _ref10 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee10(req, res) {
-    var child_id, i;
+    var payments, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, row;
+
     return regeneratorRuntime.wrap(function _callee10$(_context11) {
       while (1) {
         switch (_context11.prev = _context11.next) {
           case 0:
             _context11.next = 2;
-            return childTable.add(req.body.child);
+            return paymentTable.getAll({
+              where: "time LIKE '".concat(getTime(), "%'")
+            });
 
           case 2:
-            child_id = _context11.sent;
-            _context11.t0 = regeneratorRuntime.keys(req.body.schedule);
+            payments = _context11.sent;
+            _iteratorNormalCompletion2 = true;
+            _didIteratorError2 = false;
+            _iteratorError2 = undefined;
+            _context11.prev = 6;
+            _iterator2 = payments[Symbol.iterator]();
 
-          case 4:
-            if ((_context11.t1 = _context11.t0()).done) {
-              _context11.next = 10;
+          case 8:
+            if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
+              _context11.next = 16;
               break;
             }
 
-            i = _context11.t1.value;
+            row = _step2.value;
+            _context11.next = 12;
+            return childTable.get({
+              where: "id = ".concat(row.child_id)
+            });
+
+          case 12:
+            row.child = _context11.sent;
+
+          case 13:
+            _iteratorNormalCompletion2 = true;
             _context11.next = 8;
+            break;
+
+          case 16:
+            _context11.next = 22;
+            break;
+
+          case 18:
+            _context11.prev = 18;
+            _context11.t0 = _context11["catch"](6);
+            _didIteratorError2 = true;
+            _iteratorError2 = _context11.t0;
+
+          case 22:
+            _context11.prev = 22;
+            _context11.prev = 23;
+
+            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+              _iterator2["return"]();
+            }
+
+          case 25:
+            _context11.prev = 25;
+
+            if (!_didIteratorError2) {
+              _context11.next = 28;
+              break;
+            }
+
+            throw _iteratorError2;
+
+          case 28:
+            return _context11.finish(25);
+
+          case 29:
+            return _context11.finish(22);
+
+          case 30:
+            res.render('payment/report.ejs', {
+              admin: req.cookies.admin,
+              payments: payments
+            });
+
+          case 31:
+          case "end":
+            return _context11.stop();
+        }
+      }
+    }, _callee10, null, [[6, 18, 22, 30], [23,, 25, 29]]);
+  }));
+
+  return function (_x20, _x21) {
+    return _ref10.apply(this, arguments);
+  };
+}());
+app.post('/api/addChild',
+/*#__PURE__*/
+function () {
+  var _ref11 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee11(req, res) {
+    var child_id, i;
+    return regeneratorRuntime.wrap(function _callee11$(_context12) {
+      while (1) {
+        switch (_context12.prev = _context12.next) {
+          case 0:
+            _context12.next = 2;
+            return childTable.add(req.body.child);
+
+          case 2:
+            child_id = _context12.sent;
+            _context12.t0 = regeneratorRuntime.keys(req.body.schedule);
+
+          case 4:
+            if ((_context12.t1 = _context12.t0()).done) {
+              _context12.next = 10;
+              break;
+            }
+
+            i = _context12.t1.value;
+            _context12.next = 8;
             return scheduleTable.add(_objectSpread({}, req.body.schedule[i], {
               child_id: child_id
             }));
 
           case 8:
-            _context11.next = 4;
+            _context12.next = 4;
             break;
 
           case 10:
@@ -1080,41 +1177,6 @@ function () {
             });
 
           case 12:
-          case "end":
-            return _context11.stop();
-        }
-      }
-    }, _callee10);
-  }));
-
-  return function (_x20, _x21) {
-    return _ref10.apply(this, arguments);
-  };
-}());
-app.post('/api/addTeacher',
-/*#__PURE__*/
-function () {
-  var _ref11 = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee11(req, res) {
-    return regeneratorRuntime.wrap(function _callee11$(_context12) {
-      while (1) {
-        switch (_context12.prev = _context12.next) {
-          case 0:
-            log("\u0423\u0447\u0438\u0442\u0435\u043B\u044C ".concat(req.body.fio, " \u0431\u044B\u043B \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443."));
-            _context12.t0 = res;
-            _context12.next = 4;
-            return teacherTable.add(req.body);
-
-          case 4:
-            _context12.t1 = _context12.sent;
-            _context12.t2 = {
-              id: _context12.t1
-            };
-
-            _context12.t0.json.call(_context12.t0, _context12.t2);
-
-          case 7:
           case "end":
             return _context12.stop();
         }
@@ -1126,7 +1188,7 @@ function () {
     return _ref11.apply(this, arguments);
   };
 }());
-app.post('/api/getTeacher',
+app.post('/api/addTeacher',
 /*#__PURE__*/
 function () {
   var _ref12 = _asyncToGenerator(
@@ -1136,19 +1198,20 @@ function () {
       while (1) {
         switch (_context13.prev = _context13.next) {
           case 0:
+            log("\u0423\u0447\u0438\u0442\u0435\u043B\u044C ".concat(req.body.fio, " \u0431\u044B\u043B \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443."));
             _context13.t0 = res;
-            _context13.next = 3;
-            return teacherTable.getAll({
-              where: "fio LIKE '%".concat(req.body.fio, "%'"),
-              order: 'fio'
-            });
+            _context13.next = 4;
+            return teacherTable.add(req.body);
 
-          case 3:
+          case 4:
             _context13.t1 = _context13.sent;
+            _context13.t2 = {
+              id: _context13.t1
+            };
 
-            _context13.t0.json.call(_context13.t0, _context13.t1);
+            _context13.t0.json.call(_context13.t0, _context13.t2);
 
-          case 5:
+          case 7:
           case "end":
             return _context13.stop();
         }
@@ -1160,7 +1223,7 @@ function () {
     return _ref12.apply(this, arguments);
   };
 }());
-app.post('/api/getChild',
+app.post('/api/getTeacher',
 /*#__PURE__*/
 function () {
   var _ref13 = _asyncToGenerator(
@@ -1172,7 +1235,7 @@ function () {
           case 0:
             _context14.t0 = res;
             _context14.next = 3;
-            return childTable.getAll({
+            return teacherTable.getAll({
               where: "fio LIKE '%".concat(req.body.fio, "%'"),
               order: 'fio'
             });
@@ -1194,56 +1257,29 @@ function () {
     return _ref13.apply(this, arguments);
   };
 }());
-app.post('/api/updateChild',
+app.post('/api/getChild',
 /*#__PURE__*/
 function () {
   var _ref14 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee14(req, res) {
-    var b, i;
     return regeneratorRuntime.wrap(function _callee14$(_context15) {
       while (1) {
         switch (_context15.prev = _context15.next) {
           case 0:
-            _context15.next = 2;
-            return childTable.update({
-              where: "id = ".concat(req.body.id),
-              val: req.body.child
+            _context15.t0 = res;
+            _context15.next = 3;
+            return childTable.getAll({
+              where: "fio LIKE '%".concat(req.body.fio, "%'"),
+              order: 'fio'
             });
 
-          case 2:
-            b = _context15.sent;
-            _context15.next = 5;
-            return scheduleTable.remove({
-              where: "child_id = ".concat(req.body.id)
-            });
+          case 3:
+            _context15.t1 = _context15.sent;
+
+            _context15.t0.json.call(_context15.t0, _context15.t1);
 
           case 5:
-            _context15.t0 = regeneratorRuntime.keys(req.body.schedule);
-
-          case 6:
-            if ((_context15.t1 = _context15.t0()).done) {
-              _context15.next = 12;
-              break;
-            }
-
-            i = _context15.t1.value;
-            _context15.next = 10;
-            return scheduleTable.add(Object.assign(req.body.schedule[i], {
-              child_id: req.body.id
-            }));
-
-          case 10:
-            _context15.next = 6;
-            break;
-
-          case 12:
-            log("\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E ".concat(req.body.child.fio, " \u0431\u044B\u043B\u0430 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430."));
-            res.json({
-              status: b ? 'OK' : 'ERROR'
-            });
-
-          case 14:
           case "end":
             return _context15.stop();
         }
@@ -1255,32 +1291,56 @@ function () {
     return _ref14.apply(this, arguments);
   };
 }());
-app.post('/api/removeChild',
+app.post('/api/updateChild',
 /*#__PURE__*/
 function () {
   var _ref15 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee15(req, res) {
+    var b, i;
     return regeneratorRuntime.wrap(function _callee15$(_context16) {
       while (1) {
         switch (_context16.prev = _context16.next) {
           case 0:
             _context16.next = 2;
-            return childTable.remove({
-              where: "id = ".concat(req.body.id)
+            return childTable.update({
+              where: "id = ".concat(req.body.id),
+              val: req.body.child
             });
 
           case 2:
-            _context16.next = 4;
+            b = _context16.sent;
+            _context16.next = 5;
             return scheduleTable.remove({
               where: "child_id = ".concat(req.body.id)
             });
 
-          case 4:
-            log("\u0420\u0435\u0431\u0451\u043D\u043E\u043A ".concat(req.body.fio, " \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u0438\u0437 \u0441\u0438\u0441\u0442\u0435\u043C\u044B."));
-            res.sendStatus(200);
+          case 5:
+            _context16.t0 = regeneratorRuntime.keys(req.body.schedule);
 
           case 6:
+            if ((_context16.t1 = _context16.t0()).done) {
+              _context16.next = 12;
+              break;
+            }
+
+            i = _context16.t1.value;
+            _context16.next = 10;
+            return scheduleTable.add(Object.assign(req.body.schedule[i], {
+              child_id: req.body.id
+            }));
+
+          case 10:
+            _context16.next = 6;
+            break;
+
+          case 12:
+            log("\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E ".concat(req.body.child.fio, " \u0431\u044B\u043B\u0430 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430."));
+            res.json({
+              status: b ? 'OK' : 'ERROR'
+            });
+
+          case 14:
           case "end":
             return _context16.stop();
         }
@@ -1292,7 +1352,7 @@ function () {
     return _ref15.apply(this, arguments);
   };
 }());
-app.post('/api/updateTeacher',
+app.post('/api/removeChild',
 /*#__PURE__*/
 function () {
   var _ref16 = _asyncToGenerator(
@@ -1303,6 +1363,43 @@ function () {
         switch (_context17.prev = _context17.next) {
           case 0:
             _context17.next = 2;
+            return childTable.remove({
+              where: "id = ".concat(req.body.id)
+            });
+
+          case 2:
+            _context17.next = 4;
+            return scheduleTable.remove({
+              where: "child_id = ".concat(req.body.id)
+            });
+
+          case 4:
+            log("\u0420\u0435\u0431\u0451\u043D\u043E\u043A ".concat(req.body.fio, " \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u0438\u0437 \u0441\u0438\u0441\u0442\u0435\u043C\u044B."));
+            res.sendStatus(200);
+
+          case 6:
+          case "end":
+            return _context17.stop();
+        }
+      }
+    }, _callee16);
+  }));
+
+  return function (_x32, _x33) {
+    return _ref16.apply(this, arguments);
+  };
+}());
+app.post('/api/updateTeacher',
+/*#__PURE__*/
+function () {
+  var _ref17 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee17(req, res) {
+    return regeneratorRuntime.wrap(function _callee17$(_context18) {
+      while (1) {
+        switch (_context18.prev = _context18.next) {
+          case 0:
+            _context18.next = 2;
             return teacherTable.update({
               val: {
                 fio: req.body.fio
@@ -1318,33 +1415,33 @@ function () {
 
           case 4:
           case "end":
-            return _context17.stop();
+            return _context18.stop();
         }
       }
-    }, _callee16);
+    }, _callee17);
   }));
 
-  return function (_x32, _x33) {
-    return _ref16.apply(this, arguments);
+  return function (_x34, _x35) {
+    return _ref17.apply(this, arguments);
   };
 }());
 app.post('/api/removeTeacher',
 /*#__PURE__*/
 function () {
-  var _ref17 = _asyncToGenerator(
+  var _ref18 = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee17(req, res) {
-    return regeneratorRuntime.wrap(function _callee17$(_context18) {
+  regeneratorRuntime.mark(function _callee18(req, res) {
+    return regeneratorRuntime.wrap(function _callee18$(_context19) {
       while (1) {
-        switch (_context18.prev = _context18.next) {
+        switch (_context19.prev = _context19.next) {
           case 0:
-            _context18.next = 2;
+            _context19.next = 2;
             return teacherTable.remove({
               where: "id = ".concat(req.body.id)
             });
 
           case 2:
-            _context18.next = 4;
+            _context19.next = 4;
             return scheduleTable.remove({
               where: "teacher_id = ".concat(req.body.id)
             });
@@ -1357,56 +1454,56 @@ function () {
 
           case 6:
           case "end":
-            return _context18.stop();
+            return _context19.stop();
         }
       }
-    }, _callee17);
+    }, _callee18);
   }));
 
-  return function (_x34, _x35) {
-    return _ref17.apply(this, arguments);
+  return function (_x36, _x37) {
+    return _ref18.apply(this, arguments);
   };
 }());
 app.post('/api/addAttendance',
 /*#__PURE__*/
 function () {
-  var _ref18 = _asyncToGenerator(
+  var _ref19 = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee18(req, res) {
+  regeneratorRuntime.mark(function _callee19(req, res) {
     var i;
-    return regeneratorRuntime.wrap(function _callee18$(_context19) {
+    return regeneratorRuntime.wrap(function _callee19$(_context20) {
       while (1) {
-        switch (_context19.prev = _context19.next) {
+        switch (_context20.prev = _context20.next) {
           case 0:
-            _context19.t0 = regeneratorRuntime.keys(req.body.attendance);
+            _context20.t0 = regeneratorRuntime.keys(req.body.attendance);
 
           case 1:
-            if ((_context19.t1 = _context19.t0()).done) {
-              _context19.next = 11;
+            if ((_context20.t1 = _context20.t0()).done) {
+              _context20.next = 11;
               break;
             }
 
-            i = _context19.t1.value;
+            i = _context20.t1.value;
 
             if (!(req.body.attendance[i].time === undefined)) {
-              _context19.next = 5;
+              _context20.next = 5;
               break;
             }
 
-            return _context19.abrupt("continue", 1);
+            return _context20.abrupt("continue", 1);
 
           case 5:
-            _context19.next = 7;
+            _context20.next = 7;
             return attendanceTable.remove({
               where: "child_id = ".concat(req.body.attendance[i].child_id, " \n                AND time = '").concat(req.body.attendance[i].time, "'\n                AND lesson_type = ").concat(req.body.attendance[i].lesson_type)
             });
 
           case 7:
-            _context19.next = 9;
+            _context20.next = 9;
             return attendanceTable.add(req.body.attendance[i]);
 
           case 9:
-            _context19.next = 1;
+            _context20.next = 1;
             break;
 
           case 11:
@@ -1420,43 +1517,43 @@ function () {
 
           case 13:
           case "end":
-            return _context19.stop();
+            return _context20.stop();
         }
       }
-    }, _callee18);
+    }, _callee19);
   }));
 
-  return function (_x36, _x37) {
-    return _ref18.apply(this, arguments);
+  return function (_x38, _x39) {
+    return _ref19.apply(this, arguments);
   };
 }());
 app.post('/api/removeAttendance',
 /*#__PURE__*/
 function () {
-  var _ref19 = _asyncToGenerator(
+  var _ref20 = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee19(req, res) {
+  regeneratorRuntime.mark(function _callee20(req, res) {
     var i;
-    return regeneratorRuntime.wrap(function _callee19$(_context20) {
+    return regeneratorRuntime.wrap(function _callee20$(_context21) {
       while (1) {
-        switch (_context20.prev = _context20.next) {
+        switch (_context21.prev = _context21.next) {
           case 0:
-            _context20.t0 = regeneratorRuntime.keys(req.body.ids);
+            _context21.t0 = regeneratorRuntime.keys(req.body.ids);
 
           case 1:
-            if ((_context20.t1 = _context20.t0()).done) {
-              _context20.next = 7;
+            if ((_context21.t1 = _context21.t0()).done) {
+              _context21.next = 7;
               break;
             }
 
-            i = _context20.t1.value;
-            _context20.next = 5;
+            i = _context21.t1.value;
+            _context21.next = 5;
             return attendanceTable.remove({
               where: "id = ".concat(req.body.ids[i])
             });
 
           case 5:
-            _context20.next = 1;
+            _context21.next = 1;
             break;
 
           case 7:
@@ -1470,71 +1567,6 @@ function () {
 
           case 9:
           case "end":
-            return _context20.stop();
-        }
-      }
-    }, _callee19);
-  }));
-
-  return function (_x38, _x39) {
-    return _ref19.apply(this, arguments);
-  };
-}());
-app.post('/api/payAnnual',
-/*#__PURE__*/
-function () {
-  var _ref20 = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee20(req, res) {
-    var child_id, child, annual, forWhat;
-    return regeneratorRuntime.wrap(function _callee20$(_context21) {
-      while (1) {
-        switch (_context21.prev = _context21.next) {
-          case 0:
-            child_id = req.body.child_id;
-            _context21.next = 3;
-            return childTable.get({
-              where: "id = ".concat(child_id)
-            });
-
-          case 3:
-            child = _context21.sent;
-            _context21.next = 6;
-            return annualPaymentTable.get({
-              where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
-            });
-
-          case 6:
-            annual = _context21.sent;
-
-            if (!annual) {
-              _context21.next = 14;
-              break;
-            }
-
-            delete req.body.child_id;
-            delete req.body.time;
-            _context21.next = 12;
-            return annualPaymentTable.update({
-              val: req.body,
-              where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
-            });
-
-          case 12:
-            _context21.next = 16;
-            break;
-
-          case 14:
-            _context21.next = 16;
-            return annualPaymentTable.add(req.body);
-
-          case 16:
-            forWhat = "".concat(req.body.fee ? "Ежегодный взнос" : "") + "".concat(req.body.book ? (req.body.fee ? ", " : "") + "Пособие" : "") + "".concat(req.body.fee_3 ? (req.body.fee || req.body.book ? ", " : "") + "Пособие_3" : "");
-            log("\u041F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0430 \u043E\u043F\u043B\u0430\u0442\u0430 \u0437\u0430 ".concat(forWhat, " \u043E\u0442 ").concat(child.fio, "."));
-            res.sendStatus(200);
-
-          case 19:
-          case "end":
             return _context21.stop();
         }
       }
@@ -1545,32 +1577,60 @@ function () {
     return _ref20.apply(this, arguments);
   };
 }());
-app.post('/api/pay',
+app.post('/api/payAnnual',
 /*#__PURE__*/
 function () {
   var _ref21 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee21(req, res) {
-    var child;
+    var child_id, child, annual, forWhat;
     return regeneratorRuntime.wrap(function _callee21$(_context22) {
       while (1) {
         switch (_context22.prev = _context22.next) {
           case 0:
-            _context22.next = 2;
+            child_id = req.body.child_id;
+            _context22.next = 3;
             return childTable.get({
-              where: "id = ".concat(req.body.child_id)
+              where: "id = ".concat(child_id)
             });
 
-          case 2:
+          case 3:
             child = _context22.sent;
-            _context22.next = 5;
-            return paymentTable.add(req.body);
+            _context22.next = 6;
+            return annualPaymentTable.get({
+              where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
+            });
 
-          case 5:
-            log("\u041F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0430 \u043E\u043F\u043B\u0430\u0442\u0430 \u043D\u0430 \u0441\u0443\u043C\u043C\u0443 ".concat(req.body.amount, "\u0440 \u043E\u0442 ").concat(child.fio, " \u043F\u043E ").concat(req.body.type === '0' ? "безналичному" : "наличному", " \u0440\u0430\u0441\u0447\u0435\u0442\u0443."));
+          case 6:
+            annual = _context22.sent;
+
+            if (!annual) {
+              _context22.next = 14;
+              break;
+            }
+
+            delete req.body.child_id;
+            delete req.body.time;
+            _context22.next = 12;
+            return annualPaymentTable.update({
+              val: req.body,
+              where: "child_id = ".concat(child_id, " AND time LIKE '").concat(new Date().getFullYear(), "%'")
+            });
+
+          case 12:
+            _context22.next = 16;
+            break;
+
+          case 14:
+            _context22.next = 16;
+            return annualPaymentTable.add(req.body);
+
+          case 16:
+            forWhat = "".concat(req.body.fee ? "Ежегодный взнос" : "") + "".concat(req.body.book ? (req.body.fee ? ", " : "") + "Пособие" : "") + "".concat(req.body.fee_3 ? (req.body.fee || req.body.book ? ", " : "") + "Пособие_3" : "");
+            log("\u041F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0430 \u043E\u043F\u043B\u0430\u0442\u0430 \u0437\u0430 ".concat(forWhat, " \u043E\u0442 ").concat(child.fio, "."));
             res.sendStatus(200);
 
-          case 7:
+          case 19:
           case "end":
             return _context22.stop();
         }
@@ -1582,7 +1642,7 @@ function () {
     return _ref21.apply(this, arguments);
   };
 }());
-app.post('/api/addVacation',
+app.post('/api/pay',
 /*#__PURE__*/
 function () {
   var _ref22 = _asyncToGenerator(
@@ -1601,18 +1661,15 @@ function () {
           case 2:
             child = _context23.sent;
             _context23.next = 5;
-            return vacationTable.remove({
-              where: "child_id = ".concat(req.body.child_id)
-            });
+            return paymentTable.add(_objectSpread({}, req.body, {
+              admin: req.cookies.admin
+            }));
 
           case 5:
-            _context23.next = 7;
-            return vacationTable.add(req.body);
-
-          case 7:
+            log("\u041F\u0440\u043E\u0438\u0437\u0432\u0435\u0434\u0435\u043D\u0430 \u043E\u043F\u043B\u0430\u0442\u0430 \u043D\u0430 \u0441\u0443\u043C\u043C\u0443 ".concat(req.body.amount, "\u0440 \u043E\u0442 ").concat(child.fio, " \u043F\u043E ").concat(req.body.type === '0' ? "безналичному" : "наличному", " \u0440\u0430\u0441\u0447\u0435\u0442\u0443."));
             res.sendStatus(200);
 
-          case 8:
+          case 7:
           case "end":
             return _context23.stop();
         }
@@ -1624,54 +1681,37 @@ function () {
     return _ref22.apply(this, arguments);
   };
 }());
-app.post('/api/getTodayPayment',
+app.post('/api/addVacation',
 /*#__PURE__*/
 function () {
   var _ref23 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee23(req, res) {
-    var m, y, d, nonCash, cash;
+    var child;
     return regeneratorRuntime.wrap(function _callee23$(_context24) {
       while (1) {
         switch (_context24.prev = _context24.next) {
           case 0:
-            m = new Date().getMonth() + 1;
-            m = m > 9 ? m : '0' + m;
-            y = new Date().getFullYear();
-            d = new Date().getDate();
-            d = d > 9 ? d : '0' + d;
-            nonCash = 0;
-            _context24.next = 8;
-            return paymentTable.getAll({
-              where: "type = 0 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "'")
+            _context24.next = 2;
+            return childTable.get({
+              where: "id = ".concat(req.body.child_id)
             });
+
+          case 2:
+            child = _context24.sent;
+            _context24.next = 5;
+            return vacationTable.remove({
+              where: "child_id = ".concat(req.body.child_id)
+            });
+
+          case 5:
+            _context24.next = 7;
+            return vacationTable.add(req.body);
+
+          case 7:
+            res.sendStatus(200);
 
           case 8:
-            _context24.t0 = function (row) {
-              nonCash += row.amount;
-            };
-
-            _context24.sent.forEach(_context24.t0);
-
-            cash = 0;
-            _context24.next = 13;
-            return paymentTable.getAll({
-              where: "type = 1 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "'")
-            });
-
-          case 13:
-            _context24.t1 = function (row) {
-              cash += row.amount;
-            };
-
-            _context24.sent.forEach(_context24.t1);
-
-            res.json({
-              nonCash: nonCash,
-              cash: cash
-            });
-
-          case 16:
           case "end":
             return _context24.stop();
         }
@@ -1681,6 +1721,65 @@ function () {
 
   return function (_x46, _x47) {
     return _ref23.apply(this, arguments);
+  };
+}());
+app.post('/api/getTodayPayment',
+/*#__PURE__*/
+function () {
+  var _ref24 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee24(req, res) {
+    var m, y, d, nonCash, cash;
+    return regeneratorRuntime.wrap(function _callee24$(_context25) {
+      while (1) {
+        switch (_context25.prev = _context25.next) {
+          case 0:
+            m = new Date().getMonth() + 1;
+            m = m > 9 ? m : '0' + m;
+            y = new Date().getFullYear();
+            d = new Date().getDate();
+            d = d > 9 ? d : '0' + d;
+            nonCash = 0;
+            _context25.next = 8;
+            return paymentTable.getAll({
+              where: "type = 0 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "%'")
+            });
+
+          case 8:
+            _context25.t0 = function (row) {
+              nonCash += row.amount;
+            };
+
+            _context25.sent.forEach(_context25.t0);
+
+            cash = 0;
+            _context25.next = 13;
+            return paymentTable.getAll({
+              where: "type = 1 AND time LIKE '".concat(y, "-").concat(m, "-").concat(d, "%'")
+            });
+
+          case 13:
+            _context25.t1 = function (row) {
+              cash += row.amount;
+            };
+
+            _context25.sent.forEach(_context25.t1);
+
+            res.json({
+              nonCash: nonCash,
+              cash: cash
+            });
+
+          case 16:
+          case "end":
+            return _context25.stop();
+        }
+      }
+    }, _callee24);
+  }));
+
+  return function (_x48, _x49) {
+    return _ref24.apply(this, arguments);
   };
 }());
 app.use(function (request, response) {
