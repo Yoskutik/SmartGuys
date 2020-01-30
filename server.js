@@ -736,7 +736,7 @@ function () {
             _context6.t2 = _context6.sent;
             _context6.next = 9;
             return attendanceTable.getAll({
-              where: "child_id = ".concat(req.query.id, " \n                AND time LIKE '").concat(m === 1 ? year - 1 : year, "-").concat(m === 1 ? 12 : m > 9 ? m : '0' + m, "%' \n                AND lesson_type < 6")
+              where: "child_id = ".concat(req.query.id, " \n                AND time LIKE '").concat(m === 1 ? year - 1 : year, "-").concat(m === 1 ? 12 : m - 1 > 9 ? m - 1 : '0' + (m - 1), "%' \n                AND lesson_type < 6")
             });
 
           case 9:
