@@ -1,7 +1,11 @@
 <footer class="footer">
     <div class="container">
+        <span class="footer__by">
+            <span class="footer__version"></span>
+        </span>
         <span class="footer__copyright">
-            &copy; 2019 «Умники и умницы»
+            &copy; 2019<%- new Date().getFullYear() > 2019 ? `-${new Date().getFullYear()}` : '' %>
+            ИП Матвиенко О.А. «Умники и умницы»
         </span>
     </div>
 </footer>

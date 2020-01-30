@@ -24,6 +24,19 @@ function copy(copy, title, desrciption) {
 $(window)
     .ready(() => {
         $('.logout').on('click', () => $.removeCookie('admin', {path: '/'}));
+        $('.admin .fio').text($.cookie('admin'));
+        $('.footer__version')
+            .text(`v. ${$.cookie('version')}`)
+            .on('click', () => {
+                try {
+                    let date = new Date($.cookie('lastUpdateAt'));
+                    toast(`
+                        Версия № ${$.cookie('version')} <br>
+                        Последнее обновление: ${date.getDate()} ${$.cookie('lastUpdateAt').split(' ')[1]}
+                        ${date.getFullYear()}
+                    `);
+                } catch { }
+            });
     })
     .on('load', () => {
         console.timeEnd('Loaded');

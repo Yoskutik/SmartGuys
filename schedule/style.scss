@@ -71,6 +71,7 @@
 
         & > div {
           display: flex;
+          align-items: center;
           padding: 7px;
 
           &:hover {
@@ -88,6 +89,11 @@
 
         .time {
           margin-left: auto;
+          white-space: nowrap;
+        }
+
+        .fio {
+          margin-right: 12px;
         }
       }
 

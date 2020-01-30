@@ -14,7 +14,7 @@
     <script src="/child/script.js"></script>
 </head>
 <body>
-<%- include('../assets/elements/header', {admin: admin}); %>
+<%- include ../assets/elements/header.ejs %>
 <div class="body container-fluid">
     <div class="row justify-content-center">
         <div class="children__window">
@@ -110,41 +110,49 @@
                         <div class="info__payment-list">
                             Список оплат
                             <ul>
-                                <% payment.forEach(row => { %>
-                                    <li>
-                                        <% let [yyyy, mm, dd] = row.time.match(/\d+/g); %>
-                                        <%= `${dd}.${mm}.${yyyy}` %>
-                                        <%= row.amount %> ₽
-                                        <% if (row.comment) { %>
-                                            <br><%= row.comment %>
-                                        <% } %>
-                                    </li>
-                                <% }); %>
+                                <% if (payment.length) { %>
+                                    <% payment.forEach(row => { %>
+                                        <li>
+                                            <% let [yyyy, mm, dd] = row.time.match(/\d+/g); %>
+                                            <%= `${dd}.${mm}.${yyyy}` %>
+                                            <%= row.amount %> ₽
+                                            <% if (row.comment) { %>
+                                                <br><%= row.comment %>
+                                            <% } %>
+                                        </li>
+                                    <% }); %>
+                                <% } else { %>
+                                    <li style="text-align: center; display: block">Список оплат пуст</li>
+                                <% } %>
                             </ul>
                         </div>
                         <div class="info__attendance">
                             Посещаемость
                             <ul>
-                                <% attendance.forEach(row => { %>
-                                    <li data-time="<%= row.time %>" data-lesson-type="<%= row.lesson_type %>"
-                                        data-id="<%= row.id %>">
-                                        <% let [yyyy, mm, dd] = row.time.match(/\d+/g); %>
-                                        <%= `${dd}.${mm}.${yyyy}` %>
-                                        <div style="display: flex">
-                                            <span class="remove"></span>
-                                            <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
-                                                items: [
-                                                    {color: '#ededed'},
-                                                    {color: '#068f0f', content: {text: 'П'}},
-                                                    {color: '#e8e120', content: {text: 'Б'}},
-                                                    {color: '#e82020', content: {text: 'О'}},
-                                                ],
-                                                className: 'disabled',
-                                                chosen: row.type,
-                                            }); %>
-                                        </div>
-                                    </li>
-                                <% }) %>
+                                <% if (attendance.length) { %>
+                                    <% attendance.forEach(row => { %>
+                                        <li data-time="<%= row.time %>" data-lesson-type="<%= row.lesson_type %>"
+                                            data-id="<%= row.id %>">
+                                            <% let [yyyy, mm, dd] = row.time.match(/\d+/g); %>
+                                            <%= `${dd}.${mm}.${yyyy}` %>
+                                            <div style="display: flex">
+                                                <span class="remove"></span>
+                                                <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                                                    items: [
+                                                        {color: '#ededed'},
+                                                        {color: '#068f0f', content: {text: 'П'}},
+                                                        {color: '#e8e120', content: {text: 'Б'}},
+                                                        {color: '#e82020', content: {text: 'О'}},
+                                                    ],
+                                                    className: 'disabled',
+                                                    chosen: row.type,
+                                                }); %>
+                                            </div>
+                                        </li>
+                                    <% }) %>
+                                <% } else { %>
+                                    <li style="text-align: center; display: block">Список посещений пуст</li>
+                                <% } %>
                             </ul>
                             <div class="attendance__btns justify-content-end">
                                 <button type="button" class="btn btn-info change">Изменить</button>

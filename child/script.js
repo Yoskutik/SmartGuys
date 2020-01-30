@@ -202,7 +202,7 @@ $(window).ready(() => {
                 parent.find('.close').trigger('click');
                 toast('Посещаемость добавлена');
             },
-            error: toast('Что-то пошло не так')
+            error: () => toast('Что-то пошло не так')
         });
     });
 

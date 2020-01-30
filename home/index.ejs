@@ -8,7 +8,7 @@
     <script src="/assets/elements/multyCheckbox/multyCheckbox.js"></script>
 </head>
 <body>
-<%- include('../assets/elements/header', {admin: admin}); %>
+<%- include ../assets/elements/header.ejs %>
 <div class="body container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8 col-sm-10">
@@ -19,46 +19,52 @@
                         <span class="form__schedule_time"></span>
                     </span>
                     <div class="form__schedule_children">
-                        <% for (let teacher in teachers) { %>
-                            <div class="form__schedule_children-item">
-                                <span class="form__schedule_children-title">
-                                    <%= teacher %>
-                                </span>
-                                <ul>
-                                    <% teachers[teacher].forEach(child => { %>
-                                        <li class="li" data-id="<%= child.id %>" data-lesson-type="<%= child.lesson_type %>">
-                                            <div>
-                                                <span>
-                                                    <%= child.fio %>
-                                                    <% let years = child.years; %>
-                                                    <% if (Math.abs(years) > 4 || years === 0) { %>
-                                                        <small><%= years %> лет</small>
-                                                    <% } else if (Math.abs(years) > 1) { %>
-                                                        <small><%= years %> года</small>
-                                                    <% } else { %>
-                                                        <small><%= years %> год</small>
-                                                    <% } %>
-                                                </span>
-                                                    <span class="at">
-                                                    <%= child.time %>
-                                                </span>
-                                            </div>
-                                            <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
-                                                items: [
-                                                    {color: '#ededed'},
-                                                    {color: '#068f0f', content: {text: 'П'}},
-                                                    {color: '#e8e120', content: {text: 'Б'}},
-                                                    {color: '#e82020', content: {text: 'О'}},
-                                                ],
-                                                chosen: child.attendance ? child.attendance.type : 0,
-                                            }); %>
-                                        </li>
-                                    <% }) %>
-                                </ul>
+                        <% if (Object.keys(teachers).length) { %>
+                            <% for (let teacher in teachers) { %>
+                                <div class="form__schedule_children-item">
+                                    <span class="form__schedule_children-title">
+                                        <%= teacher %>
+                                    </span>
+                                    <ul>
+                                        <% teachers[teacher].forEach(child => { %>
+                                            <li class="li" data-id="<%= child.id %>" data-lesson-type="<%= child.lesson_type %>">
+                                                <div>
+                                                    <span>
+                                                        <%= child.fio %>
+                                                        <% let years = child.years; %>
+                                                        <% if (Math.abs(years) > 4 || years === 0) { %>
+                                                            <small><%= years %> лет</small>
+                                                        <% } else if (Math.abs(years) > 1) { %>
+                                                            <small><%= years %> года</small>
+                                                        <% } else { %>
+                                                            <small><%= years %> год</small>
+                                                        <% } %>
+                                                    </span>
+                                                        <span class="at">
+                                                        <%= child.time %>
+                                                    </span>
+                                                </div>
+                                                <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                                                    items: [
+                                                        {color: '#ededed'},
+                                                        {color: '#068f0f', content: {text: 'П'}},
+                                                        {color: '#e8e120', content: {text: 'Б'}},
+                                                        {color: '#e82020', content: {text: 'О'}},
+                                                    ],
+                                                    chosen: child.attendance ? child.attendance.type : 0,
+                                                }); %>
+                                            </li>
+                                        <% }) %>
+                                    </ul>
+                                </div>
+                            <% } %>
+                        <% } else { %>
+                            <div style="text-align: center; padding: 12px;">
+                                В данный момент занятий нет.
                             </div>
                         <% } %>
                     </div>
-                    <% if (Object.keys(teachers).length > 0) { %>
+                    <% if (Object.keys(teachers).length) { %>
                         <div class="form__schedule_btns justify-content-end">
                             <button type="button" class="btn btn-info send">Отправить посещаемость</button>
                             <a class="btn btn-info" href="/payment/report/" target="_blank">Сегодняшний расчет</a>

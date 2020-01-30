@@ -11,7 +11,7 @@
     </script>
 </head>
 <body>
-<%- include('../assets/elements/header', {admin: admin}); %>
+<%- include ../assets/elements/header.ejs %>
 <div class="body container-fluid">
     <div class="row justify-content-center">
         <% if (new Date().getDay() === 7) { %>
@@ -62,7 +62,7 @@
                             <% schedule.teachers[i].forEach(teacher => { %>
                                 <li class="teacher-item">
                                     <div>
-                                        <%= teacher.fio %>
+                                        <span class="fio"><%= teacher.fio %></span>
                                         <span class="time"><%= teacher.time %></span>
                                     </div>
                                     <ul class="schedule__weekday_list inner">

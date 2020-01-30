@@ -152,14 +152,16 @@ $(window).ready(() => {
             </div>
         `);
         $('.time').mask('00:00-00:00');
+        $('.children__window_add button').trigger('click');
     });
 
     $('.children__window_add button').on('click', () => {
         $('.children__add').css('max-height', `${$('.children__add')[0].scrollHeight}px`);
-        $('.children__window_add').remove();
+        $('.children__window').css('margin-bottom', '20px');
+        $('.children__window_add').hide();
         sleep(700).then(() => {
-            $('.children__window').css('margin-bottom', '0');
             $('.children__add').css('overflow', 'visible');
+            sleep(700).then(() => $('.children__add').css('transition-duration', '0s'));
         });
     });
 });

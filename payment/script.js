@@ -166,7 +166,7 @@ $(window).ready(() => {
                 let w = createVacation();
                 w.onafterprint = () => {
                     w.close();
-                    $.cookie('payed', `За ${data.fio} заплачено ${total}`, { path: '/children/' });
+                    $.cookie('payed', `За ${data.fio} заплачено ${total} ₽`, { path: '/children/' });
                     location.href = '/children/';
                 };
                 w.onload = () => w.print();

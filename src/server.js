@@ -28,7 +28,7 @@ let annualPaymentTable = new Table('annual_payment');
 async function log(message) {
     let [yyyy, mm, dd] = new Date().toISOString().match(/\d+/g);
     let [, , h, m] = new Date().toString().match(/\d+/g);
-    console.log(`\x1b[1m\x1b[36m[\x1b[4m${dd}.${mm}.${yyyy} ${h}:${m}\x1b[0m\x1b[1m\x1b[36m] ${message}\x1b[0m`);
+    console.log(`[${dd}.${mm}.${yyyy} ${h}:${m}] ${message}`);
 }
 
 // Requisites
@@ -51,6 +51,14 @@ let ITN, PSRN, prices;
         logopedist: parseInt(lines[9].match(/\d+/)[0]),
         psychologist: parseInt(lines[10].match(/\d+/)[0]),
     }
+})();
+
+//version
+let version, lastUpdateAt;
+(() => {
+    let lines = fs.readFileSync('./version.txt', 'utf-8').split('\n');
+    version = lines[0].replace('current version: ', '');
+    lastUpdateAt = lines[1].replace('last update: ', '');
 })();
 
 // Attendance daily table update
@@ -126,6 +134,11 @@ app.set('view engine', '.ejs');
 app.set('views', __dirname);
 
 app.use((req, res, next) => {
+    if (req.cookies.version !== version || res.cookie.lastUpdateAt !== lastUpdateAt) {
+        res.cookie('version', version, {path: '/'});
+        res.cookie('lastUpdateAt', lastUpdateAt, {path: '/'});
+    }
+
     if (req.method === 'GET'
             && !req.url.match(/\/.+\..+$/)
             && !req.cookies.admin) {
@@ -135,7 +148,7 @@ app.use((req, res, next) => {
     }
 });
 
-app.get('/',          async (req, res) => {
+app.get('/',                    async (req, res) => {
     let childrenDict = {};
     (await childTable.getAll({columns: 'id, fio, birthday'}))
         .forEach(c => {
@@ -175,15 +188,12 @@ app.get('/',          async (req, res) => {
         });
     }
 
-    res.render('home/index.ejs', {
-        admin: req.query.new_admin || req.cookies.admin,
-        teachers,
-    });
+    res.render('home/index.ejs', { teachers });
 });
-app.get('/children/', async (req, res) => {
-    res.render('children/index.ejs', {admin: req.cookies.admin})
+app.get('/children/',           async (req, res) => {
+    res.render('children/index.ejs');
 });
-app.get('/schedule/', async (req, res) => {
+app.get('/schedule/',           async (req, res) => {
     let childrenDict = {};
     (await childTable.getAll({columns: 'id, fio, birthday'}))
         .forEach(c => {
@@ -254,19 +264,15 @@ app.get('/schedule/', async (req, res) => {
         }
     }
 
-    res.render('schedule/index.ejs', {
-        admin: req.cookies.admin,
-        schedule,
-    });
+    res.render('schedule/index.ejs', { schedule });
 });
-app.get('/child/',    async (req, res) => {
+app.get('/child/',              async (req, res) => {
     let schedule = await scheduleTable.getAll({where: `child_id = ${req.query.id}`, order: 'weekday'});
     let child =  await childTable.get({where: `id = ${req.query.id}`});
     for (let i in schedule) {
         schedule[i].teacher = await teacherTable.get({where: `id = ${schedule[i].teacher_id}`});
     }
     res.render('child/index.ejs', {
-        admin: req.cookies.admin,
         child,
         schedule,
         attendance: await attendanceTable.getAll({
@@ -282,11 +288,10 @@ app.get('/child/',    async (req, res) => {
         })
     });
 });
-app.get('/payment/',  async (req, res) => {
+app.get('/payment/',            async (req, res) => {
     let m = new Date().getMonth() + 1;
     let year = new Date().getFullYear();
     res.render('payment/index.ejs', {
-        admin: req.cookies.admin,
         child: await childTable.get({
             where: `id = ${req.query.id}`
         }),
@@ -310,15 +315,13 @@ app.get('/payment/voucher/',    async (req, res) => {
         prices,
         ITN,
         PSRN,
-        admin: req.cookies.admin,
     })
 });
-app.get('/login/',    async (req, res) => {
+app.get('/login/',              async (req, res) => {
     res.render('login/index.ejs');
 });
-app.get('/teachers/', async (req, res) => {
+app.get('/teachers/',           async (req, res) => {
     res.render('teachers/index.ejs', {
-        admin: req.cookies.admin,
         teachers: await teacherTable.getAll(),
     })
 });
@@ -351,7 +354,6 @@ app.get('/teachers/schedule/',  async (req, res) => {
     }
 
     res.render('teachers/schedule.ejs', {
-        admin: req.cookies.admin,
         schedule,
         fio: (await teacherTable.get({
             where: `id = ${req.query.id}`,
@@ -365,10 +367,10 @@ app.get('/payment/report/',     async (req, res) => {
     for (let row of payments) {
         row.child = await childTable.get({where: `id = ${row.child_id}`});
     }
-    res.render('payment/report/index.ejs', {admin: req.cookies.admin, payments});
+    res.render('payment/report/index.ejs', { payments });
 });
 
-app.post('/api/addChild',      async (req, res) => {
+app.post('/api/addChild',           async (req, res) => {
     let child_id = await childTable.add(req.body.child);
 
     for (let i in req.body.schedule) {
@@ -378,17 +380,17 @@ app.post('/api/addChild',      async (req, res) => {
     log(`Ребёнок ${req.body.child.fio} был добавлен в систему.`);
     res.json({status: 'OK'});
 });
-app.post('/api/addTeacher',    async (req, res) => {
+app.post('/api/addTeacher',         async (req, res) => {
     log(`Учитель ${req.body.fio} был добавлен в систему.`);
     res.json({id: await teacherTable.add(req.body)});
 });
-app.post('/api/getTeacher',    async (req, res) => {
+app.post('/api/getTeacher',         async (req, res) => {
     res.json(await teacherTable.getAll({where: `fio LIKE '%${req.body.fio}%'`, order: 'fio'}));
 });
-app.post('/api/getChild',      async (req, res) => {
+app.post('/api/getChild',           async (req, res) => {
     res.json(await childTable.getAll({where: `fio LIKE '%${req.body.fio}%'`, order: 'fio'}));
 });
-app.post('/api/updateChild',   async (req, res) => {
+app.post('/api/updateChild',        async (req, res) => {
     let b = await childTable.update({
         where: `id = ${req.body.id}`,
         val: req.body.child,
@@ -402,7 +404,7 @@ app.post('/api/updateChild',   async (req, res) => {
     log(`Информация о ${req.body.child.fio} была обновлена.`);
     res.json({status: b ? 'OK' : 'ERROR'});
 });
-app.post('/api/removeChild',   async (req, res) => {
+app.post('/api/removeChild',        async (req, res) => {
     await childTable.remove({
         where: `id = ${req.body.id}`,
     });
@@ -412,7 +414,7 @@ app.post('/api/removeChild',   async (req, res) => {
     log(`Ребёнок ${req.body.fio} был удален из системы.`);
     res.sendStatus(200);
 });
-app.post('/api/updateTeacher', async (req, res) => {
+app.post('/api/updateTeacher',      async (req, res) => {
     await teacherTable.update({
         val: {fio: req.body.fio},
         where: `id = ${req.body.id}`,
@@ -420,7 +422,7 @@ app.post('/api/updateTeacher', async (req, res) => {
     log(`Информация о ${req.body.fio} была обновлена.`);
     res.json({status: 'OK'});
 });
-app.post('/api/removeTeacher', async (req, res) => {
+app.post('/api/removeTeacher',      async (req, res) => {
     await teacherTable.remove({
         where: `id = ${req.body.id}`
     });
@@ -430,7 +432,7 @@ app.post('/api/removeTeacher', async (req, res) => {
     log(`Учитель ${req.body.fio} был удален из системы.`);
     res.json({status: 'OK'});
 });
-app.post('/api/addAttendance', async (req, res) => {
+app.post('/api/addAttendance',      async (req, res) => {
     for (let i in req.body.attendance) {
         // ¯\_(ツ)_/¯ Это трогать нельзя
         if (req.body.attendance[i].time === undefined) continue;
@@ -455,7 +457,7 @@ app.post('/api/removeAttendance',   async (req, res) => {
     }
     res.json({status: 'OK'});
 });
-app.post('/api/payAnnual',     async (req, res) => {
+app.post('/api/payAnnual',          async (req, res) => {
     let child_id = req.body.child_id;
     let child = await childTable.get({where: `id = ${child_id}`});
     let annual = await annualPaymentTable.get({
@@ -477,7 +479,7 @@ app.post('/api/payAnnual',     async (req, res) => {
     log(`Произведена оплата за ${forWhat} от ${child.fio}.`);
     res.sendStatus(200);
 });
-app.post('/api/pay',           async (req, res) => {
+app.post('/api/pay',                async (req, res) => {
     let child = await childTable.get({where: `id = ${req.body.child_id}`});
     await paymentTable.add({
         ...(req.body),
@@ -486,7 +488,7 @@ app.post('/api/pay',           async (req, res) => {
     log(`Произведена оплата на сумму ${req.body.amount}р от ${child.fio} по ${req.body.type === '0' ? "безналичному" : "наличному"} расчету.`);
     res.sendStatus(200);
 });
-app.post('/api/addVacation',   async (req, res) => {
+app.post('/api/addVacation',        async (req, res) => {
     let child = await childTable.get({where: `id = ${req.body.child_id}`});
     await vacationTable.remove({
         where: `child_id = ${req.body.child_id}`,
@@ -506,13 +508,10 @@ app.use(function (request, response) {
 
 app.listen(port, address, () => {
     console.clear();
-    console.log();
-    console.log();
-    console.log('\t\x1b[1m\x1b[36mДобро пожаловать в \x1b[4mУмники и Умницы. Администрирование\x1b[0m\x1b[1m\x1b[36m!\x1b[0m');
-    console.log('\t\x1b[1m\x1b[36mК сайту можно обратиться по ссылкам:\x1b[0m');
-    console.log('\t\x1b[1m\x1b[36m - \x1b[4mhttp://127.0.0.1\x1b[0m \x1b[1m\x1b[36m-\x1b[0m');
-    console.log('\t\x1b[1m\x1b[36m - \x1b[4mhttp://localhost\x1b[0m \x1b[1m\x1b[36m-\x1b[0m');
-    console.log();
+    console.log('Добро пожаловать в Умники и Умницы. Администрирование!');
+    console.log('К сайту можно обратиться по ссылкам:');
+    console.log('  - http://127.0.0.1 -');
+    console.log('  - http://localhost -');
     opn('http://localhost');
 });
 

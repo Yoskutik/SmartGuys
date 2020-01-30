@@ -197,7 +197,7 @@ let additional = +query.additional;
                 </div>
                 <div class="payment__row">
                     <span class="payment__row_title">Администратор:</span>
-                    <div class="payment__row_body"><%= admin %></div>
+                    <div class="payment__row_body admin__fio"></div>
                 </div>
                 <div class="payment__row payment__total">
                     <span class="payment__row_title">ИП Матвиенко О.А.</span>
@@ -372,7 +372,7 @@ let additional = +query.additional;
                 </div>
                 <div class="payment__row">
                     <span class="payment__row_title">Администратор:</span>
-                    <div class="payment__row_body"><%= admin %></div>
+                    <div class="payment__row_body admin__fio"></div>
                 </div>
                 <div class="payment__row payment__total">
                     <span class="payment__row_title">ИП Матвиенко О.А.</span>
@@ -393,5 +393,10 @@ let additional = +query.additional;
         </div>
     </div>
 </div>
+<script>
+    $(window).ready(() => {
+        $('.admin__fio').text($.cookie('admin'));
+    });
+</script>
 </body>
 </html>

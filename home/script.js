@@ -63,7 +63,7 @@ $(window).ready(() => {
         $(this).removeClass('border-danger');
     });
 
-    if (!$('.form__schedule_children').html().trim()) {
-        $('.form__schedule_children').css('border', 'none');
-    }
+    $('.form__schedule_children-item').each((i, el) => {
+        console.log(i, el);
+    })
 });

@@ -1,102 +1,111 @@
 .navigation {
   position: relative;
-  padding: 0; }
-  .navigation__link {
-    cursor: pointer; }
-  .navigation__update {
-    position: absolute;
-    cursor: pointer;
-    right: 4px;
-    top: 5px; }
-  .navigation__loader {
-    position: absolute;
-    display: none;
-    right: 0;
-    top: 1px; }
+  padding: 0;
+}
+.navigation__link {
+  cursor: pointer;
+}
+.navigation__update {
+  position: absolute;
+  cursor: pointer;
+  right: 4px;
+  top: 5px;
+}
+.navigation__loader {
+  position: absolute;
+  display: none;
+  right: 0;
+  top: 1px;
+}
 
 .schedule {
   border: 1px solid #E0E0E0;
   margin-bottom: 10px;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
+  align-items: start;
   border-top: none;
   overflow: hidden;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  padding: 0; }
-  .schedule__btns {
-    margin-bottom: 20px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    padding: 0; }
-  .schedule__children, .schedule__teachers {
-    -webkit-transition-duration: 0.8s;
-            transition-duration: 0.8s;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -ms-flex-negative: 0;
-        flex-shrink: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    width: 100%; }
-  .schedule__weekday {
-    border: 1px solid #E0E0E0;
-    border-radius: 5px 5px 0 0;
-    width: calc(100% / 3 - 20px);
-    margin: 10px; }
-    .schedule__weekday_title {
-      border-bottom: 1px solid #E0E0E0;
-      padding: 5px 10px;
-      display: block; }
-    .schedule__weekday_list {
-      width: 100%;
-      padding: 0;
-      margin: 0; }
-      .schedule__weekday_list li {
-        border-bottom: 1px solid #E0E0E0;
-        list-style: none;
-        cursor: pointer;
-        width: 100%; }
-        .schedule__weekday_list li > div {
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          padding: 7px; }
-          .schedule__weekday_list li > div:hover {
-            background: #ededed; }
-          .schedule__weekday_list li > div:active {
-            background: #E0E0E0; }
-        .schedule__weekday_list li:last-child {
-          margin-bottom: -1px; }
-        .schedule__weekday_list li .time {
-          margin-left: auto; }
-      .schedule__weekday_list.inner {
-        margin-bottom: -1px;
-        overflow: hidden;
-        max-height: 0;
-        -webkit-transition-duration: 0.5s;
-                transition-duration: 0.5s; }
-        .schedule__weekday_list.inner li {
-          border-top: 1px solid #E0E0E0;
-          border-bottom: none;
-          position: relative; }
-        .schedule__weekday_list.inner div {
-          padding-left: 25px; }
-        .schedule__weekday_list.inner .multyCheckbox {
-          position: absolute;
-          color: #fff;
-          right: 7px;
-          top: 7px; }
+  padding: 0;
+}
+.schedule__btns {
+  margin-bottom: 20px;
+  display: flex;
+  padding: 0;
+}
+.schedule__children, .schedule__teachers {
+  transition-duration: 0.8s;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  display: flex;
+  width: 100%;
+}
+.schedule__weekday {
+  border: 1px solid #E0E0E0;
+  border-radius: 5px 5px 0 0;
+  width: calc(100% / 3 - 20px);
+  margin: 10px;
+}
+.schedule__weekday_title {
+  border-bottom: 1px solid #E0E0E0;
+  padding: 5px 10px;
+  display: block;
+}
+.schedule__weekday_list {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.schedule__weekday_list li {
+  border-bottom: 1px solid #E0E0E0;
+  list-style: none;
+  cursor: pointer;
+  width: 100%;
+}
+.schedule__weekday_list li > div {
+  display: flex;
+  align-items: center;
+  padding: 7px;
+}
+.schedule__weekday_list li > div:hover {
+  background: #ededed;
+}
+.schedule__weekday_list li > div:active {
+  background: #E0E0E0;
+}
+.schedule__weekday_list li:last-child {
+  margin-bottom: -1px;
+}
+.schedule__weekday_list li .time {
+  margin-left: auto;
+  white-space: nowrap;
+}
+.schedule__weekday_list li .fio {
+  margin-right: 12px;
+}
+.schedule__weekday_list.inner {
+  margin-bottom: -1px;
+  overflow: hidden;
+  max-height: 0;
+  transition-duration: 0.5s;
+}
+.schedule__weekday_list.inner li {
+  border-top: 1px solid #E0E0E0;
+  border-bottom: none;
+  position: relative;
+}
+.schedule__weekday_list.inner div {
+  padding-left: 25px;
+}
+.schedule__weekday_list.inner .multyCheckbox {
+  position: absolute;
+  color: #fff;
+  right: 7px;
+  top: 7px;
+}
 
 .alert .close {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  outline: none; }
+  user-select: none;
+  outline: none;
+}
 
 /*# sourceMappingURL=style.css.map */
