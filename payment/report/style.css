@@ -18,7 +18,7 @@
   text-align: center;
 }
 .payments .amount {
-  width: 90px;
+  width: 100px;
 }
 .payments td.amount {
   text-align: right;
@@ -87,6 +87,13 @@
 }
 .total__table tr:hover {
   background: lightgoldenrodyellow;
+}
+
+.buttons {
+  max-width: 1200px;
+  min-width: 800px;
+  width: 80%;
+  margin: 20px auto 0;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -21,7 +21,7 @@
   }
 
   .amount {
-    width: 90px;
+    width: 100px;
   }
 
   td.amount {
@@ -114,4 +114,11 @@
       }
     }
   }
+}
+
+.buttons {
+  max-width: 1200px;
+  min-width: 800px;
+  width: 80%;
+  margin: 20px auto 0;
 }

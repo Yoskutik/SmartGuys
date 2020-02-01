@@ -9,8 +9,23 @@ $(window).ready(() => {
         } else if (!getSelectedText() || !this.innerText.includes(getSelectedText())) {
             this.classList.remove('unwrapped');
         }
-    })
+    });
+
+    $(window).on('afterprint', () => {
+        $('header').show();
+        $('footer').show();
+        $('.buttons').show();
+    });
+
+    $('.buttons__print').on('click', () => {
+        $('header').hide();
+        $('footer').hide();
+        $('.buttons').hide();
+        print();
+    });
 });
+
+$('title').text('Ежедневный отчет');
 
 function getSelectedText() {
     let text = '';
