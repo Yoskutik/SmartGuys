@@ -1134,7 +1134,8 @@ function () {
   var _ref11 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee11(req, res) {
-    var child_id, i;
+    var child_id, fields, i, _i2;
+
     return regeneratorRuntime.wrap(function _callee11$(_context12) {
       while (1) {
         switch (_context12.prev = _context12.next) {
@@ -1144,31 +1145,59 @@ function () {
 
           case 2:
             child_id = _context12.sent;
-            _context12.t0 = regeneratorRuntime.keys(req.body.schedule);
+            fields = {
+              child: {},
+              schedule: []
+            };
+            fields.child.fio = !!req.body.child.fio;
+            fields.child.birthday = !!req.body.child.birthday;
+            fields.child.parent_1_fio = !!req.body.child.parent_1_fio;
+            fields.child.parent_1_tel = !!req.body.child.parent_1_tel;
 
-          case 4:
-            if ((_context12.t1 = _context12.t0()).done) {
-              _context12.next = 10;
+            for (i in req.body.schedule) {
+              fields.schedule[i] = {};
+              fields.schedule[i].weekday = !!req.body.schedule[i].weekday;
+              fields.schedule[i].time = !!req.body.schedule[i].time;
+              fields.schedule[i].type = !!req.body.schedule[i].type;
+              fields.schedule[i].teacher_id = !!req.body.schedule[i].teacher_id;
+            }
+
+            if (!(!fields.child.fio || !fields.child.birthday || !fields.child.parent_1_fio || !fields.child.parent_1_tel || fields.schedule.some(function (row) {
+              return Object.values(row).includes(false);
+            }))) {
+              _context12.next = 12;
               break;
             }
 
-            i = _context12.t1.value;
-            _context12.next = 8;
-            return scheduleTable.add(_objectSpread({}, req.body.schedule[i], {
+            res.status(405).send(fields);
+            return _context12.abrupt("return");
+
+          case 12:
+            _context12.t0 = regeneratorRuntime.keys(req.body.schedule);
+
+          case 13:
+            if ((_context12.t1 = _context12.t0()).done) {
+              _context12.next = 19;
+              break;
+            }
+
+            _i2 = _context12.t1.value;
+            _context12.next = 17;
+            return scheduleTable.add(_objectSpread({}, req.body.schedule[_i2], {
               child_id: child_id
             }));
 
-          case 8:
-            _context12.next = 4;
+          case 17:
+            _context12.next = 13;
             break;
 
-          case 10:
+          case 19:
             log("\u0420\u0435\u0431\u0451\u043D\u043E\u043A ".concat(req.body.child.fio, " \u0431\u044B\u043B \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443."));
             res.json({
               status: 'OK'
             });
 
-          case 12:
+          case 21:
           case "end":
             return _context12.stop();
         }
@@ -1727,7 +1756,6 @@ app.listen(port, address, function () {
   console.log('К сайту можно обратиться по ссылкам:');
   console.log('  - http://127.0.0.1 -');
   console.log('  - http://localhost -');
-  console.log();
   (0, _opn["default"])('http://localhost');
 });
 
@@ -1759,3 +1787,4 @@ function getTime(w) {
   var d = date.getDate();
   return "".concat(date.getFullYear(), "-").concat(m > 9 ? m : '0' + m, "-").concat(d > 9 ? d : '0' + d);
 }
+//# sourceMappingURL=server.js.map

@@ -21,11 +21,16 @@ $(window).ready(() => {
         let schedule = [];
         $('.children__add_schedule').each((i, el) => {
             el = $(el);
+            let teacher_id = el.find('.fio').data('id');
+            if (!teacher_id) {
+                teacher_id = el.find('.children__add_schedule_teachers li').data('id');
+                el.find('.children__add_schedule_teachers').remove();
+            }
             schedule.push({
                 weekday: el.find(':selected').index() - 1,
                 time: el.find('.time').val(),
                 type: el.find('.multyCheckbox__item:visible').index(),
-                teacher_id: el.find('.fio').data('id'),
+                teacher_id,
             })
         });
 
@@ -53,6 +58,22 @@ $(window).ready(() => {
                     $('.weekdays').val('День недели');
                     $('.multyCheckbox__item:visible').hide();
                     $('.multyCheckbox__item:first-child').show();
+                }
+            },
+            error: data => {
+                toast('Не все поля заполнены верно');
+                let child = data.responseJSON.child;
+                let schedule = data.responseJSON.schedule;
+                if (!child.fio) $('[name=fio]').addClass('border-danger');
+                if (!child.birthday) $('[name=birthday]').addClass('border-danger');
+                if (!child.parent_1_fio) $('input').eq(3).addClass('border-danger');
+                if (!child.parent_1_tel) $('input').eq(4).addClass('border-danger');
+
+                for (let i in schedule) {
+                    if (!schedule[i].type) $('.children__add_schedule').eq(i).find('.multyCheckbox').addClass('border-danger');
+                    if (!schedule[i].weekday) $('.children__add_schedule').eq(i).find('.weekdays').addClass('border-danger');
+                    if (!schedule[i].time) $('.children__add_schedule').eq(i).find('.time').addClass('border-danger');
+                    if (!schedule[i].teacher_id) $('.children__add_schedule').eq(i).find('.fio').addClass('border-danger');
                 }
             }
         })

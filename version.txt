@@ -1,2 +1,2 @@
-current version: 1.4.1
-last update: Sat Feb 01 2020
+current version: 1.4.2
+last update: Tue Feb 04 2020

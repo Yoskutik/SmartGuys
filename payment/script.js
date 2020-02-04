@@ -189,7 +189,7 @@ function getTotal() {
                 ? prices[key] * 8
                 : prices[key] * $('.custom-number-input__input').eq(i).val();
         } else {
-            let count = parseInt($('.custom-number-input__input').eq(i).val()) - data.attendance[key].passes;
+            let count = parseInt($('.custom-number-input__input').eq(i).val());
             let c = count;
             total += count >= 8 ? prices[key] * 8 : prices[key] * count;
             total += c < 8

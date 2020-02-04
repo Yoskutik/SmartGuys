@@ -64,7 +64,8 @@
                                     </select>
                                     <input name="time" class="time" type="text" placeholder="Время" disabled value="<%= schedule[i].time %>">
                                     <input class="fio" type="text" placeholder="ФИО учителя" disabled
-                                           value="<%= schedule[i].teacher.fio %>" data-id="<%= schedule[i].teacher_id %>">
+                                           value="<%= schedule[i].teacher ? schedule[i].teacher.fio : '' %>"
+                                           data-id="<%= schedule[i].teacher_id %>">
                                     <ul class="children__add_schedule_teachers dropdown_list"></ul>
                                     <span class="<%= i === 0 ? 'add' : 'remove' %>"></span>
                                 </div>
@@ -131,24 +132,26 @@
                             <ul>
                                 <% if (attendance.length) { %>
                                     <% attendance.forEach(row => { %>
-                                        <li data-time="<%= row.time %>" data-lesson-type="<%= row.lesson_type %>"
-                                            data-id="<%= row.id %>">
-                                            <% let [yyyy, mm, dd] = row.time.match(/\d+/g); %>
-                                            <%= `${dd}.${mm}.${yyyy}` %>
-                                            <div style="display: flex">
-                                                <span class="remove"></span>
-                                                <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
-                                                    items: [
-                                                        {color: '#ededed'},
-                                                        {color: '#068f0f', content: {text: 'П'}},
-                                                        {color: '#e8e120', content: {text: 'Б'}},
-                                                        {color: '#e82020', content: {text: 'О'}},
-                                                    ],
-                                                    className: 'disabled',
-                                                    chosen: row.type,
-                                                }); %>
-                                            </div>
-                                        </li>
+                                        <% if (row.time !== 'undefined') { %>
+                                            <li data-time="<%= row.time %>" data-lesson-type="<%= row.lesson_type %>"
+                                                data-id="<%= row.id %>">
+                                                <% let [yyyy, mm, dd] = row.time.match(/\d+/g) %>
+                                                <%= `${dd}.${mm}.${yyyy}` %>
+                                                <div style="display: flex">
+                                                    <span class="remove"></span>
+                                                    <%- include('../assets/elements/multyCheckbox/multyCheckbox', {
+                                                        items: [
+                                                            {color: '#ededed'},
+                                                            {color: '#068f0f', content: {text: 'П'}},
+                                                            {color: '#e8e120', content: {text: 'Б'}},
+                                                            {color: '#e82020', content: {text: 'О'}},
+                                                        ],
+                                                        className: 'disabled',
+                                                        chosen: row.type,
+                                                    }); %>
+                                                </div>
+                                            </li>
+                                        <% } %>
                                     <% }) %>
                                 <% } else { %>
                                     <li style="text-align: center; display: block">Список посещений пуст</li>

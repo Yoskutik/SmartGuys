@@ -373,6 +373,26 @@ app.get('/payment/report/',     async (req, res) => {
 app.post('/api/addChild',           async (req, res) => {
     let child_id = await childTable.add(req.body.child);
 
+    let fields = {child: {}, schedule: []};
+    fields.child.fio = !!req.body.child.fio;
+    fields.child.birthday = !!req.body.child.birthday;
+    fields.child.parent_1_fio = !!req.body.child.parent_1_fio;
+    fields.child.parent_1_tel = !!req.body.child.parent_1_tel;
+
+    for (let i in req.body.schedule) {
+        fields.schedule[i] = {};
+        fields.schedule[i].weekday = !!req.body.schedule[i].weekday;
+        fields.schedule[i].time = !!req.body.schedule[i].time;
+        fields.schedule[i].type = !!req.body.schedule[i].type;
+        fields.schedule[i].teacher_id = !!req.body.schedule[i].teacher_id;
+    }
+
+    if (!fields.child.fio || !fields.child.birthday || !fields.child.parent_1_fio || !fields.child.parent_1_tel
+        || fields.schedule.some(row => Object.values(row).includes(false))) {
+        res.status(405).send(fields);
+        return;
+    }
+
     for (let i in req.body.schedule) {
         await scheduleTable.add({...req.body.schedule[i], child_id});
     }
