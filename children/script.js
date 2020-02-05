@@ -24,7 +24,7 @@ $(window).ready(() => {
             let teacher_id = el.find('.fio').data('id');
             if (!teacher_id) {
                 teacher_id = el.find('.children__add_schedule_teachers li').data('id');
-                el.find('.children__add_schedule_teachers').remove();
+                el.find('.children__add_schedule_teachers li').remove();
             }
             schedule.push({
                 weekday: el.find(':selected').index() - 1,

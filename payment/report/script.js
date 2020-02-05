@@ -25,8 +25,6 @@ $(window).ready(() => {
     });
 });
 
-$('title').text('Ежедневный отчет');
-
 function getSelectedText() {
     let text = '';
     if (typeof window.getSelection != 'undefined') {

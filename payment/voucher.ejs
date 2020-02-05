@@ -1,43 +1,97 @@
 <%
 let attendance = {};
-['group', 'mental_arifm_1', 'mental_arifm_2', 'english', 'painting'].forEach((key, i) => {
+['group', 'mental_arifm_1', 'mental_arifm_2', 'english', 'painting',
+    'speed_read_1', 'speed_read_2'].forEach((key, i) => {
     attendance[key] = {};
     attendance[key].attendance = +query[key].match(/\d+/g)[0];
     attendance[key].passes = +query[key].match(/\d+/g)[1];
     attendance[key].ill = +query[key].match(/\d+/g)[2];
 });
-let defectologist = +query.defectologist;
-let logopedist = +query.logopedist;
-let psychologist = +query.psychologist;
-let fee = query.fee === '1';
-let books = query.books === '1';
-let books_3 = query.books_3 === '1';
+let withoutPasses = {
+    defectologist:  +query.defectologist,
+    logopedist:     +query.logopedist,
+    psychologist:   +query.psychologist
+}
+let annual = {
+    fee:    query.fee === '1',
+    book:   query.book === '1',
+    fee_3:  query.fee_3 === '1'
+}
 let additional = +query.additional;
+
+function createItem(id, name, first) {
+    if (attendance[id].attendance) {
+        let item = `
+            <div class="payment__row ${first ? 'payment__total' : ''}">
+                <span class="payment__row_title">${name}:</span>
+                <div class="payment__row_body" style="display: flex">
+                    ${prices[id]} ₽ <small>x</small> ${attendance[id].attendance}
+                </div>
+            </div>
+        `;
+        if (attendance[id].passes)
+            item += `
+             <div class="payment__row">
+                <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
+                <div class="payment__row_body">
+                    ${attendance[id].passes} / ${attendance[id].ill}
+                </div>
+            </div>
+            `
+        return item;
+    } else {
+        return '';
+    }
+}
+
+function createItem2(id, name, first) {
+    if (withoutPasses[id]) {
+        return `
+            <div class="payment__row ${first ? 'payment__total' : ''}">
+                <span class="payment__row_title">${name}:</span>
+                <div class="payment__row_body" style="display: flex">
+                    ${prices[id]} ₽ <small>x</small> ${withoutPasses[id]}
+                </div>
+            </div>
+        `;
+    } else {
+        return '';
+    }
+}
+
+function createAnnual(id, name, first) {
+    if (annual[id]) {
+        return `
+            <div class="payment__row ${first ? 'payment__total' : ''}">
+                <span class="payment__row_title">${name}:</span>
+                <div class="payment__row_body">${prices[id]} ₽</div>
+            </div>
+        `;
+    } else {
+        return '';
+    }
+}
 %>
 
 <!DOCTYPE>
 <html lang="ru">
 <head>
     <title>Кассовый чек</title>
+    <%- include ../assets/elements/head.ejs %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="/payment/style.css">
-    <style>
-        small {
-            margin: 2px 5px 0;
-        }
-    </style>
 </head>
 <body>
 <div class="body container-fluid">
-    <% const count = parseInt(query.count); %>
-    <% const passes = parseInt(query.passes); %>
-    <% const passesIll = parseInt(query.passesIll); %>
+    <% const count =        +query.count; %>
+    <% const passes =       +query.passes; %>
+    <% const passesIll =    +query.passesIll; %>
     <% const attendanceAmount = count > 8 ? prices.visit * 8 : prices.visit * count; %>
     <div style="display: flex">
-        <div style="margin: 20px 20px 0 20px; width: 400px;">
+        <div class="copy" style="margin: 20px 20px 0 20px; width: 400px;">
             <div class="payment">
                 <div class="payment__row">
                     <span class="payment__row_title">ФИО ребенка:</span>
@@ -48,130 +102,21 @@ let additional = +query.additional;
                     <% let m = new Date().getMonth() + 1; %>
                     <div class="payment__row_body"><%= `${m > 9 ? m : '0' + m}.${new Date().getFullYear()}` %></div>
                 </div>
-                <% if (attendance.group.attendance) { %>
-                    <div class="payment__row payment__total">
-                        <span class="payment__row_title">Групповых занятий:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.group %> ₽ <small>x</small> <%= attendance.group.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.group.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.group.passes %> / <%= attendance.group.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (attendance.mental_arifm_1.attendance) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">Ментальная арифметика I:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.mental_arifm_1 %> ₽ <small>x</small> <%= attendance.mental_arifm_1.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.mental_arifm_1.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.mental_arifm_1.passes %> / <%= attendance.mental_arifm_1.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (attendance.mental_arifm_2.attendance) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">Ментальная арифметика II:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.mental_arifm_2 %> ₽ <small>x</small> <%= attendance.mental_arifm_2.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.mental_arifm_2.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.mental_arifm_2.passes %> / <%= attendance.mental_arifm_2.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (attendance.english.attendance) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">Английский язык:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.english %> ₽ <small>x</small> <%= attendance.english.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.english.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.english.passes %> / <%= attendance.english.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (attendance.painting.attendance) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">ИЗО студия:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.painting %> ₽ <small>x</small> <%= attendance.painting.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.painting.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.painting.passes %> / <%= attendance.painting.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (defectologist) { %>
-                    <div class="payment__row payment__total">
-                        <span class="payment__row_title">Посещений у дефектолога:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.defectologist %> ₽ <small>x</small> <%= defectologist %>
-                        </div>
-                    </div>
-                <% } %>
-                <% if (logopedist) { %>
-                    <div class="payment__row <%= defectologist ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Посещений у логопеда:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.logopedist %> ₽ <small>x</small> <%= logopedist %>
-                        </div>
-                    </div>
-                <% } %>
-                <% if (psychologist) { %>
-                    <div class="payment__row <%= defectologist || logopedist ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Посещений у психолога:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.psychologist %> ₽ <small>x</small> <%= psychologist %>
-                        </div>
-                    </div>
-                <% } %>
-                <% if (fee) { %>
-                    <div class="payment__row payment__total">
-                        <span class="payment__row_title">Ежегодный взнос:</span>
-                        <div class="payment__row_body"><%= prices.fee %> ₽</div>
-                    </div>
-                <% } %>
-                <% if (books) { %>
-                    <div class="payment__row <%= fee ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Пособие:</span>
-                        <div class="payment__row_body"><%= prices.books %> ₽</div>
-                    </div>
-                <% } %>
-                <% if (books_3) { %>
-                    <div class="payment__row <%= fee || books ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Пособие 3:</span>
-                        <div class="payment__row_body"><%= prices.books_3 %> ₽</div>
-                    </div>
-                <% } %>
+                <%- createItem('group', 'Групповых занятий', true) %>
+                <%- createItem('english', 'Английский язык') %>
+                <%- createItem('painting', 'ИЗО студия') %>
+                <%- createItem('mental_arifm_1', 'Ментальная арифметика I', true) %>
+                <%- createItem('mental_arifm_2', 'Ментальная арифметика II') %>
+                <%- createItem('speed_read_1', 'Скорочтение I') %>
+                <%- createItem('speed_read_2', 'Скорочтение II') %>
+                <%- createItem2('defectologist', 'Посещений у дефектолога', true) %>
+                <%- createItem2('logopedist', 'Посещений у логопеда') %>
+                <%- createItem2('psychologist', 'Посещений у психолога') %>
+                <%- createAnnual('fee', 'Ежегодный взнос', true) %>
+                <%- createAnnual('book', 'Пособие', !annual.fee) %>
+                <%- createAnnual('fee_3', 'Пособие 3', !annual.fee && !annual.book) %>
                 <% if (additional) { %>
-                    <div class="payment__row <%= fee || books || books_3 ? '' : 'payment__total' %>">
+                    <div class="payment__row <%= fee || book || fee_3 ? '' : 'payment__total' %>">
                         <span class="payment__row_title">Дополнительная сумма:</span>
                         <div class="payment__row_body"><%= additional %> ₽</div>
                     </div>
@@ -216,186 +161,12 @@ let additional = +query.additional;
                 </div>
             </div>
         </div>
-        <div style="margin: 20px 20px 0 20px; width: 400px;">
-            <div class="payment">
-                <div class="payment__row">
-                    <span class="payment__row_title">ФИО ребенка:</span>
-                    <div class="payment__row_body"><%= query.fio %></div>
-                </div>
-                <div class="payment__row">
-                    <span class="payment__row_title">Расчетный период:</span>
-                    <div class="payment__row_body"><%= `${m > 9 ? m : '0' + m}.${new Date().getFullYear()}` %></div>
-                </div>
-                <% if (attendance.group.attendance) { %>
-                    <div class="payment__row payment__total">
-                        <span class="payment__row_title">Групповых занятий:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.group %> ₽ <small>x</small> <%= attendance.group.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.group.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.group.passes %> / <%= attendance.group.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (attendance.mental_arifm_1.attendance) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">Ментальная арифметика I:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.mental_arifm_1 %> ₽ <small>x</small> <%= attendance.mental_arifm_1.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.mental_arifm_1.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.mental_arifm_1.passes %> / <%= attendance.mental_arifm_1.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (attendance.mental_arifm_2.attendance) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">Ментальная арифметика II:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.mental_arifm_2 %> ₽ <small>x</small> <%= attendance.mental_arifm_2.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.mental_arifm_2.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.mental_arifm_2.passes %> / <%= attendance.mental_arifm_2.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (attendance.english.attendance) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">Английский язык:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.english %> ₽ <small>x</small> <%= attendance.english.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.english.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.english.passes %> / <%= attendance.english.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (attendance.painting.attendance) { %>
-                    <div class="payment__row">
-                        <span class="payment__row_title">ИЗО студия:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.painting %> ₽ <small>x</small> <%= attendance.painting.attendance %>
-                        </div>
-                    </div>
-                    <% if (attendance.painting.passes) { %>
-                        <div class="payment__row">
-                            <span class="payment__row_title" style="padding-left: 20px">Пропусков / по болезни:</span>
-                            <div class="payment__row_body">
-                                <%= attendance.painting.passes %> / <%= attendance.painting.ill %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } %>
-                <% if (defectologist) { %>
-                    <div class="payment__row payment__total">
-                        <span class="payment__row_title">Посещений у дефектолога:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.defectologist %> ₽ <small>x</small> <%= defectologist %>
-                        </div>
-                    </div>
-                <% } %>
-                <% if (logopedist) { %>
-                    <div class="payment__row <%= defectologist ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Посещений у логопеда:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.logopedist %> ₽ <small>x</small> <%= logopedist %>
-                        </div>
-                    </div>
-                <% } %>
-                <% if (psychologist) { %>
-                    <div class="payment__row <%= defectologist || logopedist ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Посещений у психолога:</span>
-                        <div class="payment__row_body" style="display: flex">
-                            <%= prices.psychologist %> ₽ <small>x</small> <%= psychologist %>
-                        </div>
-                    </div>
-                <% } %>
-                <% if (fee) { %>
-                    <div class="payment__row payment__total">
-                        <span class="payment__row_title">Ежегодный взнос:</span>
-                        <div class="payment__row_body"><%= prices.fee %> ₽</div>
-                    </div>
-                <% } %>
-                <% if (books) { %>
-                    <div class="payment__row <%= fee ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Пособие:</span>
-                        <div class="payment__row_body"><%= prices.books %> ₽</div>
-                    </div>
-                <% } %>
-                <% if (books_3) { %>
-                    <div class="payment__row <%= fee || books ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Пособие 3:</span>
-                        <div class="payment__row_body"><%= prices.books_3 %> ₽</div>
-                    </div>
-                <% } %>
-                <% if (additional) { %>
-                    <div class="payment__row <%= fee || books || books_3 ? '' : 'payment__total' %>">
-                        <span class="payment__row_title">Дополнительная сумма:</span>
-                        <div class="payment__row_body"><%= additional %> ₽</div>
-                    </div>
-                <% } %>
-                <div class="payment__row payment__total">
-                    <span class="payment__row_title">Итого к оплате:</span>
-                    <div class="payment__row_body total"><%= query.total %> ₽</div>
-                </div>
-                <div class="payment__row payment__total">
-                    <span class="payment__row_title">Дата:</span>
-                    <div class="payment__row_body">
-                        <%= `${dd > 9 ? dd : '0' + dd}.${mm > 9 ? mm : '0' + mm}.${yy}` %>
-                    </div>
-                </div>
-                <div class="payment__row">
-                    <span class="payment__row_title">Вид оплаты:</span>
-                    <div class="payment__row_body">
-                        <%= query.type === '0' ? 'Безналичный' : 'Наличный' %>
-                    </div>
-                </div>
-                <div class="payment__row">
-                    <span class="payment__row_title">Администратор:</span>
-                    <div class="payment__row_body admin__fio"></div>
-                </div>
-                <div class="payment__row payment__total">
-                    <span class="payment__row_title">ИП Матвиенко О.А.</span>
-                </div>
-                <div class="payment__row">
-                    <span class="payment__row_title">ИНН</span>
-                    <div class="payment__row_body">
-                        <%= ITN %>
-                    </div>
-                </div>
-                <div class="payment__row">
-                    <span class="payment__row_title">ОГРН</span>
-                    <div class="payment__row_body">
-                        <%= PSRN %>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <script>
     $(window).ready(() => {
         $('.admin__fio').text($.cookie('admin'));
+        $('.copy').clone().appendTo($('.copy').parent());
     });
 </script>
 </body>

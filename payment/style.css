@@ -1,164 +1,193 @@
 .styled-checkbox {
-  display: none; }
-  .styled-checkbox + label {
-    min-height: 24px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    position: relative;
-    cursor: pointer;
-    padding: 0;
-    margin-bottom: 0; }
-  .styled-checkbox + label:before {
-    content: '';
-    margin-right: 5px;
-    display: inline-block;
-    vertical-align: text-top;
-    width: 20px;
-    height: 20px;
-    background: white;
-    border: 1px solid #E0E0E0;
-    border-radius: 5px; }
-  .styled-checkbox:hover + label:before {
-    border-width: 0;
-    background: #f35429; }
-  .styled-checkbox:checked + label:before {
-    border-width: 0;
-    background: #f35429; }
-  .styled-checkbox:disabled + label {
-    color: #b8b8b8;
-    cursor: auto; }
-  .styled-checkbox:disabled + label:before {
-    border-width: 0;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-    background: #ddd; }
-  .styled-checkbox:checked + label:after {
-    content: url(/assets/icons/checked.png);
-    position: absolute;
-    left: 3px;
-    top: 5px; }
-  .styled-checkbox.danger + label:before {
-    border-color: #dc3545; }
+  display: none;
+}
+.styled-checkbox + label {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0;
+}
+.styled-checkbox + label:before {
+  content: "";
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 5px;
+}
+.styled-checkbox:hover + label:before {
+  border-width: 0;
+  background: #f35429;
+}
+.styled-checkbox:checked + label:before {
+  border-width: 0;
+  background: #f35429;
+}
+.styled-checkbox:disabled + label {
+  color: #b8b8b8;
+  cursor: auto;
+}
+.styled-checkbox:disabled + label:before {
+  border-width: 0;
+  box-shadow: none;
+  background: #ddd;
+}
+.styled-checkbox:checked + label:after {
+  content: url(/assets/icons/checked.png);
+  position: absolute;
+  left: 3px;
+  top: 5px;
+}
+.styled-checkbox.danger + label:before {
+  border-color: #dc3545;
+}
 
 .custom-number-input {
   height: 26px;
   position: relative;
-  width: 50px; }
-  .custom-number-input__input {
-    width: calc(100% - 12px);
-    border: 1px solid #b3b3b3;
-    border-radius: 5px 0 0 5px;
-    height: calc(100% - 1px);
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    position: absolute;
-    outline: none;
-    padding: 3px; }
-  .custom-number-input__up, .custom-number-input__down {
-    border: 1px solid #b3b3b3;
-    position: absolute;
-    cursor: pointer;
-    height: 13px;
-    width: 13px; }
-    .custom-number-input__up:hover, .custom-number-input__down:hover {
-      background: #E0E0E0; }
-    .custom-number-input__up:active, .custom-number-input__down:active {
-      background: #adadad; }
-    .custom-number-input__up:before, .custom-number-input__up:after, .custom-number-input__down:before, .custom-number-input__down:after {
-      background: #4d4d4d;
-      position: absolute;
-      display: block;
-      height: 2px;
-      content: '';
-      width: 6px;
-      left: 1px;
-      top: 5px; }
-  .custom-number-input__up {
-    border-radius: 0 5px 0 0;
-    right: 0;
-    top: 0; }
-    .custom-number-input__up:before {
-      left: 4px;
-      -webkit-transform: rotate(45deg);
-              transform: rotate(45deg); }
-    .custom-number-input__up:after {
-      -webkit-transform: rotate(-45deg);
-              transform: rotate(-45deg); }
-  .custom-number-input__down {
-    border-radius: 0 0 5px 0;
-    top: 12px;
-    right: 0; }
-    .custom-number-input__down:before {
-      left: 4px;
-      -webkit-transform: rotate(-45deg);
-              transform: rotate(-45deg); }
-    .custom-number-input__down:after {
-      -webkit-transform: rotate(45deg);
-              transform: rotate(45deg); }
+  width: 50px;
+}
+.custom-number-input__input {
+  width: calc(100% - 12px);
+  border: 1px solid #b3b3b3;
+  border-radius: 5px 0 0 5px;
+  height: calc(100% - 1px);
+  box-sizing: border-box;
+  position: absolute;
+  outline: none;
+  padding: 3px;
+}
+.custom-number-input__up, .custom-number-input__down {
+  border: 1px solid #b3b3b3;
+  position: absolute;
+  cursor: pointer;
+  height: 13px;
+  width: 13px;
+}
+.custom-number-input__up:hover, .custom-number-input__down:hover {
+  background: #E0E0E0;
+}
+.custom-number-input__up:active, .custom-number-input__down:active {
+  background: #adadad;
+}
+.custom-number-input__up:before, .custom-number-input__up:after, .custom-number-input__down:before, .custom-number-input__down:after {
+  background: #4d4d4d;
+  position: absolute;
+  display: block;
+  height: 2px;
+  content: "";
+  width: 6px;
+  left: 1px;
+  top: 5px;
+}
+.custom-number-input__up {
+  border-radius: 0 5px 0 0;
+  right: 0;
+  top: 0;
+}
+.custom-number-input__up:before {
+  left: 4px;
+  transform: rotate(45deg);
+}
+.custom-number-input__up:after {
+  transform: rotate(-45deg);
+}
+.custom-number-input__down {
+  border-radius: 0 0 5px 0;
+  top: 12px;
+  right: 0;
+}
+.custom-number-input__down:before {
+  left: 4px;
+  transform: rotate(-45deg);
+}
+.custom-number-input__down:after {
+  transform: rotate(45deg);
+}
 
 .payment {
   width: 100%;
   min-height: 100px;
   border: 1px solid #E0E0E0;
   border-radius: 5px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   padding: 10px;
-  margin-bottom: 10px; }
-  .payment__row {
-    width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    margin-bottom: 10px; }
-    .payment__row:last-child {
-      margin-bottom: 0; }
-    .payment__row_body {
-      margin-left: auto; }
-  .payment__total {
-    border-top: 1px solid #E0E0E0;
-    padding-top: 10px; }
-  .payment .counter, .payment .price__visit, .payment .price__individual {
-    display: none; }
-  .payment .individual {
-    padding: 3px;
-    width: 52px;
-    height: 24px; }
+  margin-bottom: 10px;
+}
+.payment__row {
+  width: 100%;
+  display: flex;
+  margin-bottom: 10px;
+}
+.payment__row:last-child {
+  margin-bottom: 0;
+}
+.payment__row_body {
+  margin-left: auto;
+}
+.payment__row_body .price {
+  min-width: 50px;
+  text-align: right;
+}
+.payment__total {
+  border-top: 1px solid #E0E0E0;
+  padding-top: 10px;
+}
+.payment .counter, .payment .price__visit, .payment .price__individual {
+  display: none;
+}
+.payment .individual {
+  padding: 3px;
+  width: 52px;
+  height: 24px;
+}
 
 .type {
   padding: 0 5px;
-  margin-bottom: 10px; }
-  .type__title {
-    display: block;
-    margin-bottom: 5px; }
+  margin-bottom: 10px;
+}
+.type__title {
+  display: block;
+  margin-bottom: 5px;
+}
 
 .comment {
-  margin-bottom: 10px; }
-  .comment__title {
-    display: block;
-    padding: 5px; }
-  .comment__message {
-    width: 100%;
-    border: 1px solid #E0E0E0;
-    border-radius: 5px;
-    min-height: 100px;
-    padding: 5px; }
+  margin-bottom: 10px;
+}
+.comment__title {
+  display: block;
+  padding: 5px;
+}
+.comment__message {
+  width: 100%;
+  border: 1px solid #E0E0E0;
+  border-radius: 5px;
+  min-height: 100px;
+  padding: 5px;
+}
 
 .buttons {
   margin-bottom: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex; }
-  .buttons button {
-    margin-left: 10px; }
+  display: flex;
+}
+.buttons button {
+  margin-left: 10px;
+}
+
+small {
+  margin: 2px 5px 0;
+}
+
+.styled-checkbox + label {
+  position: relative;
+  top: -1px;
+}
 
 /*# sourceMappingURL=style.css.map */

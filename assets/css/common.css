@@ -8965,9 +8965,9 @@ body {
 
 @font-face {
   font-family: Gotham;
-  src: url(assets/fonts/Gotham.otf); }
+  src: url(../fonts/Gotham.otf); }
 @font-face {
   font-family: AleksandraC;
-  src: url(assets/fonts/AleksandraC.otf); }
+  src: url(../fonts/AleksandraC.otf); }
 
 /*# sourceMappingURL=common.css.map */

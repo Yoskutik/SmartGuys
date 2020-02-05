@@ -327,4 +327,3 @@ var _db = {
   writable: true,
   value: new sqlite3.Database("".concat(_os["default"].homedir(), "/\u0423\u043C\u043D\u0438\u043A\u0438 \u0438 \u0443\u043C\u043D\u0438\u0446\u044B/db.db"), sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
 };
-//# sourceMappingURL=db.js.map

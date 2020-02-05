@@ -23,6 +23,11 @@
 
     &_body {
       margin-left: auto;
+
+      .price {
+        min-width: 50px;
+        text-align: right;
+      }
     }
   }
 
@@ -76,4 +81,13 @@
   button {
     margin-left: 10px;
   }
+}
+
+small {
+  margin: 2px 5px 0;
+}
+
+.styled-checkbox + label {
+  position: relative;
+  top: -1px;
 }

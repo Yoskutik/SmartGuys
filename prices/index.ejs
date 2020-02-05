@@ -1,0 +1,25 @@
+<!DOCTYPE>
+<html lang="ru">
+<head>
+    <%- include('../assets/elements/head'); %>
+    <link rel="stylesheet" href="/prices/style.css">
+    <script src="/prices/script.js"></script>
+</head>
+<body>
+<%- include ../assets/elements/header.ejs %>
+<div class="body container-fluid">
+    <div class="prices">
+        <% for (let id in prices) {%>
+            <div class="prices__item" data-id="<%= id %>">
+                <span class="name"><%= prices[id].name %></span>
+                <input disabled value="<%= prices[id].price %> ₽" type="text">
+            </div>
+        <% } %>
+    </div>
+    <div class="buttons justify-content-end">
+        <button type="button" class="btn btn-info change">Изменить</button>
+    </div>
+</div>
+<%- include('../assets/elements/footer'); %>
+</body>
+</html>

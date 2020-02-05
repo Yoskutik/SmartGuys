@@ -2,7 +2,8 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import express from 'express';
-import Table from './bin/db';
+import Table from './db';
+import JSONReader from "./jsonReader";
 import { zip } from 'nodeJs-zip';
 import request from 'request';
 import path from 'path';
@@ -33,25 +34,28 @@ async function log(message) {
 
 // Requisites
 let ITN, PSRN, prices;
-(() => {
+function updatePrices() {
     let lines = fs.readFileSync('./Юридические реквизиты.txt', 'utf-8').split('\n');
     ITN = lines[0].replace('ИНН: ', '');
     PSRN = lines[1].replace('ОГРН: ', '');
-    lines = fs.readFileSync('./Цены.txt', 'utf-8').split('\n');
+    let reader = new JSONReader('./bin/prices.json');
     prices = {
-        group: parseInt(lines[0].match(/\d+/)[0]),
-        mental_arifm_1: parseInt(lines[1].match(/\d+/g)[1]),
-        mental_arifm_2: parseInt(lines[2].match(/\d+/g)[1]),
-        english: parseInt(lines[3].match(/\d+/)[0]),
-        painting: parseInt(lines[4].match(/\d+/)[0]),
-        fee: parseInt(lines[5].match(/\d+/)[0]),
-        books: parseInt(lines[6].match(/\d+/)[0]),
-        books_3: parseInt(lines[7].match(/\d+/g)[1]),
-        defectologist: parseInt(lines[8].match(/\d+/)[0]),
-        logopedist: parseInt(lines[9].match(/\d+/)[0]),
-        psychologist: parseInt(lines[10].match(/\d+/)[0]),
+        group: reader.group.price,
+        english: reader.english.price,
+        painting: reader.painting.price,
+        mental_arifm_1: reader.mental_arifm_1.price,
+        mental_arifm_2: reader.mental_arifm_2.price,
+        speed_read_1: reader.speed_read_1.price,
+        speed_read_2: reader.speed_read_2.price,
+        fee: reader.fee.price,
+        book: reader.book.price,
+        fee_3: reader.fee_3.price,
+        defectologist: reader.defectologist.price,
+        logopedist: reader.logopedist.price,
+        psychologist: reader.psychologist.price,
     }
-})();
+}
+updatePrices();
 
 //version
 let version, lastUpdateAt;
@@ -289,6 +293,7 @@ app.get('/child/',              async (req, res) => {
     });
 });
 app.get('/payment/',            async (req, res) => {
+    updatePrices();
     let m = new Date().getMonth() + 1;
     let year = new Date().getFullYear();
     res.render('payment/index.ejs', {
@@ -298,7 +303,7 @@ app.get('/payment/',            async (req, res) => {
         attendance: await attendanceTable.getAll({
             where: `child_id = ${req.query.id} 
                 AND time LIKE '${m === 1 ? year - 1 : year}-${m === 1 ? 12 : m - 1 > 9 ? m - 1 : '0' + (m - 1)}%' 
-                AND lesson_type < 6`,
+                AND lesson_type != 6`,
         }),
         annual: await annualPaymentTable.getAll({
             where: `child_id = ${req.query.id} AND time LIKE '${year}%'`,
@@ -368,6 +373,9 @@ app.get('/payment/report/',     async (req, res) => {
         row.child = await childTable.get({where: `id = ${row.child_id}`});
     }
     res.render('payment/report/index.ejs', { payments });
+});
+app.get('/prices/',            async (req, res) => {
+    res.render('prices/index.ejs', {prices: new JSONReader('./bin/prices.json')});
 });
 
 app.post('/api/addChild',           async (req, res) => {
@@ -515,6 +523,17 @@ app.post('/api/addVacation',        async (req, res) => {
     });
     await vacationTable.add(req.body);
     res.sendStatus(200);
+});
+app.post('/api/updatePrices',       async (req, res) => {
+    let reader = new JSONReader('./bin/prices.json');
+    for (let key in req.body) {
+        reader[key].price = req.body[key].price;
+    }
+    if (reader.save()) {
+        res.sendStatus(201);
+    } else {
+        res.sendStatus(401);
+    }
 });
 
 app.use(function (request, response) {

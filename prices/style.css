@@ -1,0 +1,28 @@
+.prices {
+  width: 300px;
+  margin: 0 auto 20px;
+}
+.prices__item {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.prices input {
+  border: 1px solid #E0E0E0;
+  padding: 1px 5px;
+  width: 60px;
+  margin-left: 20px;
+  text-align: left;
+}
+.prices input:disabled {
+  border: 1px solid white;
+  background: white;
+  text-align: right;
+}
+
+.buttons {
+  width: 300px;
+  margin: 0 auto 20px;
+}
+
+/*# sourceMappingURL=style.css.map */
