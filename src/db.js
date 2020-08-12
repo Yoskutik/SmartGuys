@@ -7,7 +7,8 @@ class TableError extends Error {
 }
 
 export default class Table {
-    static #db = new sqlite3.Database(`${os.homedir()}/Умники и умницы/db.db`,  sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE);
+    static #db = new sqlite3.Database(`${os.homedir()}/Умники и умницы/db.db`,
+        sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE);
 
     #table;
     #tableInfo = {};

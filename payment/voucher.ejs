@@ -91,6 +91,7 @@ function createAnnual(id, name, first) {
     <% const passesIll =    +query.passesIll; %>
     <% const attendanceAmount = count > 8 ? prices.visit * 8 : prices.visit * count; %>
     <div style="display: flex">
+        <% for (let i = 0; i < 2; i++) { %>
         <div class="copy" style="margin: 20px 20px 0 20px; width: 400px;">
             <div class="payment">
                 <div class="payment__row">
@@ -142,7 +143,7 @@ function createAnnual(id, name, first) {
                 </div>
                 <div class="payment__row">
                     <span class="payment__row_title">Администратор:</span>
-                    <div class="payment__row_body admin__fio"></div>
+                    <div class="payment__row_body admin__fio"><%- query.admin %></div>
                 </div>
                 <div class="payment__row payment__total">
                     <span class="payment__row_title">ИП Матвиенко О.А.</span>
@@ -161,13 +162,8 @@ function createAnnual(id, name, first) {
                 </div>
             </div>
         </div>
+        <% } %>
     </div>
 </div>
-<script>
-    $(window).ready(() => {
-        $('.admin__fio').text($.cookie('admin'));
-        $('.copy').clone().appendTo($('.copy').parent());
-    });
-</script>
 </body>
 </html>

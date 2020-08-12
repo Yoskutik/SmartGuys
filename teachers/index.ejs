@@ -11,14 +11,14 @@
     <div class="row justify-content-center">
         <div class="col-lg-3 col-md-4 teachers">
             <ul class="teachers__list">
-                <% for (let i in teachers) {%>
-                    <li data-id="<%= teachers[i].id %>">
+                <% teachers.forEach(teacher => {%>
+                    <li data-id="<%= teacher.id %>">
                         <span class="schedule"></span>
-                        <input disabled value="<%= teachers[i].fio %>" type="text">
+                        <input disabled value="<%= teacher.fio %>" type="text">
                         <span class="remove"></span>
                         <span class="update"></span>
                     </li>
-                <% } %>
+                <% }) %>
             </ul>
             <div class="btns justify-content-end">
                 <button type="button" class="btn btn-info add">Добавить</button>

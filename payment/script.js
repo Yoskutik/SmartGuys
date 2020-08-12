@@ -222,6 +222,7 @@ function createVacation() {
         `fee_3=${$('#fee_3').is(':checked:not(:disabled)') ? 1 : 0}`,
         `additional=${$('.additional').val()}`,
         `total=${getTotal()}`,
+        `admin=${$.cookie('admin')}`,
         `type=${+$('input[type=radio]:checked').val()}`,
         `speed_read_1=${$('.custom-number-input__input.speed_read_1').val()}/${data.attendance.speed_read_1.passes}/${data.attendance.speed_read_1.ill}`,
         `speed_read_2=${$('.custom-number-input__input.speed_read_2').val()}/${data.attendance.speed_read_2.passes}/${data.attendance.speed_read_2.ill}`,
