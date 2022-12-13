@@ -22,7 +22,7 @@
     "consolidate": "^0.15.1",
     "cookie-parser": "^1.4.5",
     "ejs": "^2.7.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jquery": "^3.5.1",
     "md5": "^2.3.0",
     "nodeJs-zip": "^1.0.4",
